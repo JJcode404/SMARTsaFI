@@ -1,0 +1,84 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+}
+
+.content {
+  width: 100%;
+  max-width: 48rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 3.75rem;
+  font-weight: 300;
+  color: rgb(173, 140, 140);
+  margin-bottom: 2rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  color: #6b7280;
+  font-size: 1.125rem;
+  margin-bottom: 3rem;
+  margin-top: 0;
+}
+
+.inputContainer {
+  display: flex;
+  gap: 1rem;
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+.emailInput {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  font-size: 1.125rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.emailInput:focus {
+  box-shadow: 0 0 0 2px #d1d5db;
+  border-color: transparent;
+}
+
+.signupButton {
+  padding: 1rem 2rem;
+  background-color: #d1d5db;
+  color: #374151;
+  font-size: 1.125rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.signupButton:hover {
+  background-color: #9ca3af;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .title {
+    font-size: 3rem;
+  }
+
+  .inputContainer {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .emailInput,
+  .signupButton {
+    font-size: 1rem;
+    padding: 0.875rem 1.25rem;
+  }
+}

@@ -1,0 +1,115 @@
+footer: {
+    backgroundColor: '#f8f9fa',
+    padding: '60px 20px 40px 20px',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif',
+    textAlign: 'center'
+  },
+  topLinks: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '40px',
+    marginBottom: '40px',
+    flexWrap: 'wrap'
+  },
+  topLink: {
+    color: '#6c757d',
+    textDecoration: 'none',
+    fontSize: '16px',
+    fontWeight: '400',
+    transition: 'color 0.3s ease'
+  },
+  topLinkHover: {
+    color: '#495057'
+  },
+  socialIcons: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '15px',
+    marginBottom: '30px'
+  },
+  socialIcon: {
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'transform 0.3s ease',
+    cursor: 'pointer'
+  },
+  socialIconHover: {
+    transform: 'translateY(-2px)'
+  },
+  facebookIcon: {
+    backgroundColor: '#1877f2'
+  },
+  instagramIcon: {
+    background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)'
+  },
+  twitterIcon: {
+    backgroundColor: '#000000'
+  },
+  companyName: {
+    fontSize: '28px',
+    fontWeight: '600',
+    color: '#2c3e50',
+    marginBottom: '15px',
+    letterSpacing: '-0.5px'
+  },
+  location: {
+    fontSize: '18px',
+    color: '#6c757d',
+    marginBottom: '10px',
+    fontWeight: '400'
+  },
+  phone: {
+    fontSize: '18px',
+    color: '#6c757d',
+    marginBottom: '40px',
+    fontWeight: '400'
+  },
+  bottomSection: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: '20px',
+    borderTop: '1px solid #e9ecef',
+    flexWrap: 'wrap',
+    gap: '20px'
+  },
+  copyright: {
+    fontSize: '14px',
+    color: '#6c757d',
+    fontWeight: '400'
+  },
+  poweredBy: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    fontSize: '14px',
+    color: '#6c757d'
+  },
+  goDaddyLogo: {
+    height: '20px',
+    width: 'auto'
+  },
+  // Mobile responsiveness
+  '@media (max-width: 768px)': {
+    topLinks: {
+      gap: '20px'
+    },
+    companyName: {
+      fontSize: '24px'
+    },
+    location: {
+      fontSize: '16px'
+    },
+    phone: {
+      fontSize: '16px'
+    },
+    bottomSection: {
+      flexDirection: 'column',
+      textAlign: 'center',
+      gap: '15px'
+    }
+  }

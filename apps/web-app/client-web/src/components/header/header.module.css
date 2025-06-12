@@ -1,0 +1,42 @@
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.topNotice {
+  text-align: center;
+  font-size: 0.85rem;
+  padding: 0.5rem;
+  background-color: white;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.logo {
+  height: 50px;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.menu li {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.icons span {
+  margin-left: 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}

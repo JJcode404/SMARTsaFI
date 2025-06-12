@@ -1,0 +1,77 @@
+.giftCardContainer {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  padding: 40px 20px;
+  max-width: 1200px;
+}
+
+.imageSection {
+  flex: 1;
+  width: 100%;
+  height: 400px; /* ADD THIS LINE */
+  background: url("https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop")
+    center/cover no-repeat;
+}
+
+.giftBoxImage {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+.contentSection {
+  flex: 1;
+  padding: 60px 50px;
+  background: white;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 400;
+  color: #b39c9c;
+  line-height: 1.2;
+  margin-bottom: 30px;
+  letter-spacing: -0.5px;
+}
+
+.description {
+  font-size: 18px;
+  color: #888;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+.ctaButton {
+  background: #d4d4d4;
+  color: #666;
+  border: none;
+  padding: 18px 36px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .giftCardContainer {
+    flex-direction: column;
+    margin: 20px;
+  }
+
+  .contentSection {
+    padding: 40px 30px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+}
