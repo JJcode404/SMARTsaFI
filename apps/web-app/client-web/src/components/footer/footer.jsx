@@ -268,7 +268,7 @@ const Footer = () => {
           ...(isMobile ? { fontSize: "16px" } : {}),
         }}
       >
-        Houston, TX
+        Nairobi, Kenya
       </p>
 
       <p
