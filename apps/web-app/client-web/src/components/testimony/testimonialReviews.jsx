@@ -28,19 +28,9 @@ const TestimonialReviews = () => {
       fullReview:
         "Hands down this was the best cleaning we have received. The attention to detail was amazing and our house has never looked better. Professional, reliable, and affordable!",
     },
+
     {
       id: 3,
-      name: "Tiffany Wright",
-      date: "14/12/2024",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face",
-      rating: 5,
-      text: "A huge thank you to Maya for providing exceptional s...",
-      fullReview:
-        "A huge thank you to Maya for providing exceptional service! The deep cleaning was thorough and professional. I'm so impressed with the results and will definitely book again.",
-    },
-    {
-      id: 4,
       name: "Michael Johnson",
       date: "08/03/2025",
       avatar:
@@ -51,7 +41,29 @@ const TestimonialReviews = () => {
         "Outstanding service! The team was punctual and professional. They transformed our home and exceeded all expectations. Worth every penny!",
     },
     {
+      id: 4,
+      name: "Sarah Davis",
+      date: "22/02/2025",
+      avatar:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
+      rating: 5,
+      text: "I've tried several cleaning services, but Pretty Cle...",
+      fullReview:
+        "I've tried several cleaning services, but Pretty Cleaning Services TX stands out from the rest. Reliable, thorough, and friendly staff. Highly recommended!",
+    },
+    {
       id: 5,
+      name: "Michael Johnson",
+      date: "08/03/2025",
+      avatar:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face",
+      rating: 5,
+      text: "Outstanding service! The team was punctual and prof...",
+      fullReview:
+        "Outstanding service! The team was punctual and professional. They transformed our home and exceeded all expectations. Worth every penny!",
+    },
+    {
+      id: 6,
       name: "Sarah Davis",
       date: "22/02/2025",
       avatar:
