@@ -1,7 +1,6 @@
 .hero {
   position: relative;
-  background: url("/homepage.jpg") center/cover no-repeat;
-  background-position: 0% 25%;
+  background: url("/homepage.jpg") top center / cover no-repeat;
   height: 100vh;
   color: #000;
   font-family: "Segoe UI", sans-serif;
