@@ -11,7 +11,8 @@ function Navbar() {
   return (
     <header className={styles.header}>
       <div className={styles.topNotice}>
-        📯 Sign up to our email list and become a member today! 🕊️
+        <span>📯</span> Sign up to our email list and become a member today!{" "}
+        <span>🕊️</span>
       </div>
       <nav className={styles.navbar}>
         <img

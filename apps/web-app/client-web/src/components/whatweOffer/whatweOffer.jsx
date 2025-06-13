@@ -80,7 +80,7 @@ const WhatWeOffer = () => {
         </div>
         <div className={styles["event-services"]}>
           <h2 className={styles["bottom-title"]}>Event Services</h2>
-          <p className={styles["bottom-text"]}>
+          <p className={styles["bottom-def"]}>
             Extra attention is needed for extraordinary events. Let us help!
           </p>
           <ul className={styles["event-list"]}>

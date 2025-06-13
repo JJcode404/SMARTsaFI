@@ -29,18 +29,18 @@ function HeroContent() {
 function LandingPage() {
   return (
     <div className={styles.main}>
+      <Navbar />
       <div className={styles.hero}>
-        <Navbar />
         <HeroContent />
-        <WhoWeAre />
-        <TestimonialReviews />
-        <SparkligGallery />
-        <QuoteComponent />
-        <WhatWeOffer />
-        <Subscription />
-        <GiftCard />
-        <Footer />
       </div>
+      <WhoWeAre />
+      <TestimonialReviews />
+      <SparkligGallery />
+      <QuoteComponent />
+      <WhatWeOffer />
+      <Subscription />
+      <GiftCard />
+      <Footer />
     </div>
   );
 }

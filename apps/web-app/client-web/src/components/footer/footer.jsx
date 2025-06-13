@@ -100,6 +100,12 @@ const styles = {
   },
   // Mobile responsiveness
   "@media (max-width: 768px)": {
+    footer: {
+      padding: "40px 0",
+    },
+    topLinks: {
+      flexDirection: "column",
+    },
     topLinks: {
       gap: "20px",
     },
@@ -107,7 +113,7 @@ const styles = {
       fontSize: "24px",
     },
     location: {
-      fontSize: "16px",
+      fontSize: "22px",
     },
     phone: {
       fontSize: "16px",

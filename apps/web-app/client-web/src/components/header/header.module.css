@@ -41,7 +41,7 @@
 }
 
 .menu li:hover {
-  color: #007bff;
+  color: grey;
 }
 
 .icons {
@@ -117,7 +117,7 @@
 
 .mobileMenuList li:hover {
   background-color: #f8f9fa;
-  color: #007bff;
+  color: gray;
 }
 
 .mobileMenuList li:last-child {
@@ -146,12 +146,16 @@
 /* Mobile Styles */
 @media (max-width: 768px) {
   .topNotice {
-    font-size: 0.75rem;
     padding: 0.4rem;
+    display: flex;
+    font-size: 16px;
   }
 
   .navbar {
     padding: 0.8rem 1rem;
+  }
+  .icons {
+    display: none;
   }
 
   .logo {
@@ -186,23 +190,18 @@
     height: 35px;
   }
 
-  .topNotice {
-    font-size: 0.7rem;
-    padding: 0.3rem;
-  }
+  /* .icons span:first-child {
+    display: none; 
+  } */
 
-  .icons span:first-child {
-    display: none; /* Hide search icon on very small screens */
-  }
-
-  .icons span {
+  /* .icons span {
     margin-left: 0.5rem;
-  }
+  } */
 
-  .icons img {
+  /* .icons img {
     width: 16px;
     height: 16px;
-  }
+  } */
 
   .mobileMenuList li {
     padding: 0.8rem 1rem;

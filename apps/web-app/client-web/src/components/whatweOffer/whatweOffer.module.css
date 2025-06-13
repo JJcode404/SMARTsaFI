@@ -163,8 +163,9 @@
   text-align: center;
 }
 
-.bottom-text {
-  font-size: 15px;
+.bottom-text,
+.bottom-def {
+  font-size: 16px;
   line-height: 1.6;
   color: #636e72;
   text-align: center;
@@ -176,7 +177,7 @@
 }
 
 .event-list li {
-  font-size: 15px;
+  font-size: 16px;
   color: #636e72;
   margin-bottom: 8px;
   padding-left: 20px;
@@ -185,7 +186,6 @@
 
 .event-list li::before {
   content: "•";
-  color: #74b9ff;
   font-weight: bold;
   position: absolute;
   left: 0;
@@ -202,12 +202,15 @@
   .move-content,
   .commercial-services,
   .event-services {
-    padding: 30px 20px;
+    padding: 20px 0px 0px;
   }
 
   .deep-clean-image,
   .move-image {
     min-height: 200px;
+  }
+  .move-image {
+    display: none;
   }
 
   .section-title,

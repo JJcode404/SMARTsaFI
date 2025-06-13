@@ -34,7 +34,7 @@ const SparkligGallery = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000); // every 5 seconds
+    }, 3000);
 
     return () => clearInterval(interval); // cleanup on unmount
   }, [images.length]);
@@ -50,14 +50,23 @@ const SparkligGallery = () => {
       </div>
 
       <div className={styles.galleryWrapper}>
+        <div
+          className={styles.slider}
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {images.map((img, index) => (
+            <img
+              key={index}
+              src={img}
+              alt={`Gallery item ${index + 1}`}
+              className={styles.slideImage}
+            />
+          ))}
+        </div>
+
         <button className={styles.navButton} onClick={goPrev}>
           &lt;
         </button>
-        <img
-          src={images[currentIndex]}
-          alt={`Gallery item ${currentIndex + 1}`}
-          className={styles.mainImage}
-        />
         <button className={styles.navButton} onClick={goNext}>
           &gt;
         </button>
