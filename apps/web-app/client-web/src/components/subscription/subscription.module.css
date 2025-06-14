@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "Merriweather";
+  src: url("/fonts/Merriweather-Bold.ttf");
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -15,6 +19,7 @@
 .title {
   font-size: 3.75rem;
   font-weight: 300;
+  font-family: Merriweather, "Times New Roman", Times, serif;
   color: rgb(173, 140, 140);
   margin-bottom: 2rem;
   margin-top: 0;

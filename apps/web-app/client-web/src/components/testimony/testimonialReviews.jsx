@@ -15,7 +15,7 @@ const TestimonialReviews = () => {
       rating: 5,
       text: "Big thanks to Maya for an awesome job!!! Had a mov...",
       fullReview:
-        "Big thanks to Maya for an awesome job!!! Had a move-out cleaning and she did an incredible job. The place was spotless and ready for the next tenant. Highly recommend Pretty Cleaning Services!",
+        "Big thanks to Maya for an awesome job!!! Had a move-out cleaning and she did an incredible job. The place was spotless and ready for the next tenant. Highly recommend SMARTsaFI Cleaning Services!",
     },
     {
       id: 2,
@@ -47,9 +47,9 @@ const TestimonialReviews = () => {
       avatar:
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
       rating: 5,
-      text: "I've tried several cleaning services, but Pretty Cle...",
+      text: "I've tried several cleaning services, but SMARTsaFI Cle...",
       fullReview:
-        "I've tried several cleaning services, but Pretty Cleaning Services TX stands out from the rest. Reliable, thorough, and friendly staff. Highly recommended!",
+        "I've tried several cleaning services, but SMARTsaFI Cleaning Services TX stands out from the rest. Reliable, thorough, and friendly staff. Highly recommended!",
     },
     {
       id: 5,
@@ -69,9 +69,9 @@ const TestimonialReviews = () => {
       avatar:
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
       rating: 5,
-      text: "I've tried several cleaning services, but Pretty Cle...",
+      text: "I've tried several cleaning services, but SMARTsaFI Cle...",
       fullReview:
-        "I've tried several cleaning services, but Pretty Cleaning Services TX stands out from the rest. Reliable, thorough, and friendly staff. Highly recommended!",
+        "I've tried several cleaning services, but SMARTsaFI Cleaning Services TX stands out from the rest. Reliable, thorough, and friendly staff. Highly recommended!",
     },
   ];
 
@@ -145,7 +145,7 @@ const TestimonialReviews = () => {
             </div>
             <div className={styles.ratingInfo}>
               <p className={styles.companyDescription}>
-                Pretty Cleaning Services TX - Cleaning Service Houston TX,
+                SMARTsaFI Cleaning Services TX - Cleaning Service Houston TX,
                 Residential Cleaning, Affordable Deep Cleaning
               </p>
               <div className={styles.ratingScore}>

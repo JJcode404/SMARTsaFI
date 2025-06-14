@@ -4,10 +4,9 @@ const GiftCard = () => {
   return (
     <div className={styles.giftCardContainer}>
       <div className={styles.imageSection}></div>
-
       <div className={styles.contentSection}>
         <h1 className={styles.title}>
-          Get a Pretty Cleaning Services TX Gift Card Today
+          Get a SMARTsaFI Cleaning Services TX Gift Card Today
         </h1>
         <p className={styles.description}>
           Looking for the perfect gift? Give the gift of a clean home with a

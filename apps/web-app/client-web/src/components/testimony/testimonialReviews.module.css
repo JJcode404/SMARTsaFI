@@ -7,6 +7,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  font-family: sans-serif;
 }
 
 .overlay {
@@ -28,7 +29,7 @@
 }
 
 .title {
-  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-size: clamp(1.5rem, 4vw, 2.7rem);
   font-weight: bold;
   color: white;
   margin-bottom: 2rem;

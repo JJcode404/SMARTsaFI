@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "Merriweather";
+  src: url("/fonts/Merriweather-Bold.ttf");
+}
 .container {
   text-align: center;
   padding: 2rem;
@@ -11,6 +15,7 @@
 
 .headerLine {
   display: flex;
+  font-family: Merriweather, "Times New Roman", Times, serif;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
@@ -27,6 +32,7 @@
   color: rgb(173, 140, 140);
   font-weight: 400;
   margin: 0;
+  white-space: nowrap;
 }
 
 .title {
@@ -119,5 +125,8 @@
 @media (max-width: 768px) {
   .container {
     padding: 40px 20px;
+  }
+  .headerText {
+    white-space: wrap;
   }
 }

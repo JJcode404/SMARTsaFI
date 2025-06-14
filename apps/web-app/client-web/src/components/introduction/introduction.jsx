@@ -23,10 +23,11 @@ const WhoWeAre = () => {
       <div className={styles.storySection}>
         <h3 className={styles.storyTitle}>Our Story</h3>
         <p className={styles.storyText}>
-          At Pretty Cleaning Services TX, we started this business in 2017 with
-          a passion for providing a clean and healthy home environment for our
-          clients. Our team of experienced cleaners is dedicated to delivering
-          high-quality cleaning services that exceed our clients' expectations.
+          At SMARTsaFI Cleaning Services TX, we started this business in 2017
+          with a passion for providing a clean and healthy home environment for
+          our clients. Our team of experienced cleaners is dedicated to
+          delivering high-quality cleaning services that exceed our clients'
+          expectations.
         </p>
         <button className={styles.servicesButton}>Our Services</button>
       </div>

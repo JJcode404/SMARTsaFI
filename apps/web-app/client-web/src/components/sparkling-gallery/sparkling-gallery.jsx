@@ -6,20 +6,20 @@ const SparkligGallery = () => {
 
   const images = [
     // Modern living rooms
-    "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop",
-    "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop",
-    "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop",
+    "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
+    "https://images.pexels.com/photos/1571453/pexels-photo-1571453.jpeg",
+    "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg",
     // Clean kitchens
-    "https://images.pexels.com/photos/1599791/pexels-photo-1599791.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop",
-    "https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop",
-    "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop",
+    "https://images.pexels.com/photos/1599791/pexels-photo-1599791.jpeg",
+    "https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg",
+    "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
     // Bedrooms
-    "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop",
-    "https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop",
+    "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg",
+    "https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg",
     // Bathrooms
-    "https://images.pexels.com/photos/6585751/pexels-photo-6585751.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop",
+    "https://images.pexels.com/photos/6585751/pexels-photo-6585751.jpeg",
     // Home office/study
-    "https://images.pexels.com/photos/667838/pexels-photo-667838.jpeg?auto=compress&cs=tinysrgb&w=400&h=500&fit=crop",
+    "https://images.pexels.com/photos/667838/pexels-photo-667838.jpeg",
   ];
 
   const goPrev = () => {

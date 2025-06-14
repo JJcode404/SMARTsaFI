@@ -14,8 +14,8 @@ const WhatWeOffer = () => {
 
       {/* Hero Image */}
       <img
-        src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-        alt="Modern bathroom interior"
+        src="https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop"
+        alt="Modern sitting room interior"
         className={styles.heroImage}
       />
 
