@@ -29,7 +29,6 @@ function HeroContent() {
 function LandingPage() {
   return (
     <div className={styles.main}>
-      <Navbar />
       <div className={styles.hero}>
         <HeroContent />
       </div>
@@ -40,7 +39,6 @@ function LandingPage() {
       <WhatWeOffer />
       <Subscription />
       <GiftCard />
-      <Footer />
     </div>
   );
 }
