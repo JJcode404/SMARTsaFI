@@ -1,0 +1,268 @@
+@font-face {
+  font-family: "Monument";
+  src: url("/fonts/logoFont/AllrounderMonumentTest-Book.otf");
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* font-family: sans-serif; */
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #10144a;
+  padding: 22px 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  color: #10144a;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.backArrow {
+  margin-right: 8px;
+  font-size: 18px;
+  color: white;
+}
+
+.brandName {
+  font-family: Monument;
+  font-size: 28px;
+  font-weight: 600;
+  color: white;
+  font-style: italic;
+}
+.small {
+  font-size: 20px;
+}
+
+.languageSelector {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  gap: 5px;
+  background: white;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+/* .flagIcon {
+  width: 16px;
+  height: 12px;
+
+  background: linear-gradient(
+    to bottom,
+    #000 33%,
+    #ff0000 33%,
+    #ff0000 66%,
+    #ffff00 66%
+  );
+  border-radius: 1px;
+} */
+.languageSelector img {
+  width: 15px;
+  height: 13px;
+  /* margin-right: 5px; */
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.loginContainer {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 48px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.loginTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #10144a;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.loginSubtitle {
+  color: #666;
+  text-align: center;
+  margin-bottom: 32px;
+  font-size: 14px;
+}
+
+.signupLink {
+  color: #1086f4;
+  text-decoration: none;
+}
+
+.signupLink:hover {
+  text-decoration: underline;
+}
+
+.formGroup {
+  margin-bottom: 24px;
+}
+
+.formLabel {
+  display: block;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.formInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: #1086f4;
+  box-shadow: 0 0 0 3px rgba(16, 134, 244, 0.1);
+}
+
+.forgotPassword {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.forgotPassword a {
+  color: #1086f4;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgotPassword a:hover {
+  text-decoration: underline;
+}
+
+.signInButton {
+  width: 100%;
+  background: linear-gradient(135deg, #10144a 0%, #1086f4 100%);
+  color: #ffffff;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 24px;
+}
+
+.signInButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 134, 244, 0.3);
+}
+
+.divider {
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 45%;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
+.socialButton {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+.socialButton img {
+  width: 20px;
+}
+
+.socialButton:hover {
+  background-color: #f5f5f5;
+  border-color: #1086f4;
+}
+
+.appleButton {
+  color: #000;
+}
+
+.googleButton {
+  color: #666;
+}
+
+.socialIcon {
+  display: flex;
+  gap: 20px;
+}
+.socialIcon img {
+  width: 40px;
+}
+
+.termsText {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.4;
+  margin-top: 24px;
+}
+
+.termsLink {
+  color: #1086f4;
+  text-decoration: none;
+}
+
+.termsLink:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .loginContainer {
+    padding: 32px 24px;
+  }
+
+  .brandName {
+    font-size: 24px;
+  }
+}

@@ -60,6 +60,7 @@ const SparkligGallery = () => {
               src={img}
               alt={`Gallery item ${index + 1}`}
               className={styles.slideImage}
+              loading="lazy"
             />
           ))}
         </div>
