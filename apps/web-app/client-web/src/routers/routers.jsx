@@ -1,6 +1,7 @@
 import { RootLayout } from "./rootlayout";
 import { LandingPage } from "../pages/landing-page/landingPage";
 import { AuthPage } from "../pages/authPage/authPage";
+import { ServiceDetails } from "../pages/serviceDetails/serviceDetails";
 
 const routes = [
   {
@@ -16,6 +17,10 @@ const routes = [
   {
     path: "/account",
     element: <AuthPage />,
+  },
+  {
+    path: "/service-product-detail",
+    element: <ServiceDetails />,
   },
 ];
 

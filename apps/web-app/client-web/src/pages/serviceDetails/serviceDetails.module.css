@@ -1,0 +1,619 @@
+.container {
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+/* Header */
+.header {
+  background-color: #10144a;
+  padding: 22px 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  color: #10144a;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.backArrow {
+  margin-right: 8px;
+  font-size: 18px;
+  color: white;
+}
+
+.brandName {
+  font-family: Monument;
+  font-size: 28px;
+  font-weight: 600;
+  color: white;
+  font-style: italic;
+}
+.small {
+  font-size: 20px;
+}
+
+.languageSelector {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  gap: 5px;
+  background: white;
+  padding: 5px;
+  border-radius: 10px;
+  color: black;
+}
+
+/* .flagIcon {
+    width: 16px;
+    height: 12px;
+  
+    background: linear-gradient(
+      to bottom,
+      #000 33%,
+      #ff0000 33%,
+      #ff0000 66%,
+      #ffff00 66%
+    );
+    border-radius: 1px;
+  } */
+.languageSelector img {
+  width: 15px;
+  height: 13px;
+  /* margin-right: 5px; */
+}
+
+@media (min-width: 640px) {
+  .headerContent {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .headerContent {
+    padding: 0 2rem;
+  }
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logoIcon {
+  width: 2rem;
+  height: 2rem;
+  background-color: #14b8a6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoInner {
+  width: 1rem;
+  height: 1rem;
+  background-color: white;
+  border-radius: 50%;
+}
+
+/* .brandName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+} */
+
+.brandAccent {
+  color: #0d9488;
+}
+
+.nav {
+  display: none;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .nav {
+    display: flex;
+  }
+}
+
+.navButton {
+  color: #374151;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.navButton:hover {
+  color: #0d9488;
+}
+
+.navIcon {
+  margin-left: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.userIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #374151;
+}
+
+.menuIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #374151;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .menuIcon {
+    display: none;
+  }
+}
+
+/* Progress Section */
+.progressSection {
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.progressContent {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.progressHeader {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.progressTitle {
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #10144a;
+  margin-bottom: 0.5rem;
+}
+
+.progressSubtitle {
+  color: #6b7280;
+  font-size: 1.15rem;
+}
+
+.progressBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 2rem;
+}
+
+.progressStep {
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.progressStep:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: -9rem;
+  transform: translateY(-50%);
+  width: 6rem;
+  height: 2px;
+  background-color: #6b7280;
+  z-index: 0;
+}
+.stepCircle {
+  width: 2rem;
+  height: 2rem;
+  background-color: #d1d5db;
+  color: #6b7280;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.stepActive {
+  background-color: #10144a;
+  color: white;
+}
+
+.stepLabel {
+  margin-left: 0.5rem;
+  /* font-size: 0.875rem; */
+  color: #6b7280;
+}
+
+.stepLabelActive {
+  font-weight: 500;
+  color: #10144a;
+}
+
+.stepConnector {
+  width: 4rem;
+  height: 1px;
+  background-color: #d1d5db;
+}
+
+/* Main Content */
+.mainContent {
+  max-width: 1015px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .contentGrid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+/* Left Column */
+.leftColumn {
+  grid-column: span 1;
+}
+
+/* @media (min-width: 1024px) {
+  .leftColumn {
+    grid-column: span 2;
+  }
+} */
+
+.serviceCard {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
+}
+
+.serviceTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.serviceImageContainer {
+  margin-bottom: 1.5rem;
+}
+
+.serviceImage {
+  width: 100%;
+  height: 16rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.serviceInfo {
+  margin-bottom: 1.5rem;
+}
+
+.servicePrice {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.inclusionsTitle {
+  /* font-size: 0.875rem; */
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+}
+
+.inclusionsDescription {
+  /* font-size: 0.875rem; */
+  margin-bottom: 1rem;
+}
+
+.inclusionsList {
+  font-size: 0.875rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.inclusionsList li {
+  margin-bottom: 0.25rem;
+}
+
+/* Property Section */
+.propertySection {
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 0.75rem;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.propertyButton {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background-color: #f3f4f6;
+  color: #374151;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.propertyButton:hover {
+  background-color: #e5e7eb;
+}
+
+.propertyButtonActive {
+  background-color: #10144a;
+  color: white;
+}
+
+.furnishingButton {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background-color: #f3f4f6;
+  color: #374151;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.furnishingButton:hover {
+  background-color: #e5e7eb;
+}
+
+.furnishingButtonActive {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+/* Room Section */
+.roomSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.roomRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.roomRow:last-child {
+  border-bottom: none;
+}
+
+.roomLabel {
+  /* font-size: 0.875rem; */
+  font-weight: 500;
+  color: #111827;
+  font-weight: bold;
+}
+
+.roomControls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.roomButton {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid #10144a;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.roomButton:hover {
+  background-color: #f9fafb;
+}
+
+.roomButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.roomButtonIcon {
+  width: 1rem;
+  height: 1rem;
+  color: #6b7280;
+}
+
+.roomCount {
+  width: 2rem;
+  text-align: center;
+  /* font-size: 0.875rem; */
+  font-weight: 500;
+}
+.futherInstruction {
+  margin: 1em 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.insturctionsLable {
+  font-weight: bold;
+}
+.instructions {
+  border: 1px solid #efefef;
+  height: 180px;
+  padding: 8px;
+  border-radius: 10px;
+  /* font-size: 1em; */
+}
+.bookButton,
+.navbackButton {
+  padding: 1rem 2rem;
+  background-color: #d1d5db;
+  color: #374151;
+  font-weight: 500;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1em;
+}
+.bookButton {
+  background-color: #10144a;
+  color: white;
+}
+.navigate {
+  display: flex;
+  gap: 16px;
+}
+
+/* Right Column */
+.rightColumn {
+  grid-column: span 1;
+}
+
+.summaryCard {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
+  position: sticky;
+  top: 1rem;
+}
+
+.summaryTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.summarySection {
+  margin-bottom: 1rem;
+}
+
+.summaryToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.summaryToggleLabel {
+  font-size: 0.985rem;
+  font-weight: bold;
+  color: #111827;
+}
+
+.summaryToggleIcon {
+  width: 1rem;
+  height: 1rem;
+  color: #6b7280;
+  transition: transform 0.2s ease;
+}
+
+.summaryToggleIconRotated {
+  transform: rotate(180deg);
+}
+
+.summaryDetails {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.summaryTotal {
+  font-weight: 500;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.summaryLabel {
+  color: #6b7280;
+}
+
+.summaryValue {
+  color: #111827;
+}
+
+@media (max-width: 480px) {
+  .stepLabel {
+    font-size: 0.75rem;
+    margin: 0px;
+  }
+  .progressBar {
+    gap: 0;
+    justify-content: space-between;
+  }
+  .progressStep:not(:first-child)::before {
+    top: 30%;
+    left: -2.3rem;
+    width: 2rem;
+  }
+  .progressSubtitle {
+    font-size: 0.9rem;
+  }
+  .progressTitle {
+    font-size: 1.2rem;
+  }
+}
