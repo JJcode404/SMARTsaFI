@@ -268,18 +268,18 @@
 .mainContent {
   max-width: 1015px;
   margin: 0 auto;
-  padding: 2rem 1rem;
 }
 
 .contentGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
+  gap: 1rem;
+  padding: 20px 0px;
 }
 
 @media (min-width: 1024px) {
   .contentGrid {
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 2.3fr 1fr;
   }
 }
 
@@ -504,6 +504,7 @@
   border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.2s;
+  width: 15em;
   margin-top: 1em;
 }
 .bookButton {
@@ -525,7 +526,7 @@
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   border: 1px solid #e5e7eb;
-  padding: 1.5rem;
+  padding: 1rem;
   position: sticky;
   top: 1rem;
 }
@@ -583,7 +584,7 @@
 }
 
 .summaryTotal {
-  font-weight: 500;
+  font-weight: bold;
   padding-top: 0.5rem;
   border-top: 1px solid #e5e7eb;
 }
@@ -616,4 +617,129 @@
   .progressTitle {
     font-size: 1.2rem;
   }
+}
+
+/* === Responsive Enhancements === */
+
+.container {
+  padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .headerRight {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .progressBar {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .navigate {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .bookButton,
+  .navbackButton {
+    width: 100%;
+  }
+
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .rightColumn {
+    order: -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .brandName {
+    font-size: 20px;
+  }
+
+  .small {
+    font-size: 16px;
+  }
+
+  .serviceTitle,
+  .summaryTitle {
+    font-size: 1rem;
+  }
+
+  .progressTitle {
+    font-size: 1.1rem;
+  }
+
+  .progressSubtitle {
+    font-size: 0.9rem;
+  }
+
+  .stepLabel {
+    font-size: 0.75rem;
+    margin: 0;
+  }
+
+  .progressBar {
+    gap: 0;
+    justify-content: space-between;
+  }
+
+  .progressStep:not(:first-child)::before {
+    top: 30%;
+    left: -2.3rem;
+    width: 2rem;
+  }
+
+  .stepCircle {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.7rem;
+  }
+
+  .roomControls {
+    gap: 0.5rem;
+  }
+
+  .roomButton {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .roomCount {
+    width: 1.5rem;
+  }
+
+  .instructions {
+    height: 120px;
+  }
+
+  .summaryCard {
+    position: static;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .rightColumn {
+    order: -1;
+  }
+}
+
+.serviceImage {
+  height: auto;
+  max-height: 14rem;
 }

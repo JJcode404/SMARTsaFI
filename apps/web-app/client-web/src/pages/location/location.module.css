@@ -1,0 +1,103 @@
+.locationContainer {
+  max-width: 1015px;
+  margin: auto;
+  padding: 20px;
+  padding-inline: 5vw; /* adds horizontal responsiveness */
+  flex-wrap: nowrap;
+}
+
+.addAddress {
+  width: 100%;
+  max-width: 10em;
+  background: #10144a;
+  color: #ffffff;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: auto;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.currentlocation {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.buttonDiv {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.locationView {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+/* LocationInput.module.css */
+
+.locationInput {
+  display: flex;
+  align-items: center;
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.locationInput:focus-within {
+  border-color: #10144a;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(16, 20, 74, 0.1);
+}
+
+.locationIcon {
+  margin-right: 0.75rem;
+  color: #10144a;
+}
+
+.locationInput input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  outline: none;
+  color: #334155;
+}
+
+.locationInput input::placeholder {
+  color: #94a3b8;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .locationContainer {
+    padding: 15px;
+  }
+
+  .addAddress {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+
+  .locationView {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .addAddress {
+    width: 100%;
+    max-width: none;
+  }
+
+  .locationContainer {
+    padding-inline: 4vw;
+  }
+}

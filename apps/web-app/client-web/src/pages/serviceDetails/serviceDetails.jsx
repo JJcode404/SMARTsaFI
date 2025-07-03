@@ -1,7 +1,8 @@
 // CleaningServiceUI.jsx
-import React, { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Plus, Minus, User, Menu, ArrowLeft } from "lucide-react";
 import styles from "./serviceDetails.module.css";
+import { useBooking } from "../../utilites/bookingContext";
 
 const ServiceDetails = () => {
   const [propertyType, setPropertyType] = useState("Apartment");
@@ -14,13 +15,41 @@ const ServiceDetails = () => {
     fourBedroom: 0,
     fiveBedroom: 0,
   });
+
+  const roomPrices = {
+    studio: 500,
+    oneBedroom: 700,
+    twoBedroom: 1000,
+    threeBedroom: 1300,
+    fourBedroom: 1600,
+    fiveBedroom: 2000,
+  };
+
+  const { handleNext } = useBooking();
+  const [selectedRoom, setSelecteRoom] = useState("");
+
   const [showPaymentDetails, setShowPaymentDetails] = useState(true);
   const [showServiceDetails, setShowServiceDetails] = useState(false);
+
+  const prevRoomCounts = useRef(roomCounts);
+
+  useEffect(() => {
+    const changedKey = Object.keys(roomCounts).find(
+      (key) => roomCounts[key] > prevRoomCounts.current[key]
+    );
+
+    if (changedKey) {
+      console.log(`${changedKey} was incremented`);
+    }
+    setSelecteRoom(changedKey);
+
+    // Update the ref for next comparison
+    prevRoomCounts.current = roomCounts;
+  }, [roomCounts]);
 
   const updateRoomCount = (roomType, increment) => {
     setRoomCounts((prev) => {
       const newCount = Math.max(0, prev[roomType] + (increment ? 1 : -1));
-
       return {
         studio: 0,
         oneBedroom: 0,
@@ -34,65 +63,16 @@ const ServiceDetails = () => {
   };
 
   const basePrice = 3000;
-  const additionalRoomPrice = 500;
-  const totalRooms = Object.values(roomCounts).reduce(
-    (sum, count) => sum + count,
-    0
-  );
-  const totalPrice = basePrice + totalRooms * additionalRoomPrice;
+
+  const selectedRooomPrice = roomPrices[selectedRoom] || 0;
+  // const totalRooms = Object.values(roomCounts).reduce(
+  //   (sum, count) => sum + count,
+  //   0
+  // );
+  const totalPrice = basePrice + selectedRooomPrice;
 
   return (
     <div className={styles.container}>
-      {/* Header */}
-      <header className={styles.header}>
-        <a href="#" className={styles.backButton}>
-          {/* <Link to={"/"}> */}
-          <span className={styles.backArrow}>
-            <ArrowLeft />
-          </span>
-          {/* </Link> */}
-          <span className={styles.brandName}>
-            SMART <span className={styles.small}>sa</span>FI
-          </span>
-        </a>
-      </header>
-
-      {/* Progress Bar */}
-      <div className={styles.progressSection}>
-        <div className={styles.progressContent}>
-          <div className={styles.progressHeader}>
-            <h1 className={styles.progressTitle}>Service Details</h1>
-            <p className={styles.progressSubtitle}>Premium Deep Cleaning</p>
-          </div>
-
-          <div className={styles.progressBar}>
-            <div className={styles.progressStep}>
-              <div className={`${styles.stepCircle} ${styles.stepActive}`}>
-                1
-              </div>
-              <span className={`${styles.stepLabel} ${styles.stepLabelActive}`}>
-                Service Details
-              </span>
-            </div>
-            {/* <div className={styles.stepConnector}></div> */}
-            <div className={styles.progressStep}>
-              <div className={styles.stepCircle}>2</div>
-              <span className={styles.stepLabel}>Location</span>
-            </div>
-            {/* <div className={styles.stepConnector}></div> */}
-            <div className={styles.progressStep}>
-              <div className={styles.stepCircle}>3</div>
-              <span className={styles.stepLabel}>Date & Time</span>
-            </div>
-            {/* <div className={styles.stepConnector}></div> */}
-            <div className={styles.progressStep}>
-              <div className={styles.stepCircle}>4</div>
-              <span className={styles.stepLabel}>Payment</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Content */}
       <div className={styles.mainContent}>
         <div className={styles.contentGrid}>
@@ -104,7 +84,7 @@ const ServiceDetails = () => {
               {/* Service Image */}
               <div className={styles.serviceImageContainer}>
                 <img
-                  src="https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop"
+                  src="./homepage3.jpg"
                   alt="Premium Deep Cleaning Service"
                   className={styles.serviceImage}
                 />
@@ -227,7 +207,12 @@ const ServiceDetails = () => {
               </div>
               <div className={styles.navigate}>
                 <button className={styles.navbackButton}>BACK</button>
-                <button className={styles.bookButton}> BOOK NOW</button>
+                <button
+                  className={styles.bookButton}
+                  onClick={() => handleNext()}
+                >
+                  Next
+                </button>
               </div>
             </div>
           </div>
@@ -307,8 +292,10 @@ const ServiceDetails = () => {
                       </span>
                     </div>
                     <div className={styles.summaryRow}>
-                      <span className={styles.summaryLabel}>Total Rooms</span>
-                      <span className={styles.summaryValue}>{totalRooms}</span>
+                      <span className={styles.summaryLabel}>Rooms</span>
+                      <span className={styles.summaryValue}>
+                        {selectedRoom || "Not selected"}
+                      </span>
                     </div>
                     <div className={styles.summaryRow}>
                       <span className={styles.summaryLabel}>Furnishing</span>

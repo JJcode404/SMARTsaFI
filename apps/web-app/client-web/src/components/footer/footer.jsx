@@ -8,19 +8,18 @@ const styles = {
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif',
     textAlign: "center",
   },
-  topLinks: {
+
+  topLink: {
+    color: "#6c757d",
+    textDecoration: "none",
+    fontSize: "16px",
+    fontWeight: "400",
     display: "flex",
     justifyContent: "center",
     gap: "40px",
     flexDirection: "column",
     marginBottom: "40px",
     flexWrap: "wrap",
-  },
-  topLink: {
-    color: "#6c757d",
-    textDecoration: "none",
-    fontSize: "16px",
-    fontWeight: "400",
     transition: "color 0.3s ease",
   },
   topLinkHover: {
@@ -106,10 +105,9 @@ const styles = {
     },
     topLinks: {
       flexDirection: "column",
-    },
-    topLinks: {
       gap: "20px",
     },
+
     companyName: {
       fontSize: "24px",
     },
