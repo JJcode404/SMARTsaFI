@@ -5,8 +5,24 @@ import styles from "./serviceDetails.module.css";
 import { useBooking } from "../../utilites/bookingContext";
 
 const ServiceDetails = () => {
-  const [propertyType, setPropertyType] = useState("Apartment");
-  const [furnishing, setFurnishing] = useState("Furnished");
+  const { state, dispatch, handleNext } = useBooking();
+  const instructions = state.cleaningInstructions;
+  const handlePropertyChange = (type) => {
+    dispatch({ type: "SET_PROPERTY_TYPE", payload: type });
+  };
+  const handleBedroomChange = (room) => {
+    dispatch({ type: "SET_BEDROOMLABLE", payload: room });
+  };
+
+  const handleFurnishingChange = (value) => {
+    dispatch({ type: "SET_FURNISHING", payload: value });
+  };
+  const handlePriceChange = (price) => {
+    dispatch({ type: "SET_PRICE", payload: price });
+  };
+  const handleCleaningInstructions = (value) => {
+    dispatch({ type: "SET_CLEANINGINSTRUCTIONS", payload: value });
+  };
   const [roomCounts, setRoomCounts] = useState({
     studio: 0,
     oneBedroom: 0,
@@ -25,8 +41,9 @@ const ServiceDetails = () => {
     fiveBedroom: 2000,
   };
 
-  const { handleNext } = useBooking();
   const [selectedRoom, setSelecteRoom] = useState("");
+
+  const basePrice = 3000;
 
   const [showPaymentDetails, setShowPaymentDetails] = useState(true);
   const [showServiceDetails, setShowServiceDetails] = useState(false);
@@ -37,11 +54,13 @@ const ServiceDetails = () => {
     const changedKey = Object.keys(roomCounts).find(
       (key) => roomCounts[key] > prevRoomCounts.current[key]
     );
+    handleBedroomChange(changedKey);
 
-    if (changedKey) {
-      console.log(`${changedKey} was incremented`);
-    }
     setSelecteRoom(changedKey);
+
+    const newSelectedRoomPrice = roomPrices[changedKey] || 0;
+    const newTotalPrice = basePrice + newSelectedRoomPrice;
+    handlePriceChange(newTotalPrice);
 
     // Update the ref for next comparison
     prevRoomCounts.current = roomCounts;
@@ -61,15 +80,6 @@ const ServiceDetails = () => {
       };
     });
   };
-
-  const basePrice = 3000;
-
-  const selectedRooomPrice = roomPrices[selectedRoom] || 0;
-  // const totalRooms = Object.values(roomCounts).reduce(
-  //   (sum, count) => sum + count,
-  //   0
-  // );
-  const totalPrice = basePrice + selectedRooomPrice;
 
   return (
     <div className={styles.container}>
@@ -112,9 +122,9 @@ const ServiceDetails = () => {
                 <h3 className={styles.sectionTitle}>Type of Property</h3>
                 <div className={styles.buttonGroup}>
                   <button
-                    onClick={() => setPropertyType("Apartment")}
+                    onClick={() => handlePropertyChange("Apartment")}
                     className={`${styles.propertyButton} ${
-                      propertyType === "Apartment"
+                      state.propertyType === "Apartment"
                         ? styles.propertyButtonActive
                         : ""
                     }`}
@@ -122,9 +132,9 @@ const ServiceDetails = () => {
                     Apartment
                   </button>
                   <button
-                    onClick={() => setPropertyType("Villa")}
+                    onClick={() => handlePropertyChange("Villa")}
                     className={`${styles.propertyButton} ${
-                      propertyType === "Villa"
+                      state.propertyType === "Villa"
                         ? styles.propertyButtonActive
                         : ""
                     }`}
@@ -135,9 +145,9 @@ const ServiceDetails = () => {
 
                 <div className={styles.buttonGroup}>
                   <button
-                    onClick={() => setFurnishing("Furnished")}
+                    onClick={() => handleFurnishingChange("Furnished")}
                     className={`${styles.furnishingButton} ${
-                      furnishing === "Furnished"
+                      state.furnishing === "Furnished"
                         ? styles.furnishingButtonActive
                         : ""
                     }`}
@@ -145,9 +155,9 @@ const ServiceDetails = () => {
                     Furnished
                   </button>
                   <button
-                    onClick={() => setFurnishing("Unfurnished")}
+                    onClick={() => handleFurnishingChange("Unfurnished")}
                     className={`${styles.furnishingButton} ${
-                      furnishing === "Unfurnished"
+                      state.furnishing === "Unfurnished"
                         ? styles.furnishingButtonActive
                         : ""
                     }`}
@@ -201,6 +211,8 @@ const ServiceDetails = () => {
                 <textarea
                   name="instructions"
                   id="instructions"
+                  value={instructions}
+                  onChange={(e) => handleCleaningInstructions(e.target.value)}
                   placeholder="Example: A/C has bad smell, to much dust in vents, regular cleaning .etc"
                   className={styles.instructions}
                 ></textarea>
@@ -242,7 +254,7 @@ const ServiceDetails = () => {
                     <div className={styles.summaryRow}>
                       <span className={styles.summaryLabel}>Price</span>
                       <span className={styles.summaryValue}>
-                        Ksh {totalPrice.toFixed(2)}
+                        Ksh {state.price.toFixed(2)}
                       </span>
                     </div>
                     <div className={styles.summaryRow}>
@@ -258,7 +270,7 @@ const ServiceDetails = () => {
                     >
                       <span className={styles.summaryLabel}>Total Price</span>
                       <span className={styles.summaryValue}>
-                        Ksh {totalPrice.toFixed(2)}
+                        Ksh {state.price.toFixed(2)}
                       </span>
                     </div>
                   </div>
@@ -288,7 +300,7 @@ const ServiceDetails = () => {
                         Type of Property
                       </span>
                       <span className={styles.summaryValue}>
-                        {propertyType}
+                        {state.propertyType}
                       </span>
                     </div>
                     <div className={styles.summaryRow}>
@@ -299,7 +311,9 @@ const ServiceDetails = () => {
                     </div>
                     <div className={styles.summaryRow}>
                       <span className={styles.summaryLabel}>Furnishing</span>
-                      <span className={styles.summaryValue}>{furnishing}</span>
+                      <span className={styles.summaryValue}>
+                        {state.furnishing}
+                      </span>
                     </div>
                   </div>
                 )}

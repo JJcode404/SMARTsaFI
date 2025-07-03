@@ -8,7 +8,7 @@ import { Checkout } from "../checkout/checkout";
 import { ConfirmationPage } from "../paymentSuccesful/paymentSuccessful";
 
 const Booking = () => {
-  const { current, isSubmitted } = useBooking();
+  const { state } = useBooking();
   const components = [
     <ServiceDetails />,
     <Location />,
@@ -16,11 +16,11 @@ const Booking = () => {
     <Checkout />,
   ];
 
-  const CurrentComponent = components[current];
+  const CurrentComponent = components[state.current];
 
   return (
     <div>
-      {isSubmitted ? (
+      {state.isSubmitted ? (
         <ConfirmationPage />
       ) : (
         <>

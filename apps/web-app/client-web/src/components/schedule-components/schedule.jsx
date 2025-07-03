@@ -6,9 +6,8 @@ import styles from "./schedule.module.css";
 import { useBooking } from "../../utilites/bookingContext";
 
 const ScheduleService = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedTime, setSelectedTime] = useState(null);
-  const { handleNext } = useBooking();
+  const { handleNext, state, dispatch } = useBooking();
+  const { selectedDate, selectedTime, location, price, service } = state;
 
   const times = [
     "00:00",
@@ -66,7 +65,9 @@ const ScheduleService = () => {
           <div className={styles.calenderTime}>
             <div className={styles.calendarWrapper}>
               <Calendar
-                onChange={setSelectedDate}
+                onChange={(date) =>
+                  dispatch({ type: "SET_DATE", payload: date })
+                }
                 value={selectedDate}
                 className={styles.reactCalendar}
               />
@@ -82,7 +83,9 @@ const ScheduleService = () => {
                     className={`${styles.timeSlot} ${
                       selectedTime === time ? styles.timeSlotSelected : ""
                     }`}
-                    onClick={() => setSelectedTime(time)}
+                    onClick={() =>
+                      dispatch({ type: "SET_TIME", payload: time })
+                    }
                   >
                     {time}
                   </button>
@@ -121,11 +124,11 @@ const ScheduleService = () => {
               <Video /> Available Online
             </div>
             <ul className={styles.serviceList}>
-              <li>Service Name</li>
-              <li>Location</li>
-              <li>Staff Member</li>
-              <li>Duration</li>
-              <li>Price</li>
+              <li>Service Name: {service}</li>
+              <li>Location: {location}</li>
+              <li>Service Provider: Ivy Nkatha</li>
+              <li>Time: {selectedTime}</li>
+              <li>Price: {price}</li>
             </ul>
             <button className={styles.nextButton} onClick={() => handleNext()}>
               Next

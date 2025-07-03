@@ -1,63 +1,98 @@
+import { useBooking } from "../../utilites/bookingContext";
+import jsPDF from "jspdf";
 import "./paymentSuccessful.css";
 
 const ConfirmationPage = () => {
+  const { state } = useBooking();
+  const { selectedDate, selectedTime, location, price, service, bedroomLabel } =
+    state;
+
   const downloadReceipt = () => {
-    console.log("Downloading receipt...");
-    // logic to download receipt here
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("Cleaning Service Receipt", 20, 20);
+
+    doc.setFontSize(12);
+    doc.text("Service ID: #CL789123", 20, 40);
+    doc.text(`Service Type: ${service}`, 20, 50);
+    doc.text(`Scheduled Date: ${formatDate(selectedDate)}`, 20, 60);
+    doc.text(`Scheduled Time : ${selectedTime}`, 20, 70);
+    doc.text(`Location: ${location}`, 20, 80);
+    doc.text(`Total Amount: ksh ${price}`, 20, 90);
+
+    doc.save("cleaning-receipt.pdf");
   };
 
   const contactCleaner = () => {
     console.log("Contacting cleaner...");
-    // logic to contact cleaner here
+    // Implement real logic here
   };
 
+  const formatDate = (date) =>
+    date.toLocaleDateString("en-US", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+    });
+
   return (
-    <div class="confirmation-container">
-      <div class="floating-elements">
-        <div class="floating-circle"></div>
-        <div class="floating-circle"></div>
-        <div class="floating-circle"></div>
+    <div className="confirmation-container">
+      <div className="floating-elements">
+        <div className="floating-circle"></div>
+        <div className="floating-circle"></div>
+        <div className="floating-circle"></div>
       </div>
 
-      <div class="success-icon">
-        <span class="checkmark">✓</span>
+      <div className="success-icon">
+        <span className="checkmark">✓</span>
       </div>
 
-      <h1 class="title">Cleaning Booked!</h1>
-      <p class="subtitle">Your home cleaning service has been confirmed</p>
+      <h1 className="title">Cleaning Booked!</h1>
+      <p className="subtitle">Your home cleaning service has been confirmed</p>
 
-      <div class="booking-details">
-        <div class="detail-row">
-          <span class="detail-label">Service ID</span>
-          <span class="detail-value">#CL789123</span>
+      <div className="booking-details">
+        <div className="detail-row">
+          <span className="detail-label">Service ID</span>
+          <span className="detail-value">#CL789123</span>
         </div>
-        <div class="detail-row">
-          <span class="detail-label">Service Type</span>
-          <span class="detail-value">Deep Cleaning Service</span>
+        <div className="detail-row">
+          <span className="detail-label">Service Type</span>
+          <span className="detail-value">{service}</span>
         </div>
-        <div class="detail-row">
-          <span class="detail-label">Scheduled Date</span>
-          <span class="detail-value">July 15, 2025</span>
+        <div className="detail-row">
+          <span className="detail-label">Scheduled Date</span>
+          <span className="detail-value">
+            {selectedDate ? formatDate(selectedDate) : "Not set"}
+          </span>
         </div>
-        <div class="detail-row">
-          <span class="detail-label">Time Slot</span>
-          <span class="detail-value">2:00 PM - 5:00 PM</span>
+        <div className="detail-row">
+          <span className="detail-label">Scheduled Time</span>
+          <span className="detail-value">
+            {selectedTime ? `${selectedTime}` : "Not set"}
+          </span>
         </div>
-        <div class="detail-row">
-          <span class="detail-label">Property Size</span>
-          <span class="detail-value">3 Bedroom Apartment</span>
+        <div className="detail-row">
+          <span className="detail-label">Property Size</span>
+          <span className="detail-value"> {bedroomLabel}</span>
         </div>
-        <div class="detail-row">
-          <span class="detail-label">Total Amount</span>
-          <span class="detail-value total-amount">$180.00</span>
+        <div className="detail-row">
+          <span className="detail-label">Location</span>
+          <span className="detail-value">
+            {typeof location === "string" ? location : "Not set"}
+          </span>
+        </div>
+        <div className="detail-row">
+          <span className="detail-label">Total Amount</span>
+          <span className="detail-value total-amount">ksh {price}</span>
         </div>
       </div>
 
-      <div class="action-buttons">
-        <button class="btn btn-primary" onclick="downloadReceipt()">
+      <div className="action-buttons">
+        <button className="btn btn-primary" onClick={downloadReceipt}>
           Download Receipt
         </button>
-        <button class="btn btn-secondary" onclick="contactCleaner()">
+        <button className="btn btn-secondary" onClick={contactCleaner}>
           Contact Cleaner
         </button>
       </div>

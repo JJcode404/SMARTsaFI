@@ -4,7 +4,7 @@ import styles from "./booking.module.css";
 const steps = ["Service Details", "Location", "Date & Time", "Payment"];
 
 const ProgressBar = () => {
-  const { current } = useBooking(); // Assuming current is a number from 0 to 3
+  const { state } = useBooking();
 
   return (
     <div className={styles.progressSection}>
@@ -19,14 +19,14 @@ const ProgressBar = () => {
             <div key={index} className={styles.progressStep}>
               <div
                 className={`${styles.stepCircle} ${
-                  current >= index ? styles.stepActive : ""
+                  state.current >= index ? styles.stepActive : ""
                 }`}
               >
                 {index + 1}
               </div>
               <span
                 className={`${styles.stepLabel} ${
-                  current >= index ? styles.stepLabelActive : ""
+                  state.current >= index ? styles.stepLabelActive : ""
                 }`}
               >
                 {label}

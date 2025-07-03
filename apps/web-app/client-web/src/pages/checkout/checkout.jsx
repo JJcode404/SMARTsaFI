@@ -5,7 +5,10 @@ import styles from "./checkout.module.css";
 // import mastercardLogo from "";
 
 const Checkout = () => {
-  const { handleSubmit } = useBooking();
+  const { handleSubmit, state } = useBooking();
+
+  const { price } = state;
+  const Vat = 500;
 
   return (
     <div className={styles.checkoutContainer}>
@@ -31,24 +34,20 @@ const Checkout = () => {
       <div className={styles.summary}>
         <div>
           <span>Subtotal</span>
-          <span>Ksh 10,000</span>
+          <span>Ksh {price}</span>
         </div>
         <div>
           <span>VAT(16%)</span>
-          <span>Ksh 1,600</span>
-        </div>
-        <div>
-          <span>Delivery Fee</span>
-          <span>Ksh 200</span>
+          <span>Ksh {Vat}</span>
         </div>
         <div className={styles.total}>
           <strong>Total</strong>
-          <strong>Ksh 11,800</strong>
+          <strong>Ksh {price + Vat}</strong>
         </div>
       </div>
 
       <button className={styles.payBtn} onClick={() => handleSubmit()}>
-        Pay Ksh 11,800
+        Pay Ksh {price + Vat}
       </button>
     </div>
   );

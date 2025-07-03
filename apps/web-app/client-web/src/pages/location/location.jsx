@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import styles from "./location.module.css";
 import { MapPin } from "lucide-react";
@@ -8,7 +8,7 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import { useBooking } from "../../utilites/bookingContext";
 
-const libraries = ["places"]; // ✅ Fix: Move this outside component
+const libraries = ["places"];
 
 const mapContainerStyle = {
   width: "100%",
@@ -21,7 +21,7 @@ const center = {
 };
 
 const LocationPicker = () => {
-  const { handleNext } = useBooking();
+  const { handleNext, state, dispatch } = useBooking();
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyCJY0rvGj1md3ztnM_SulkVkVKhiBMFUgI",
     libraries,
@@ -29,6 +29,16 @@ const LocationPicker = () => {
 
   const [selected, setSelected] = useState(null);
   const [address, setAddress] = useState("");
+
+  useEffect(() => {
+    if (address) {
+      handleLocation(address);
+    }
+  }, [address]);
+
+  const handleLocation = (location) => {
+    dispatch({ type: "SET_LOCATION", payload: location });
+  };
 
   const handleMapClick = async (event) => {
     const lat = event.latLng.lat();
@@ -61,14 +71,7 @@ const LocationPicker = () => {
       >
         {selected && <Marker position={selected} />}
       </GoogleMap>
-      {/* {selected && (
-        <div style={{ marginTop: "1rem" }}>
-          <strong>Selected Location:</strong>
-          <p>Latitude: {selected.lat}</p>
-          <p>Longitude: {selected.lng}</p>
-          <p>Address: {address}</p>
-        </div>
-      )} */}
+
       <div className={styles.buttonDiv}>
         <button className={styles.addAddress} onClick={handleNext}>
           Add Address
@@ -120,32 +123,46 @@ const PlacesSearchBox = ({ onSelect, setAddress, address }) => {
           disabled={!ready}
           placeholder={address ? address : "Search your location"}
         />
+        {status === "OK" && (
+          <ul
+            style={{
+              listStyleType: "none",
+              padding: 0,
+              marginTop: "0.5rem",
+              backgroundColor: "#fff",
+              border: "1px solid #ccc",
+              position: "absolute",
+              zIndex: 1000,
+              width: "100%",
+              left: 0,
+              top: "100%",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+              borderRadius: "8px",
+              overflow: "hidden",
+            }}
+          >
+            {data.map(({ place_id, description }) => (
+              <li
+                key={place_id}
+                onClick={() => handleSelect(description)}
+                style={{
+                  padding: "0.75rem 1rem",
+                  cursor: "pointer",
+                  borderBottom: "1px solid #eee",
+                }}
+                onMouseOver={(e) =>
+                  (e.currentTarget.style.background = "#f0f0f0")
+                }
+                onMouseOut={(e) =>
+                  (e.currentTarget.style.background = "transparent")
+                }
+              >
+                {description}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-
-      {status === "OK" && (
-        <ul
-          style={{
-            listStyleType: "none",
-            padding: 0,
-            margin: 0,
-            backgroundColor: "#fff",
-            border: "1px solid #ccc",
-            position: "absolute",
-            zIndex: 1000,
-            width: "100%",
-          }}
-        >
-          {data.map(({ place_id, description }) => (
-            <li
-              key={place_id}
-              onClick={() => handleSelect(description)}
-              style={{ padding: "0.5rem", cursor: "pointer" }}
-            >
-              {description}
-            </li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 };
