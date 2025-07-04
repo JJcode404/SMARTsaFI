@@ -1,11 +1,12 @@
+import { useState } from "react";
 import { useBooking } from "../../utilites/bookingContext";
 import styles from "./checkout.module.css";
-// import mpesaLogo from "./mpesalogo.svg";
-// import visaLogo from "./visa-svgrepo-com.svg";
-// import mastercardLogo from "";
+import { MpesaForm } from "./mpesa";
+import { CardForm } from "./visa";
 
 const Checkout = () => {
   const { handleSubmit, state } = useBooking();
+  const [paymentMethod, setPaymentMethod] = useState("mpesa");
 
   const { price } = state;
   const Vat = 500;
@@ -18,18 +19,30 @@ const Checkout = () => {
       </p>
 
       <div className={styles.paymentIcons}>
-        <img src={"./mpesalogo1.svg"} className={styles.mpesa} alt="Mpesa" />
-        <img src={"./visa-svgrepo-com.svg"} alt="Visa" />
-        <img src={"./mastercard-svgrepo-com.svg"} alt="Mastercard" />
+        <img
+          src={"./mpesalogo1.svg"}
+          className={`${styles.mpesa} ${
+            paymentMethod === "mpesa" ? styles.active : ""
+          }`}
+          alt="Mpesa"
+          onClick={() => setPaymentMethod("mpesa")}
+        />
+        <img
+          src={"./visa-svgrepo-com.svg"}
+          alt="Visa"
+          className={paymentMethod === "card" ? styles.active : ""}
+          onClick={() => setPaymentMethod("card")}
+        />
+        <img
+          src={"./mastercard-svgrepo-com.svg"}
+          alt="Mastercard"
+          className={paymentMethod === "card" ? styles.active : ""}
+          onClick={() => setPaymentMethod("card")}
+        />
       </div>
 
-      <div className={styles.form}>
-        <label>Mpesa Phone Number</label>
-        <input type="text" placeholder="07XXXXXXXX" />
-
-        <label>Email Address</label>
-        <input type="email" placeholder="example@email.com" />
-      </div>
+      {paymentMethod === "mpesa" && <MpesaForm />}
+      {paymentMethod === "card" && <CardForm />}
 
       <div className={styles.summary}>
         <div>

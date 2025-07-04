@@ -11,7 +11,7 @@ const ConfirmationPage = () => {
     const doc = new jsPDF();
 
     doc.setFontSize(18);
-    doc.text("Cleaning Service Receipt", 20, 20);
+    doc.text("SMARTsaFI Cleaning Service Receipt", 20, 20);
 
     doc.setFontSize(12);
     doc.text("Service ID: #CL789123", 20, 40);

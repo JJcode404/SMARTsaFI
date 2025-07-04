@@ -7,9 +7,16 @@
   box-sizing: border-box;
 }
 
-.title {
+.title,
+.cardtitle {
   font-size: 24px;
   font-weight: bold;
+}
+.cardtitle {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 5px;
 }
 
 .subtitle {
@@ -31,7 +38,6 @@
   height: 60px;
   max-width: 100%;
 }
-
 .form {
   display: flex;
   flex-direction: column;
@@ -94,4 +100,23 @@
   .payBtn {
     font-size: 18px;
   }
+}
+
+.paymentIcons img {
+  cursor: pointer;
+  transition: transform 0.2s ease, border 0.2s ease;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.paymentIcons img:hover {
+  transform: scale(1.05);
+}
+
+.active {
+  border-color: #10144a; /* Dark blue or your theme primary color */
+  background-color: #f0f4ff; /* Subtle background */
+  box-shadow: 0 0 0 3px rgba(16, 20, 74, 0.1);
+  transform: scale(1.05);
 }
