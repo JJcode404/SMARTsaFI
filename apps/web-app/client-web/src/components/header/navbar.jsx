@@ -45,11 +45,10 @@ function Navbar() {
       </div>
       <nav className={styles.navbar}>
         <img
-          src="/logo.png"
+          src="/smart-safi.svg"
           alt="SMARTsaFi Cleaning Services"
           className={styles.logo}
         />
-
         {/* Desktop Menu */}
         <ul className={`${styles.menu} ${styles.desktopMenu}`}>
           <li>Home</li>

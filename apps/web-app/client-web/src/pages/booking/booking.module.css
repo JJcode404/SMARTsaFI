@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap");
 .container {
   max-width: 1015px;
   margin: 0 auto;
@@ -67,11 +68,11 @@
 }
 
 .brandName {
-  font-family: Monument;
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 35px;
+  font-family: "Cinzel", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
   color: white;
-  font-style: italic;
 }
 
 .small {

@@ -11,9 +11,7 @@ const Bookingheader = () => {
         <span className={styles.backArrow}>
           <ArrowLeft />
         </span>
-        <span className={styles.brandName}>
-          SMART <span className={styles.small}>sa</span>FI
-        </span>
+        <span className={styles.brandName}>smart safi</span>
       </a>
 
       {/* Mobile Toggle */}

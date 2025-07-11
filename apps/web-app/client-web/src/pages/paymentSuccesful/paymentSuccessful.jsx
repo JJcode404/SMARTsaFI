@@ -9,19 +9,72 @@ const ConfirmationPage = () => {
 
   const downloadReceipt = () => {
     const doc = new jsPDF();
+    const lineSpacing = 10;
+    let y = 10; // Reduced top spacing
 
-    doc.setFontSize(18);
-    doc.text("SMARTsaFI Cleaning Service Receipt", 20, 20);
+    const img = new Image();
+    img.src = "/smart-safi.png"; // PNG image in public folder
 
-    doc.setFontSize(12);
-    doc.text("Service ID: #CL789123", 20, 40);
-    doc.text(`Service Type: ${service}`, 20, 50);
-    doc.text(`Scheduled Date: ${formatDate(selectedDate)}`, 20, 60);
-    doc.text(`Scheduled Time : ${selectedTime}`, 20, 70);
-    doc.text(`Location: ${location}`, 20, 80);
-    doc.text(`Total Amount: ksh ${price}`, 20, 90);
+    img.onload = () => {
+      const pageWidth = doc.internal.pageSize.getWidth();
 
-    doc.save("cleaning-receipt.pdf");
+      // Maintain image aspect ratio (original: 626x512)
+      const imgWidth = 60;
+      const imgHeight = imgWidth * (512 / 626);
+      const imgX = (pageWidth - imgWidth) / 2;
+      doc.addImage(img, "PNG", imgX, y, imgWidth, imgHeight);
+
+      // Move below image
+      y += imgHeight + 10;
+
+      // Company Title
+      const title = "SMARTsaFI Cleaning Services Receipt";
+      doc.setFontSize(18);
+      doc.setFont("helvetica", "bold");
+      const textWidth = doc.getTextWidth(title);
+      const textX = (pageWidth - textWidth) / 2;
+      doc.text(title, textX, y);
+
+      y += 20;
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "normal");
+
+      // Details
+      doc.text(`Service ID: #CL789123`, 20, y);
+      y += lineSpacing;
+      doc.text(`Service Type: ${service}`, 20, y);
+      y += lineSpacing;
+      doc.text(`Scheduled Date: ${formatDate(selectedDate)}`, 20, y);
+      y += lineSpacing;
+      doc.text(`Scheduled Time: ${selectedTime || "Not set"}`, 20, y);
+      y += lineSpacing;
+      doc.text(`Property Size: ${bedroomLabel}`, 20, y);
+      y += lineSpacing;
+      doc.text(`Location: ${location}`, 20, y);
+      y += lineSpacing;
+
+      doc.setFont("helvetica", "bold");
+      doc.text(`Total Amount: KSH ${price}`, 20, y);
+      y += 30;
+      doc.setFont("helvetica", "normal");
+
+      // Footer
+      doc.setFontSize(11);
+      doc.setTextColor(100);
+      doc.text(
+        "Thank you for booking with SMARTsaFI. Your home is in safe hands.",
+        20,
+        y
+      );
+      y += lineSpacing;
+      doc.text(
+        "For queries, contact us via info@smartsaFI.com or 0700-123-456",
+        20,
+        y
+      );
+
+      doc.save("SMARTsaFI-Receipt.pdf");
+    };
   };
 
   const contactCleaner = () => {

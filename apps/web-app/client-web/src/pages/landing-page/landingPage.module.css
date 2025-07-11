@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "FFparable";
+  src: url("/fonts/public/fonts/Parable OT W03 Extrabold.ttf");
+}
 .hero {
   position: relative;
   background: url("/homepage.jpg") top center / cover no-repeat;
@@ -23,16 +27,29 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  align-items: center;
   justify-content: center;
   border-radius: 50%;
   /* max-width: 500px; */
-  width: 400px;
-  height: 400px;
+  width: 450px;
+  height: 450px;
+}
+.brandLogo {
+  position: absolute;
+  top: 23%; /* a bit of spacing from the top */
+  left: 18%;
+  /* transform: translateX(-50%); */
+  width: 200px;
+  height: auto;
 }
 
 .heroText h1 {
-  font-size: 2rem;
+  font-size: 39px;
+  width: 300px;
+  font-family: FFparable sans-serif;
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
   margin-bottom: 1rem;
 }
 
@@ -69,6 +86,7 @@
   .heroText h1 {
     font-size: 1.75rem;
     margin-bottom: 0.75rem;
+    padding: 20px;
   }
 
   .heroText p {
@@ -88,6 +106,9 @@
     height: 100vh;
     min-height: 450px;
   }
+  .brandLogo {
+    display: none;
+  }
 
   .heroContent {
     padding: 0.5rem;
@@ -102,7 +123,6 @@
   }
 
   .heroText h1 {
-    font-size: 1.4rem;
     margin-bottom: 0.5rem;
   }
 

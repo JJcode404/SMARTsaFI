@@ -12,6 +12,11 @@ import { Footer } from "../../components/footer/footer";
 function HeroContent() {
   return (
     <div className={styles.heroContent}>
+      <img
+        src="/smart-safi.svg"
+        alt="SMARTsaFi Cleaning Services"
+        className={styles.brandLogo}
+      />
       <div className={styles.heroText}>
         <h1>Transform Your Home with Our Cleaning Services</h1>
         <p>
