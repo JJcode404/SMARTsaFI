@@ -1,18 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap");
+
 .container {
   max-width: 1015px;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
+
 .header {
   background-color: #10144a;
-  padding: 40px 20px;
+  padding: 0px 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: white;
 }
+
 .left {
   display: flex;
   align-items: center;
@@ -74,7 +77,9 @@
   font-style: normal;
   color: white;
 }
-
+.brandLogo {
+  height: 150px;
+}
 .small {
   font-size: 20px;
 }
@@ -224,8 +229,9 @@
 .progressBar {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  gap: 2rem;
+  justify-content: space-between;
+  gap: 1rem;
+  position: relative;
 }
 
 .progressStep {
@@ -234,18 +240,25 @@
   align-items: center;
   flex-direction: column;
   gap: 10px;
+  flex: 1;
+  text-align: center;
 }
 
+/* Desktop connecting lines */
 .progressStep:not(:first-child)::before {
   content: "";
   position: absolute;
-  top: 30%;
-  left: -9rem;
+  top: 1rem;
+  left: -30%;
   transform: translateY(-50%);
-  width: 6rem;
+  width: 50%;
   height: 2px;
-  background-color: #6b7280;
+  background-color: #d1d5db;
   z-index: 0;
+}
+
+.progressStep:not(:first-child).stepActive::before {
+  background-color: #10144a;
 }
 
 .stepCircle {
@@ -259,6 +272,8 @@
   justify-content: center;
   font-size: 0.875rem;
   font-weight: 500;
+  position: relative;
+  z-index: 1;
 }
 
 .stepActive {
@@ -267,8 +282,9 @@
 }
 
 .stepLabel {
-  margin-left: 0.5rem;
   color: #6b7280;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
 }
 
 .stepLabelActive {
@@ -282,32 +298,109 @@
   background-color: #d1d5db;
 }
 
-@media (max-width: 480px) {
-  .stepLabel {
-    font-size: 0.75rem;
-    margin: 0px;
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .progressBar {
+    gap: 0.5rem;
+    padding: 0 0.5rem;
   }
+
+  .progressStep {
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .stepCircle {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.75rem;
+  }
+
+  .stepLabel {
+    font-size: 0.7rem;
+    line-height: 1.1;
+    max-width: 60px;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .progressStep:not(:first-child)::before {
+    top: 0.75rem;
+    left: -25%;
+    width: 50%;
+  }
+
+  .progressTitle {
+    font-size: 1.3rem;
+  }
+
+  .progressSubtitle {
+    font-size: 1rem;
+  }
+}
+
+/* Responsive label display */
+.stepLabelFull {
+  display: inline;
+}
+
+.stepLabelShort {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .stepLabelFull {
+    display: none;
+  }
+
+  .stepLabelShort {
+    display: inline;
+  }
+}
+
+@media (max-width: 480px) {
   .header {
     padding: 20px;
   }
 
+  .progressContent {
+    padding: 1rem 0.5rem;
+  }
+
   .progressBar {
-    gap: 0;
-    justify-content: space-between;
+    gap: 0.25rem;
+    padding: 0 0.25rem;
+  }
+
+  .progressStep {
+    gap: 6px;
+  }
+
+  .stepCircle {
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 0.65rem;
+  }
+
+  .stepLabel {
+    font-size: 0.6rem;
+    max-width: 50px;
+    line-height: 1;
   }
 
   .progressStep:not(:first-child)::before {
-    top: 30%;
-    left: -2.3rem;
-    width: 2rem;
+    top: 0.625rem;
+    left: -20%;
+    width: 40%;
+    height: 1px;
+  }
+
+  .progressTitle {
+    font-size: 1.1rem;
   }
 
   .progressSubtitle {
     font-size: 0.9rem;
-  }
-
-  .progressTitle {
-    font-size: 1.2rem;
   }
 }
 

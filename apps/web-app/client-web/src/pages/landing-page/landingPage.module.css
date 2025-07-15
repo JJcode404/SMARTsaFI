@@ -31,21 +31,22 @@
   justify-content: center;
   border-radius: 50%;
   /* max-width: 500px; */
-  width: 450px;
-  height: 450px;
+  width: 400px;
+  height: 400px;
 }
 .brandLogo {
   position: absolute;
   top: 23%; /* a bit of spacing from the top */
   left: 18%;
   /* transform: translateX(-50%); */
-  width: 200px;
+  width: 230px;
   height: auto;
 }
 
 .heroText h1 {
   font-size: 39px;
   width: 300px;
+  color: #10144a;
   font-family: FFparable sans-serif;
   text-align: center;
   justify-content: center;
@@ -60,7 +61,7 @@
 
 .heroButton {
   padding: 0.75rem 1.5rem;
-  background-color: #222;
+  background-color: #1086f4;
   color: white;
   border: none;
   border-radius: 50px;

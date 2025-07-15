@@ -10,18 +10,22 @@ function AuthPage() {
       <header className={styles.header}>
         <a href="#" className={styles.backButton}>
           <Link to={"/"}>
-            <span className={styles.backArrow}>
+            {/* <span className={styles.backArrow}>
               <ArrowLeft />
-            </span>
+            </span> */}
+            <img
+              src="/smart-safi(main-logo).jpg"
+              className={styles.brandLogo}
+            />
           </Link>
-          <span className={styles.brandName}>
+          {/* <span className={styles.brandName}>
             SMART <span className={styles.small}>sa</span>FI
-          </span>
+          </span> */}
         </a>
-        <div className={styles.languageSelector}>
+        {/* <div className={styles.languageSelector}>
           <img src="/icons/kenyaFlag.svg" alt="kenya flag" />
           KE ▼
-        </div>
+        </div> */}
       </header>
 
       <main className={styles.mainContent}>

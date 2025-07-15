@@ -57,7 +57,7 @@ const styles = {
   companyName: {
     fontSize: "28px",
     fontWeight: "600",
-    color: "#2c3e50",
+    color: "#1086f4",
     marginBottom: "15px",
     letterSpacing: "-0.5px",
   },

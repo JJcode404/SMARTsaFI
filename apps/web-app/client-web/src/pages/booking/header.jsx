@@ -7,12 +7,7 @@ const Bookingheader = () => {
 
   return (
     <header className={styles.header}>
-      <a href="#" className={styles.backButton}>
-        <span className={styles.backArrow}>
-          <ArrowLeft />
-        </span>
-        <span className={styles.brandName}>smart safi</span>
-      </a>
+      <img src="/smart-safi(main-logo).jpg" className={styles.brandLogo} />
 
       {/* Mobile Toggle */}
       <button

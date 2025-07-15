@@ -6,6 +6,7 @@ import { Bookingheader } from "./header";
 import { ProgressBar } from "./progressBar";
 import { Checkout } from "../checkout/checkout";
 import { ConfirmationPage } from "../paymentSuccesful/paymentSuccessful";
+import { ServiceProvider } from "../chooseProvider/chooseProvider";
 
 const Booking = () => {
   const { state } = useBooking();
@@ -13,6 +14,7 @@ const Booking = () => {
     <ServiceDetails />,
     <Location />,
     <ScheduleService />,
+    <ServiceProvider />,
     <Checkout />,
   ];
 

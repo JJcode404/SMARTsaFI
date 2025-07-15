@@ -11,6 +11,9 @@ const initialState = {
   furnishing: "Furnished",
   price: 0,
   cleaningInstructions: "",
+  serviceProvider: "",
+  preferedLanguange: "",
+  clientSpecialReaquest: "",
   location: null,
   address: "",
   selectedDate: new Date(),
@@ -20,7 +23,7 @@ const initialState = {
 const bookingReducer = (state, action) => {
   switch (action.type) {
     case "NEXT_STEP":
-      return { ...state, current: (state.current + 1) % 4 };
+      return { ...state, current: (state.current + 1) % 5 };
     case "SUBMIT":
       return { ...state, isSubmitted: true };
     case "SET_PROPERTY_TYPE":
@@ -47,6 +50,12 @@ const bookingReducer = (state, action) => {
       return { ...state, selectedDate: action.payload };
     case "SET_TIME":
       return { ...state, selectedTime: action.payload };
+    case "SET_SERVICE_PROVIDER":
+      return { ...state, serviceProvider: action.payload };
+    case "SET_PREFERED_LANGUAGE":
+      return { ...state, preferedLanguange: action.payload };
+    case "SET_CLIENT_SPECIAL_REQUEST":
+      return { ...state, clientSpecialReaquest: action.payload };
     default:
       return state;
   }

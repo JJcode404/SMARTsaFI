@@ -14,11 +14,11 @@ body {
 
 .header {
   background-color: #10144a;
-  padding: 40px 20px;
+  padding: 0px 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .backButton {
@@ -27,6 +27,9 @@ body {
   color: #10144a;
   text-decoration: none;
   font-size: 16px;
+}
+.brandLogo {
+  width: 180px;
 }
 
 .backArrow {

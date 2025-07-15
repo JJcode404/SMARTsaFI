@@ -1,10 +1,21 @@
 import { useBooking } from "../../utilites/bookingContext";
 import styles from "./booking.module.css";
 
-const steps = ["Service Details", "Location", "Date & Time", "Payment"];
+const steps = [
+  { full: "Service Details", short: "Service" },
+  { full: "Location", short: "Location" },
+  { full: "Date & Time", short: "Date" },
+  { full: "Service Provider", short: "Provider" },
+  { full: "Payment", short: "Payment" },
+];
 
 const ProgressBar = () => {
   const { state } = useBooking();
+
+  // Function to determine if we should show short labels
+  const useShortLabels = () => {
+    return window.innerWidth <= 768;
+  };
 
   return (
     <div className={styles.progressSection}>
@@ -15,7 +26,7 @@ const ProgressBar = () => {
         </div>
 
         <div className={styles.progressBar}>
-          {steps.map((label, index) => (
+          {steps.map((step, index) => (
             <div key={index} className={styles.progressStep}>
               <div
                 className={`${styles.stepCircle} ${
@@ -29,7 +40,8 @@ const ProgressBar = () => {
                   state.current >= index ? styles.stepLabelActive : ""
                 }`}
               >
-                {label}
+                <span className={styles.stepLabelFull}>{step.full}</span>
+                <span className={styles.stepLabelShort}>{step.short}</span>
               </span>
             </div>
           ))}

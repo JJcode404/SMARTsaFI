@@ -13,7 +13,7 @@ function HeroContent() {
   return (
     <div className={styles.heroContent}>
       <img
-        src="/smart-safi.svg"
+        src="/smartSafi-noBackground.png"
         alt="SMARTsaFi Cleaning Services"
         className={styles.brandLogo}
       />

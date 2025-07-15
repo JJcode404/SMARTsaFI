@@ -34,7 +34,7 @@
 
 .quoteMark {
   font-size: 120px;
-  color: #c4a484;
+  color: #1086f4;
   font-family: "Times New Roman", serif;
   line-height: 0.8;
   margin-bottom: 20px;
@@ -44,7 +44,7 @@
 .quoteText {
   font-size: 28px;
   line-height: 1.4;
-  color: #c4a484;
+  color: #1086f4;
   text-align: center;
   max-width: 400px;
   margin: 0 auto 40px auto;
@@ -55,13 +55,13 @@
 .divider {
   width: 60px;
   height: 2px;
-  background-color: #c4a484;
+  background-color: #10144a;
   margin: 0 auto 30px auto;
 }
 
 .author {
   font-size: 18px;
-  color: #8b7355;
+  color: #1086f4;
   font-weight: 400;
   letter-spacing: 1px;
 }

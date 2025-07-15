@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import styles from "./header.module.css";
+
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -45,7 +46,7 @@ function Navbar() {
       </div>
       <nav className={styles.navbar}>
         <img
-          src="/smart-safi.svg"
+          src="/smartSafi-noBackground.png"
           alt="SMARTsaFi Cleaning Services"
           className={styles.logo}
         />
@@ -72,10 +73,18 @@ function Navbar() {
 
         <div className={styles.icons}>
           <span>
-            <img src="./icons/search.svg" alt="search icon" />
+            <img
+              src="./icons/search.svg"
+              alt="shopping cart icon"
+              className={styles.white}
+            />
           </span>
           <span>
-            <img src="./icons/shopping-cart.svg" alt="shopping cart icon" />
+            <img
+              src="./icons/shopping-cart.svg"
+              alt="shopping cart icon"
+              className={styles.white}
+            />
           </span>
           {/* Account Dropdown */}
           <div className={styles.accountDropdown} ref={dropdownRef}>
@@ -86,7 +95,11 @@ function Navbar() {
               tabIndex={0}
               onKeyDown={(e) => e.key === "Enter" && toggleAccountDropdown()}
             >
-              <img src="./icons/user.svg" alt="user icon" />
+              <img
+                src="./icons/user.svg"
+                alt="user icon"
+                className={styles.white}
+              />
             </span>
 
             {isAccountDropdownOpen && (

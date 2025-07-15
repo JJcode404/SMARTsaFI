@@ -26,12 +26,12 @@
 .line {
   width: 500px;
   height: 1px;
-  background-color: rgb(173, 140, 140);
+  background-color: #10144a;
   margin: 0 20px;
 }
 
 .headerText {
-  color: rgb(173, 140, 140);
+  color: #1086f4;
   font-size: 32px;
   font-weight: 400;
   margin: 0;
@@ -51,6 +51,7 @@
 }
 
 .storyTitle {
+  color: #1086f4;
   font-size: 32px;
   margin-bottom: 20px;
   font-weight: 400;
@@ -65,10 +66,10 @@
 
 .servicesButton,
 .bookButton {
-  color: #1b1b1b;
+  color: #ffffff;
+  background-color: #10144a;
   font: 14px Helvetica, Arial, sans-serif;
   padding: 15px 40px;
-  background-color: #e2e2e2;
   border: none;
   outline: none;
   cursor: pointer;
@@ -149,6 +150,7 @@
 
 .sectionTitle {
   font-size: 32px;
+  color: #1086f4;
   margin-bottom: 15px;
   font-weight: 400;
 }
@@ -165,6 +167,7 @@
 }
 
 .servicesTitle {
+  color: #1086f4;
   font-size: 32px;
   margin-bottom: 15px;
   font-weight: 400;

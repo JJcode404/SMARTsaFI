@@ -24,12 +24,13 @@
 .line {
   width: 500px;
   height: 1px;
-  background-color: rgb(173, 140, 140);
+  background-color: #10144a;
   margin: 0 20px;
 }
 
 .headerText {
-  color: rgb(173, 140, 140);
+  /* color: rgb(173, 140, 140); */
+  color: #1086f4;
   font-weight: 400;
   margin: 0;
   white-space: nowrap;
