@@ -1,5 +1,5 @@
-import { ScheduleService } from "../../components/schedule-components/schedule";
 import { useBooking } from "../../utilites/bookingContext";
+import { ScheduleService } from "../schedule-components/schedule";
 import { Location } from "../location/location";
 import { ServiceDetails } from "../serviceDetails/serviceDetails";
 import { Bookingheader } from "./header";
@@ -17,7 +17,13 @@ const Booking = () => {
     <ServiceProvider />,
     <Checkout />,
   ];
-
+  const steps = [
+    { full: "Service Details", short: "Service" },
+    { full: "Location", short: "Location" },
+    { full: "Date & Time", short: "Date" },
+    { full: "Service Provider", short: "Provider" },
+    { full: "Payment", short: "Payment" },
+  ];
   const CurrentComponent = components[state.current];
 
   return (
@@ -27,7 +33,7 @@ const Booking = () => {
       ) : (
         <>
           <Bookingheader />
-          <ProgressBar />
+          <ProgressBar steps={steps} currentStep={state.current} />
           {CurrentComponent}
         </>
       )}

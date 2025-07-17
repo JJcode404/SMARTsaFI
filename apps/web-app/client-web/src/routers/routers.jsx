@@ -4,6 +4,8 @@ import { AuthPage } from "../pages/authPage/authPage";
 import { ServiceDetails } from "../pages/serviceDetails/serviceDetails";
 import { BookingProvider } from "../utilites/bookingContext";
 import { Booking } from "../pages/booking/booking";
+import { ClientRegistrationPage } from "../pages/clientRegistrationPage/clientRegistrationPage";
+import { ClientRegistrationProvider } from "../utilites/clientRegistrationContext";
 Booking;
 
 const routes = [
@@ -31,6 +33,14 @@ const routes = [
       <BookingProvider>
         <Booking />
       </BookingProvider>
+    ),
+  },
+  {
+    path: "/clientRegistration",
+    element: (
+      <ClientRegistrationProvider>
+        <ClientRegistrationPage />
+      </ClientRegistrationProvider>
     ),
   },
 ];
