@@ -1,7 +1,6 @@
 .container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2rem;
+  /* margin: 0 auto;
+  padding: 2rem; */
   font-family: Arial, sans-serif;
 }
 
@@ -67,9 +66,13 @@
   gap: 1.5rem;
 }
 
-.formGroup {
+.formGroup,
+.formGroupTop {
   display: flex;
   flex-direction: column;
+}
+.formGroupTop {
+  flex-direction: row;
 }
 
 .label {

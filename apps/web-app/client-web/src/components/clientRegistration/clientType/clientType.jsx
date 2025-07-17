@@ -1,9 +1,11 @@
 import { UserIcon, Building2Icon } from "lucide-react";
 import styles from "./clientType.module.css";
 import { useState } from "react";
+import { useClientRegistration } from "../../../utilites/clientRegistrationContext";
 
 const ClientType = () => {
-  const [selected, setSelected] = useState(null);
+  const { setField, nextStep, state } = useClientRegistration();
+  const selected = state.formData.client_type;
 
   const options = [
     {
@@ -17,6 +19,11 @@ const ClientType = () => {
       icon: <Building2Icon className={styles.icon} />,
     },
   ];
+
+  const handleSelect = (type) => {
+    setField("client_type", type);
+    nextStep();
+  };
 
   return (
     <div className={styles.container}>
@@ -35,7 +42,7 @@ const ClientType = () => {
           {options.map((option) => (
             <div
               key={option.type}
-              onClick={() => setSelected(option.type)}
+              onClick={() => handleSelect(option.type)}
               className={`${styles.card} ${
                 selected === option.type
                   ? styles.cardSelected

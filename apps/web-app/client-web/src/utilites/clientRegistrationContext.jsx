@@ -49,13 +49,13 @@ function reducer(state, action) {
     case "NEXT_STEP":
       return {
         ...state,
-        step: Math.min(state.step + 1, 3),
+        current: Math.min(state.current + 1, 3),
         error: "",
       };
     case "PREV_STEP":
       return {
         ...state,
-        step: Math.max(state.step - 1, 1),
+        current: Math.max(state.current - 1, 0),
         error: "",
       };
     case "SET_ERROR":

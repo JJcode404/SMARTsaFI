@@ -5,19 +5,15 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 import styles from "./clientDocuments.module.css";
-import { useState } from "react";
+import { useClientRegistration } from "../../../utilites/clientRegistrationContext";
 
 const ClientDocumentUploads = () => {
-  const [files, setFiles] = useState({
-    id: null,
-    tax: null,
-    photo: null,
-  });
+  const { state, setFile } = useClientRegistration();
 
   const handleFileChange = (e, type) => {
     const file = e.target.files[0];
     if (file) {
-      setFiles((prev) => ({ ...prev, [type]: file }));
+      setFile(type, file);
     }
   };
 
@@ -25,7 +21,7 @@ const ClientDocumentUploads = () => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (file) {
-      setFiles((prev) => ({ ...prev, [type]: file }));
+      setFile(type, file);
     }
   };
 
@@ -52,12 +48,12 @@ const ClientDocumentUploads = () => {
         {/* National ID Proof */}
         <label
           className={styles.card}
-          onDrop={(e) => handleDrop(e, "id")}
+          onDrop={(e) => handleDrop(e, "national_id_proof")}
           onDragOver={handleDragOver}
         >
           <input
             type="file"
-            onChange={(e) => handleFileChange(e, "id")}
+            onChange={(e) => handleFileChange(e, "national_id_proof")}
             className={styles.fileInput}
             hidden
           />
@@ -65,20 +61,22 @@ const ClientDocumentUploads = () => {
             <Shield className={styles.icon} />
           </div>
           <p className={styles.cardText}>Upload ID Proof</p>
-          {files.id && (
-            <p className={styles.fileName}>Uploaded: {files.id.name}</p>
+          {state.files.national_id_proof && (
+            <p className={styles.fileName}>
+              Uploaded: {state.files.national_id_proof.name}
+            </p>
           )}
         </label>
 
         {/* Tax Document Proof */}
         <label
           className={styles.card}
-          onDrop={(e) => handleDrop(e, "tax")}
+          onDrop={(e) => handleDrop(e, "tax_document_proof")}
           onDragOver={handleDragOver}
         >
           <input
             type="file"
-            onChange={(e) => handleFileChange(e, "tax")}
+            onChange={(e) => handleFileChange(e, "tax_document_proof")}
             className={styles.fileInput}
             hidden
           />
@@ -86,20 +84,22 @@ const ClientDocumentUploads = () => {
             <FileText className={styles.icon} />
           </div>
           <p className={styles.cardText}>Upload Tax Document</p>
-          {files.tax && (
-            <p className={styles.fileName}>Uploaded: {files.tax.name}</p>
+          {state.files.tax_document_proof && (
+            <p className={styles.fileName}>
+              Uploaded: {state.files.tax_document_proof.name}
+            </p>
           )}
         </label>
 
         {/* Profile Picture */}
         <label
           className={styles.card}
-          onDrop={(e) => handleDrop(e, "photo")}
+          onDrop={(e) => handleDrop(e, "profile_picture")}
           onDragOver={handleDragOver}
         >
           <input
             type="file"
-            onChange={(e) => handleFileChange(e, "photo")}
+            onChange={(e) => handleFileChange(e, "profile_picture")}
             className={styles.fileInput}
             hidden
           />
@@ -107,8 +107,10 @@ const ClientDocumentUploads = () => {
             <ImageIcon className={styles.icon} />
           </div>
           <p className={styles.cardText}>Upload Photo</p>
-          {files.photo && (
-            <p className={styles.fileName}>Uploaded: {files.photo.name}</p>
+          {state.files.profile_picture && (
+            <p className={styles.fileName}>
+              Uploaded: {state.files.profile_picture.name}
+            </p>
           )}
         </label>
       </div>

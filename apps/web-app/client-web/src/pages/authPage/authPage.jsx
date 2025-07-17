@@ -2,32 +2,22 @@ import { useState } from "react";
 import styles from "./authPage.module.css";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+
+function Header() {
+  return (
+    <header className={styles.header}>
+      <Link to={"/"}>
+        <img src="/smart-safi(main-logo).jpg" className={styles.brandLogo} />
+      </Link>
+    </header>
+  );
+}
 function AuthPage() {
   const [view, setView] = useState("login");
 
   return (
     <>
-      <header className={styles.header}>
-        <a href="#" className={styles.backButton}>
-          <Link to={"/"}>
-            {/* <span className={styles.backArrow}>
-              <ArrowLeft />
-            </span> */}
-            <img
-              src="/smart-safi(main-logo).jpg"
-              className={styles.brandLogo}
-            />
-          </Link>
-          {/* <span className={styles.brandName}>
-            SMART <span className={styles.small}>sa</span>FI
-          </span> */}
-        </a>
-        {/* <div className={styles.languageSelector}>
-          <img src="/icons/kenyaFlag.svg" alt="kenya flag" />
-          KE ▼
-        </div> */}
-      </header>
-
+      <Header />
       <main className={styles.mainContent}>
         <div className={styles.loginContainer}>
           {view === "login" ? (
@@ -141,4 +131,4 @@ function AuthPage() {
     </>
   );
 }
-export { AuthPage };
+export { AuthPage, Header };

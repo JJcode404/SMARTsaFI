@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { CheckCircle } from "lucide-react";
 import styles from "./registrationSummary.module.css";
+import { useClientRegistration } from "../../../utilites/clientRegistrationContext";
 
 const RegistrationSummary = () => {
+  const { state } = useClientRegistration();
   const [selectedCards, setSelectedCards] = useState([]);
 
   const handleSelect = (index) => {
-    setSelectedCards(
-      (prev) =>
-        prev.includes(index)
-          ? prev.filter((i) => i !== index) // unselect
-          : [...prev, index] // select
+    setSelectedCards((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
 
@@ -18,12 +17,16 @@ const RegistrationSummary = () => {
     {
       title: "ID Verification",
       description: "Confirm your identity documents",
+      verified: state.formData.verification_id,
     },
     {
       title: "Tax Verification",
       description: "Confirm your tax documents",
+      verified: state.formData.verification_tax,
     },
   ];
+
+  const { formData, files } = state;
 
   return (
     <div className={styles.container}>
@@ -40,7 +43,7 @@ const RegistrationSummary = () => {
 
       <div className={styles.cardContainer}>
         {cards.map((card, i) => {
-          const isSelected = selectedCards.includes(i);
+          const isSelected = card.verified || selectedCards.includes(i);
           return (
             <div
               key={i}
@@ -63,31 +66,43 @@ const RegistrationSummary = () => {
         <h4 className={styles.summaryTitle}>Registration Summary</h4>
         <div className={styles.row}>
           <span>Registration Type:</span>
-          <span>Organization</span>
+          <span>{formData.client_type || "Not provided"}</span>
         </div>
         <div className={styles.row}>
           <span>Tax Number:</span>
-          <span>8904854389054</span>
+          <span>{formData.tax_number || "Not provided"}</span>
         </div>
         <div className={styles.row}>
           <span>ID Proof:</span>
-          <span>None</span>
+          <span>{files.national_id_proof.name || "None"}</span>
         </div>
         <div className={styles.row}>
           <span>Profile Picture:</span>
-          <span>None</span>
-        </div>
-        <div className={styles.row}>
-          <span>Organization:</span>
-          <span>kdfhkdfhksdfjkds</span>
-        </div>
-        <div className={styles.row}>
-          <span>Phone:</span>
-          <span>0715369733</span>
+          <span>{files.profile_picture.name || "None"}</span>
         </div>
         <div className={styles.row}>
           <span>Tax Proof:</span>
-          <span>None</span>
+          <span>{files.tax_document_proof.name || "None"}</span>
+        </div>
+        {formData.client_type === "Individual" && (
+          <div className={styles.row}>
+            <span>Full Name:</span>
+            <span>
+              {`${formData.first_name || ""} ${
+                formData.last_name || ""
+              }`.trim() || "Not provided"}
+            </span>
+          </div>
+        )}
+        {formData.client_type === "Organization" && (
+          <div className={styles.row}>
+            <span>Organization:</span>
+            <span>{formData.organization_name || "Not provided"}</span>
+          </div>
+        )}
+        <div className={styles.row}>
+          <span>Phone:</span>
+          <span>{formData.phone_number || "Not provided"}</span>
         </div>
       </div>
     </div>

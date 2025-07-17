@@ -24,6 +24,8 @@ const Booking = () => {
     { full: "Service Provider", short: "Provider" },
     { full: "Payment", short: "Payment" },
   ];
+  const title = "Service Details";
+  const subtitle = "Premium Deep Cleaning";
   const CurrentComponent = components[state.current];
 
   return (
@@ -33,7 +35,12 @@ const Booking = () => {
       ) : (
         <>
           <Bookingheader />
-          <ProgressBar steps={steps} currentStep={state.current} />
+          <ProgressBar
+            steps={steps}
+            currentStep={state.current}
+            title={title}
+            subtitle={subtitle}
+          />
           {CurrentComponent}
         </>
       )}

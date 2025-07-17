@@ -1,7 +1,7 @@
 import { useBooking } from "../../utilites/bookingContext";
 import styles from "./booking.module.css";
 
-const ProgressBar = ({ steps, currentStep }) => {
+const ProgressBar = ({ steps, currentStep, title, subtitle }) => {
   // Function to determine if we should show short labels
   const useShortLabels = () => {
     return window.innerWidth <= 768;
@@ -11,8 +11,8 @@ const ProgressBar = ({ steps, currentStep }) => {
     <div className={styles.progressSection}>
       <div className={styles.progressContent}>
         <div className={styles.progressHeader}>
-          <h1 className={styles.progressTitle}>Service Details</h1>
-          <p className={styles.progressSubtitle}>Premium Deep Cleaning</p>
+          <h1 className={styles.progressTitle}>{title}</h1>
+          <p className={styles.progressSubtitle}>{subtitle}</p>
         </div>
 
         <div className={styles.progressBar}>

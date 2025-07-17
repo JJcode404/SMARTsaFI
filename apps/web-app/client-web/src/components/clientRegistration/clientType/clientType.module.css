@@ -3,7 +3,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px;
 }
 
 .content {
@@ -105,4 +104,12 @@
 .optionDescription {
   font-size: 0.875rem;
   color: #6b7280;
+}
+
+.cardUnselected {
+  border-color: #e0e0e0;
+}
+
+.cardSelected {
+  border: 2px solid #10144a;
 }
