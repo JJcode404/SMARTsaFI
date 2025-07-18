@@ -3,7 +3,8 @@ import { useClientRegistration } from "../../../utilites/clientRegistrationConte
 import styles from "./pagination.module.css";
 
 export default function PaginationButtons() {
-  const { state, nextStep, prevStep } = useClientRegistration();
+  const { state, nextStep, prevStep, SumbitDocuments } =
+    useClientRegistration();
   const isLastStep = state.current === 3;
 
   return (
@@ -27,7 +28,11 @@ export default function PaginationButtons() {
       </button>
 
       {isLastStep ? (
-        <button type="submit" className={styles.completeButton}>
+        <button
+          type="submit"
+          className={styles.completeButton}
+          onClick={SumbitDocuments}
+        >
           <Check size={20} />
           <span>Complete Registration</span>
         </button>

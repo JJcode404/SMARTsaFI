@@ -6,6 +6,7 @@ import { ClientDocumentUploads } from "../../components/clientRegistration/clien
 import { RegistrationSummary } from "../../components/clientRegistration/RegistraionSummary/registrationSummary";
 import { Header } from "../authPage/authPage";
 import PaginationButtons from "../../components/clientRegistration/pagination/pagination";
+import { SuccessfulRegistrationPage } from "../../components/clientRegistration/successfulRegistration/successfulRegistration";
 
 const ClientRegistrationPage = () => {
   const { state } = useClientRegistration();
@@ -29,9 +30,7 @@ const ClientRegistrationPage = () => {
   return (
     <div>
       {state.isSubmitted ? (
-        <div className="success">
-          <p>User Registered Succefully</p>
-        </div>
+        <SuccessfulRegistrationPage />
       ) : (
         <>
           <Header />

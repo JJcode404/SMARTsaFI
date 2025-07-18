@@ -5,6 +5,7 @@ const ClientRegistrationContext = createContext();
 
 const initialState = {
   current: 0,
+  isSubmitted: false,
   formData: {
     client_type: "",
     first_name: "",
@@ -58,6 +59,18 @@ function reducer(state, action) {
         current: Math.max(state.current - 1, 0),
         error: "",
       };
+    case "SUBMIT":
+      return { ...state, isSubmitted: true };
+    case "VERIFY_ID":
+      return {
+        ...state,
+        formData: { ...state.formData, verification_id: true },
+      };
+    case "VERIFY_TAX":
+      return {
+        ...state,
+        formData: { ...state.formData, verification_tax: true },
+      };
     case "SET_ERROR":
       return {
         ...state,
@@ -94,6 +107,9 @@ export const ClientRegistrationProvider = ({ children }) => {
 
   const nextStep = () => dispatch({ type: "NEXT_STEP" });
   const prevStep = () => dispatch({ type: "PREV_STEP" });
+  const verifyID = () => dispatch({ type: "VERIFY_ID" });
+  const SumbitDocuments = () => dispatch({ type: "SUBMIT" });
+  const verifyTax = () => dispatch({ type: "VERIFY_TAX" });
   const setError = (message) => dispatch({ type: "SET_ERROR", message });
   const setSuccess = (message) => dispatch({ type: "SET_SUCCESS", message });
   const resetMessages = () => dispatch({ type: "RESET_MESSAGES" });
@@ -107,8 +123,11 @@ export const ClientRegistrationProvider = ({ children }) => {
         setFile,
         nextStep,
         prevStep,
+        verifyID,
+        verifyTax,
         setError,
         setSuccess,
+        SumbitDocuments,
         resetMessages,
       }}
     >

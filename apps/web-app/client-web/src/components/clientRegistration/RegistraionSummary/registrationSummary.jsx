@@ -4,10 +4,12 @@ import styles from "./registrationSummary.module.css";
 import { useClientRegistration } from "../../../utilites/clientRegistrationContext";
 
 const RegistrationSummary = () => {
-  const { state } = useClientRegistration();
+  const { state, verifyID, verifyTax } = useClientRegistration();
   const [selectedCards, setSelectedCards] = useState([]);
 
   const handleSelect = (index) => {
+    if (index === 0) verifyID();
+    if (index === 1) verifyTax();
     setSelectedCards((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
