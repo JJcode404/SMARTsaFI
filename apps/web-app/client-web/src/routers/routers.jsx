@@ -6,6 +6,7 @@ import { BookingProvider } from "../utilites/bookingContext";
 import { Booking } from "../pages/booking/booking";
 import { ClientRegistrationPage } from "../pages/clientRegistrationPage/clientRegistrationPage";
 import { ClientRegistrationProvider } from "../utilites/clientRegistrationContext";
+import { ServiceProvidersScreen } from "../pages/serviceProviderViewPage/serviceProviderViewPage";
 Booking;
 
 const routes = [
@@ -42,6 +43,10 @@ const routes = [
         <ClientRegistrationPage />
       </ClientRegistrationProvider>
     ),
+  },
+  {
+    path: "/viewServiceProviders",
+    element: <ServiceProvidersScreen />,
   },
 ];
 
