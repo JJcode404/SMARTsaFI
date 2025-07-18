@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import styles from "./location.module.css";
 import { MapPin } from "lucide-react";
+
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -23,7 +24,7 @@ const center = {
 const LocationPicker = () => {
   const { handleNext, state, dispatch } = useBooking();
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCJY0rvGj1md3ztnM_SulkVkVKhiBMFUgI",
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
