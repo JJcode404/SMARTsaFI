@@ -311,3 +311,45 @@
 .noResultsText {
   color: #6b7280;
 }
+@media (max-width: 640px) {
+  .filterContainer {
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .filterButton {
+    flex: 1 1 48%;
+    justify-content: center;
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .description {
+    max-height: 4.5em;
+  }
+
+  .providerHeader {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .providerInfo {
+    align-items: center;
+  }
+
+  .providerName {
+    white-space: normal;
+    text-overflow: unset;
+    overflow: visible;
+  }
+
+  .cardContent {
+    padding: 16px;
+  }
+
+  .mainContent {
+    padding: 16px 12px;
+  }
+}

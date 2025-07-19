@@ -1,0 +1,733 @@
+/* ServiceProviderDetail.module.css */
+
+.container {
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.header {
+  background-color: white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.headerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  color: white;
+  padding: 20px;
+  cursor: pointer;
+  background: #10144a;
+  transition: color 0.2s ease;
+}
+
+.backButtonIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.5rem;
+}
+
+.heroSection {
+  position: relative;
+}
+
+.heroBackground {
+  height: 20rem;
+  background: linear-gradient(to right, #2563eb, #9333ea);
+  position: relative;
+  overflow: hidden;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(37, 99, 235, 0.8),
+    rgba(147, 51, 234, 0.8)
+  );
+}
+
+.heroContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  margin-top: -8rem;
+}
+
+.heroCard {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.heroCardContent {
+  padding: 2rem;
+}
+
+.heroHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.heroProfile {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.profileImageContainer {
+  position: relative;
+}
+
+.profileImage {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 1rem;
+  object-fit: cover;
+  border: 4px solid white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.onlineIndicator {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  background-color: #10b981;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.profileInfo h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.ratingContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.star {
+  width: 1rem;
+  height: 1rem;
+}
+
+.starFilled {
+  fill: #fbbf24;
+  color: #fbbf24;
+}
+
+.starEmpty {
+  color: #d1d5db;
+}
+
+.starHalf {
+  fill: #fbbf24;
+  color: #fbbf24;
+  opacity: 0.5;
+}
+
+.ratingText {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+  margin-left: 0.5rem;
+}
+
+.reviewCount {
+  color: #6b7280;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+}
+
+.locationIcon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.25rem;
+}
+
+.badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.badge {
+  background-color: #dbeafe;
+  color: #1e40af;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.heroActions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.primaryButton {
+  background-color: #10144a;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+}
+
+.primaryButton:hover {
+  background-color: #1d4ed8;
+}
+
+.secondaryButton {
+  background-color: #f3f4f6;
+  color: #374151;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.secondaryButton:hover {
+  background-color: #e5e7eb;
+}
+
+.buttonIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.5rem;
+  display: inline;
+}
+
+.contentSection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .contentGrid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.mainContent {
+  grid-column: span 2;
+}
+
+@media (min-width: 1024px) {
+  .mainContent {
+    grid-column: span 1;
+  }
+}
+
+.tabsContainer {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  margin-bottom: 1.5rem;
+}
+
+.tabsNav {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tabsNavList {
+  display: flex;
+  gap: 2rem;
+  padding: 0 1.5rem;
+}
+
+.tab {
+  padding: 1rem 0.5rem;
+  border-bottom: 2px solid transparent;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  cursor: pointer;
+}
+
+.tabActive {
+  border-bottom-color: #2563eb;
+  color: #2563eb;
+}
+
+.tabInactive {
+  border-bottom-color: transparent;
+  color: #6b7280;
+}
+
+.tabInactive:hover {
+  color: #374151;
+}
+
+.tabContent {
+  padding: 1.5rem;
+}
+
+.overviewContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.overviewTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+}
+
+.overviewDescription {
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .statsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.statCard {
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.statIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.statIconBlue {
+  color: #2563eb;
+}
+
+.statIconGreen {
+  color: #059669;
+}
+
+.statIconOrange {
+  color: #d97706;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.statValue {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.servicesContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.servicesTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.serviceCard {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: box-shadow 0.2s ease;
+}
+
+.serviceCard:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.serviceHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.serviceInfo h4 {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.serviceDuration {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+.durationIcon {
+  width: 1rem;
+  height: 1rem;
+  display: inline;
+  margin-right: 0.25rem;
+}
+
+.servicePrice {
+  text-align: right;
+}
+
+.priceAmount {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #10144a;
+  display: flex;
+  align-items: center;
+}
+
+.priceIcon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.25rem;
+}
+
+.bookButton {
+  margin-top: 0.5rem;
+  background-color: #10144a;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  transition: background-color 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.bookButton:hover {
+  background-color: #1d4ed8;
+}
+
+.galleryContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.galleryTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.galleryMain {
+  position: relative;
+}
+
+.galleryImage {
+  aspect-ratio: 16/9;
+  background-color: #f3f4f6;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.galleryImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.galleryNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  padding: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.galleryNav:hover {
+  background-color: white;
+}
+
+.galleryNavLeft {
+  left: 1rem;
+}
+
+.galleryNavRight {
+  right: 1rem;
+}
+
+.galleryNavIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.galleryThumbnails {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.thumbnail {
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+}
+
+.thumbnailActive {
+  border: 2px solid #2563eb;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reviewsContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.reviewsTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.reviewCard {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.reviewHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.reviewAvatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.reviewContent {
+  flex: 1;
+}
+
+.reviewMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.reviewAuthor h4 {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.reviewRating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.reviewDate {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.reviewText {
+  color: #6b7280;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sidebarCard {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
+}
+
+.sidebarTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.contactIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #2563eb;
+}
+
+.contactLabel {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.contactValue {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.statsContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.statRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statRowLabel {
+  color: #6b7280;
+}
+
+.statRowValue {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.sidebarActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sidebarPrimaryButton {
+  width: 100%;
+  background-color: #10144a;
+  color: white;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+}
+
+.sidebarPrimaryButton:hover {
+  background-color: #1d4ed8;
+}
+
+.sidebarSecondaryButton {
+  width: 100%;
+  background-color: #f3f4f6;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  color: #374151;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebarSecondaryButton:hover {
+  background-color: #e5e7eb;
+}

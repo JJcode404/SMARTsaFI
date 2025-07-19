@@ -1,107 +1,13 @@
 import { useState, useMemo } from "react";
 import "./serviceProviderViewPage.css";
-import { Star, User, MapPin, Users, Search } from "lucide-react";
+import { Star, User, MapPin, Users, Search, ImageOff } from "lucide-react";
 import { Bookingheader } from "../booking/header";
+import { useNavigate } from "react-router-dom";
+import { serviceProviders } from "../../../data/Serviceproviders";
 const ServiceProvidersScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
-
-  // Sample data for service providers
-  const serviceProviders = [
-    {
-      id: 1,
-      name: "CleanPro Solutions",
-      type: "organization",
-      location: "Westlands, Nairobi",
-      rating: 4.8,
-      reviewCount: 127,
-      description:
-        "Professional commercial and residential cleaning services with eco-friendly products",
-      image:
-        "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=150&h=150&fit=crop&crop=center",
-    },
-    {
-      id: 2,
-      name: "Nkatha Ivy",
-      type: "individual",
-      location: "Kilimani, Nairobi",
-      rating: 4.9,
-      reviewCount: 89,
-      description:
-        "Experienced house cleaner specializing in deep cleaning and organization",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces",
-    },
-    {
-      id: 3,
-      name: "Sparkle & Shine Ltd",
-      type: "organization",
-      location: "Karen, Nairobi",
-      rating: 4.7,
-      reviewCount: 203,
-      description: "Premium cleaning services for luxury homes and offices",
-      image:
-        "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=150&h=150&fit=crop&crop=center",
-    },
-    {
-      id: 4,
-      name: "Simon James",
-      type: "individual",
-      location: "Lavington, Nairobi",
-      rating: 4.6,
-      reviewCount: 56,
-      description: "Reliable and thorough cleaning with attention to detail",
-      image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=faces",
-    },
-    {
-      id: 5,
-      name: "EcoClean Kenya",
-      type: "organization",
-      location: "Parklands, Nairobi",
-      rating: 4.9,
-      reviewCount: 156,
-      description:
-        "100% eco-friendly cleaning solutions for environmentally conscious clients",
-      image:
-        "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=150&h=150&fit=crop&crop=center",
-    },
-    {
-      id: 6,
-      name: "Grace Nyokabi",
-      type: "individual",
-      location: "Runda, Nairobi",
-      rating: 4.8,
-      reviewCount: 74,
-      description:
-        "Professional house cleaning with flexible scheduling options",
-      image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=faces",
-    },
-    {
-      id: 7,
-      name: "QuickClean Services",
-      type: "organization",
-      location: "Upperhill, Nairobi",
-      rating: 4.5,
-      reviewCount: 92,
-      description:
-        "Fast and efficient cleaning services for busy professionals",
-      image:
-        "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=150&h=150&fit=crop&crop=center",
-    },
-    {
-      id: 8,
-      name: "Peter Kimani",
-      type: "individual",
-      location: "Eastleigh, Nairobi",
-      rating: 4.7,
-      reviewCount: 41,
-      description: "Affordable and quality cleaning services for all budgets",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces",
-    },
-  ];
+  const navigate = useNavigate();
 
   // Filter and search logic
   const filteredProviders = useMemo(() => {
@@ -156,8 +62,8 @@ const ServiceProvidersScreen = () => {
         <div className="progressSection">
           <div className="progressContent">
             <div className="progressHeader">
-              <h1 className="styles.progressTitle">Browse Service Providers</h1>
-              <p className="styles.progressSubtitle">
+              <h1 className="progressTitle">Browse Service Providers</h1>
+              <p className="progressSubtitle">
                 Find trusted cleaning professionals in your area
               </p>
             </div>
@@ -222,7 +128,7 @@ const ServiceProvidersScreen = () => {
                   <div className="providerHeader">
                     <div>
                       <img
-                        src={provider.image}
+                        src={provider.profileImage}
                         alt={provider.name}
                         className="providerImage"
                       />
@@ -256,7 +162,12 @@ const ServiceProvidersScreen = () => {
                   <p className="description">{provider.description}</p>
 
                   {/* Action Button */}
-                  <button className="actionButton">View Profile</button>
+                  <button
+                    className="actionButton"
+                    onClick={() => navigate(`/service-provider/${provider.id}`)}
+                  >
+                    View Profile
+                  </button>
                 </div>
               </div>
             ))}
