@@ -56,7 +56,7 @@ const ServiceProvidersScreen = () => {
 
   return (
     <>
-      <Bookingheader />
+      {/* <Bookingheader /> */}
       <div className="container">
         {/* Header */}
         <div className="progressSection">

@@ -9,6 +9,7 @@ import {
   User,
   Headphones,
   LogOut,
+  BrushCleaning,
   X,
 } from "lucide-react";
 import styles from "./sidebar.module.css";
@@ -23,14 +24,24 @@ const HomeSiderBar = () => {
 
   const navItems = [
     { id: "dashboard", icon: Home, label: "Dashboard", path: "/homePage" },
-    { id: "bookings", icon: Calendar, label: "Bookings", path: "/bookings" },
+    {
+      id: "bookings",
+      icon: Calendar,
+      label: "Bookings",
+      path: "/homePage/myBookings",
+    },
     {
       id: "messages",
       icon: MessageCircle,
       label: "Messages",
       path: "/messages",
     },
-    { id: "cleaners", icon: CreditCard, label: "Cleaners", path: "/cleaners" },
+    {
+      id: "cleaners",
+      icon: BrushCleaning,
+      label: "Cleaners",
+      path: "/homePage/cleaners",
+    },
     {
       id: "profile",
       icon: User,

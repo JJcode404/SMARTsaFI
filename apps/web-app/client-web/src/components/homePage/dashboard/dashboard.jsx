@@ -1,6 +1,7 @@
 import styles from "./dashboard.module.css";
 import { Plus, Send, Clock, CheckCircle, AlertCircle } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
@@ -113,10 +114,12 @@ const Dashboard = () => {
             </p>
           </div>
           <div className={styles.welcomeActions}>
-            <button className={styles.primaryButton}>
-              <Plus className={styles.icon} />
-              <span>Book Cleaning</span>
-            </button>
+            <Link to={`/homePage/service-type`}>
+              <button className={styles.primaryButton}>
+                <Plus className={styles.icon} />
+                <span>Book Cleaning</span>
+              </button>
+            </Link>
             <button className={styles.secondaryButton}>
               <Send className={styles.icon} />
               <span>Send Message</span>

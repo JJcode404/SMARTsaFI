@@ -11,6 +11,9 @@ import { ServiceProviderDetail } from "../pages/serviceProviderDetails/servicePr
 import { HomePage } from "../pages/homePage/homePage";
 import { Dashboard } from "../components/homePage/dashboard/dashboard";
 import { Profile } from "../components/homePage/profile/profile";
+import ServiceBookingCard from "../components/homePage/booking/booking";
+import ServiceSelectionCard from "../components/homePage/booking/serviceSelection";
+import { MyBookings } from "../components/homePage/booking/myBookings";
 Booking;
 
 const routes = [
@@ -66,6 +69,10 @@ const routes = [
         element: <Dashboard />,
       },
       { path: "myProfile", element: <Profile /> },
+      { path: "cleaners", element: <ServiceProvidersScreen /> },
+      { path: "choose-service", element: <ServiceSelectionCard /> },
+      { path: "service-type", element: <ServiceBookingCard /> },
+      { path: "myBookings", element: <MyBookings /> },
     ],
   },
 ];
