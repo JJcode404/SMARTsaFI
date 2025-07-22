@@ -1,0 +1,662 @@
+/* Profile.module.css */
+
+.container {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #6b7280;
+}
+
+/* Section Styles */
+.section {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.subTitle {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.sectionFooter {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Icon Styles */
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.75rem;
+}
+
+.iconBlue {
+  color: #2563eb;
+}
+
+.iconGreen {
+  color: #059669;
+}
+
+.iconRed {
+  color: #dc2626;
+}
+
+.iconPurple {
+  color: #9333ea;
+}
+
+.iconYellow {
+  color: #d97706;
+}
+
+.iconOrange {
+  color: #ea580c;
+}
+
+/* Grid Layout */
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Form Elements */
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: 0 0 0 2px;
+}
+
+.inputBlue:focus {
+  box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.inputGreen:focus {
+  box-shadow: 0 0 0 2px #10b981;
+}
+
+.inputRed:focus {
+  box-shadow: 0 0 0 2px #ef4444;
+}
+
+.inputWithIcon {
+  padding-right: 3rem;
+}
+
+/* Button Styles */
+.button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.buttonBlue {
+  background-color: #10144a;
+  color: white;
+}
+
+.buttonBlue:hover {
+  background-color: #1d4ed8;
+}
+
+.buttonGreen {
+  background-color: #059669;
+  color: white;
+}
+
+.buttonGreen:hover {
+  background-color: #047857;
+}
+
+.buttonRed {
+  background-color: #dc2626;
+  color: white;
+}
+
+.buttonRed:hover {
+  background-color: #b91c1c;
+}
+
+.buttonPurple {
+  background-color: #9333ea;
+  color: white;
+}
+
+.buttonPurple:hover {
+  background-color: #7c3aed;
+}
+
+.buttonYellow {
+  background-color: #d97706;
+  color: white;
+}
+
+.buttonYellow:hover {
+  background-color: #b45309;
+}
+
+.buttonOrange {
+  background-color: #ea580c;
+  color: white;
+}
+
+.buttonOrange:hover {
+  background-color: #c2410c;
+}
+
+.buttonOutline {
+  border: 1px solid #d1d5db;
+  color: #374151;
+  background-color: white;
+}
+
+.buttonOutline:hover {
+  background-color: #f9fafb;
+}
+
+.buttonIcon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+/* Profile Picture */
+.profilePicture {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar {
+  width: 4rem;
+  height: 4rem;
+  background-color: #e5e7eb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatarIcon {
+  width: 2rem;
+  height: 2rem;
+  color: #6b7280;
+}
+
+/* Preferred Times */
+.preferredTimes {
+  margin-top: 1.5rem;
+}
+
+.timeButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.timeButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  color: #374151;
+  background-color: white;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.timeButton:hover {
+  border-color: #10b981;
+}
+
+.timeButtonActive {
+  background-color: #dcfce7;
+  border-color: #10b981;
+  color: #047857;
+}
+
+.timeButtonIcon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+/* Security Section */
+.securityContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.passwordGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .passwordGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.passwordFullWidth {
+  grid-column: 1 / -1;
+}
+
+.passwordInput {
+  position: relative;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+}
+
+.passwordToggle:hover {
+  color: #374151;
+}
+
+.passwordToggleIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.twoFactorAuth {
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.twoFactorContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Toggle Switch */
+.toggle {
+  position: relative;
+  display: inline-flex;
+  height: 1.5rem;
+  width: 2.75rem;
+  align-items: center;
+  border-radius: 9999px;
+  background-color: #e5e7eb;
+  transition: background-color 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.toggleActive {
+  background-color: #dc2626;
+}
+
+.toggleActivePurple {
+  background-color: #9333ea;
+}
+
+.toggleSlider {
+  display: inline-block;
+  height: 1rem;
+  width: 1rem;
+  transform: translateX(0.25rem);
+  border-radius: 50%;
+  background-color: white;
+  transition: transform 0.2s ease;
+}
+
+.toggleSliderActive {
+  transform: translateX(1.5rem);
+}
+
+/* Notifications */
+.notificationsContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.notificationItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Subscription */
+.subscriptionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.planCard {
+  background-color: #fefce8;
+  border: 1px solid #fde047;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.planCardContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.planName {
+  font-weight: 500;
+  color: #92400e;
+}
+
+.planPrice {
+  font-size: 0.875rem;
+  color: #a16207;
+}
+
+.paymentCard {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.paymentCardContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.paymentMethod {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.changePaymentButton {
+  font-size: 0.875rem;
+  color: #2563eb;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.changePaymentButton:hover {
+  color: #1d4ed8;
+}
+
+/* Billing History */
+.billingHistory {
+  margin-top: 1rem;
+}
+
+.billingList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.billingItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+}
+
+.billingLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.billingDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #10b981;
+  border-radius: 50%;
+}
+
+.billingDate {
+  font-weight: 500;
+  color: #111827;
+}
+
+.billingRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.billingAmount {
+  color: #6b7280;
+}
+
+.billingStatus {
+  padding: 0.25rem 0.5rem;
+  background-color: #dcfce7;
+  color: #166534;
+  font-size: 0.75rem;
+  border-radius: 9999px;
+}
+
+/* Account Actions */
+.accountActions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.actionCard {
+  padding: 1rem;
+  background-color: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 0.5rem;
+}
+
+.actionCardDanger {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+}
+
+.actionTitle {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #9a3412;
+  margin-bottom: 0.5rem;
+}
+
+.actionTitleDanger {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #991b1b;
+  margin-bottom: 0.5rem;
+}
+
+.actionDescription {
+  font-size: 0.875rem;
+  color: #c2410c;
+  margin-bottom: 1rem;
+}
+
+.actionDescriptionDanger {
+  font-size: 0.875rem;
+  color: #b91c1c;
+  margin-bottom: 1rem;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 50;
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  max-width: 28rem;
+  width: 100%;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modalTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.modalDescription {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.modalActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.modalActions .button {
+  flex: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .passwordGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .twoFactorContent {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .notificationItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .billingItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .billingRight {
+    align-self: stretch;
+    justify-content: space-between;
+  }
+
+  .modalActions {
+    flex-direction: column;
+  }
+
+  .sectionFooter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .sectionFooter .button {
+    width: 100%;
+    justify-content: center;
+  }
+}

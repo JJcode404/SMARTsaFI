@@ -10,6 +10,7 @@ import { ServiceProvidersScreen } from "../pages/serviceProviderViewPage/service
 import { ServiceProviderDetail } from "../pages/serviceProviderDetails/serviceProviderDetails";
 import { HomePage } from "../pages/homePage/homePage";
 import { Dashboard } from "../components/homePage/dashboard/dashboard";
+import { Profile } from "../components/homePage/profile/profile";
 Booking;
 
 const routes = [
@@ -64,6 +65,7 @@ const routes = [
         index: true,
         element: <Dashboard />,
       },
+      { path: "myProfile", element: <Profile /> },
     ],
   },
 ];

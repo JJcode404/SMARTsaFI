@@ -72,7 +72,9 @@
   padding: 1rem;
   gap: 0.5rem;
 }
-
+.nav a {
+  text-decoration: none;
+}
 .navItem {
   background: none;
   border: none;

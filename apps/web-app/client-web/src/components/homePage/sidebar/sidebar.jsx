@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   Home,
   Calendar,
@@ -12,20 +14,30 @@ import {
 import styles from "./sidebar.module.css";
 
 const HomeSiderBar = () => {
-  const [activeNav, setActiveNav] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const location = useLocation();
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
   const navItems = [
-    { id: "dashboard", icon: Home, label: "Dashboard" },
-    { id: "bookings", icon: Calendar, label: "Bookings" },
-    { id: "messages", icon: MessageCircle, label: "Messages" },
-    { id: "cleaners", icon: CreditCard, label: "Cleaners" },
-    { id: "profile", icon: User, label: "My Profile" },
-    { id: "support", icon: Headphones, label: "Support" },
+    { id: "dashboard", icon: Home, label: "Dashboard", path: "/homePage" },
+    { id: "bookings", icon: Calendar, label: "Bookings", path: "/bookings" },
+    {
+      id: "messages",
+      icon: MessageCircle,
+      label: "Messages",
+      path: "/messages",
+    },
+    { id: "cleaners", icon: CreditCard, label: "Cleaners", path: "/cleaners" },
+    {
+      id: "profile",
+      icon: User,
+      label: "My Profile",
+      path: "/homePage/myProfile",
+    },
+    { id: "support", icon: Headphones, label: "Support", path: "/support" },
   ];
 
   return (
@@ -34,7 +46,7 @@ const HomeSiderBar = () => {
         <div className={styles.logoContainer}>
           <div className={styles.logoIcon}>
             <img
-              src="./smart-safi(main-logo).jpg"
+              src="/smart-safi(main-logo).jpg"
               alt="SmartSafi Logo"
               className={styles.brandLogo}
             />
@@ -47,17 +59,17 @@ const HomeSiderBar = () => {
       </div>
 
       <nav className={styles.nav}>
-        {navItems.map(({ id, icon: Icon, label }) => (
-          <button
+        {navItems.map(({ id, icon: Icon, label, path }) => (
+          <Link
             key={id}
-            onClick={() => setActiveNav(id)}
+            to={path}
             className={`${styles.navItem} ${
-              activeNav === id ? styles.navItemActive : ""
+              location.pathname === path ? styles.navItemActive : ""
             }`}
           >
             <Icon className={styles.icon} />
             <span>{label}</span>
-          </button>
+          </Link>
         ))}
       </nav>
 
