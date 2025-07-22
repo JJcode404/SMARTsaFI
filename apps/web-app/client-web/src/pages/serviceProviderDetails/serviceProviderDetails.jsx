@@ -103,6 +103,7 @@ const ServiceProviderDetail = () => {
                       src={provider.profileImage}
                       alt={provider.name}
                       className={styles.profileImage}
+                      loading="lazy"
                     />
                     <div className={styles.onlineIndicator}></div>
                   </div>
@@ -257,6 +258,7 @@ const ServiceProviderDetail = () => {
                         <img
                           src={provider.gallery[selectedImageIndex]}
                           alt={`Gallery ${selectedImageIndex + 1}`}
+                          loading="lazy"
                         />
                       </div>
                       <button

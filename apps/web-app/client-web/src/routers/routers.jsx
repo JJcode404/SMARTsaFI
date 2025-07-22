@@ -8,6 +8,8 @@ import { ClientRegistrationPage } from "../pages/clientRegistrationPage/clientRe
 import { ClientRegistrationProvider } from "../utilites/clientRegistrationContext";
 import { ServiceProvidersScreen } from "../pages/serviceProviderViewPage/serviceProviderViewPage";
 import { ServiceProviderDetail } from "../pages/serviceProviderDetails/serviceProviderDetails";
+import { HomePage } from "../pages/homePage/homePage";
+import { Dashboard } from "../components/homePage/dashboard/dashboard";
 Booking;
 
 const routes = [
@@ -53,6 +55,16 @@ const routes = [
   {
     path: "/service-provider/:id",
     element: <ServiceProviderDetail />,
+  },
+  {
+    path: "/homePage",
+    element: <HomePage />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+    ],
   },
 ];
 

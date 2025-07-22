@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.mainContent {
+  flex: 1;
+  background-color: #f9fafb;
+  margin-left: 250px; /* Same width as sidebar */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+@media (max-width: 1024px) {
+  .mainContent {
+    margin-left: 0; /* full width on small screens if sidebar is collapsed */
+  }
+}
