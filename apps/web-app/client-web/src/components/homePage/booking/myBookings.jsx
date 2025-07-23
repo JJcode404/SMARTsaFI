@@ -228,15 +228,16 @@ const MyBookings = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <div className={styles.maxWidth}>
-          <h1 className={styles.headerTitle}>My Bookings</h1>
-          <p className={styles.headerSubtitle}>
-            Manage your cleaning appointments
-          </p>
+      <div className="progressSection">
+        <div className="progressContent">
+          <div className="progressHeader">
+            <h1 className="progressTitle">My Bookings</h1>
+            <p className="progressSubtitle">
+              Manage your cleaning appointments
+            </p>
+          </div>
         </div>
       </div>
-
       <div className={styles.tabContainer}>
         <div className={styles.maxWidth}>
           <div className={styles.tabNavigation}>

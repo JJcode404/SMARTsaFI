@@ -24,15 +24,18 @@ abbr {
 }
 
 body {
-  background-color: white;
+  background: #f9fafb;
   font-size: 18px; /* Increased base font size */
 }
-
+.wrapper {
+  padding: 20px;
+}
 .container {
   max-width: 1200px; /* Add a max-width for larger layouts */
   min-height: 100vh;
-  background: white;
-  padding: 3rem 4rem; /* Increased padding */
+  background-color: white;
+  padding: 1.4em; /* Increased padding */
+  border-radius: 20px;
   font-family: sans-serif;
   color: #11124c;
   margin: auto;

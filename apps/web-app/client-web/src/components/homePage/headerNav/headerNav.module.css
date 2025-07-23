@@ -7,7 +7,7 @@ body.dark-mode {
   --border-color: #475569;
 }
 
-header {
+.header {
   position: sticky;
   top: 0;
   z-index: 30;

@@ -4,6 +4,17 @@
   padding: 20px;
   padding-inline: 5vw; /* adds horizontal responsiveness */
   flex-wrap: nowrap;
+  width: 100%;
+
+  min-height: 100vh;
+}
+.main {
+  border-radius: 20px;
+  padding: 1.356em;
+  background-color: white;
+}
+.wrap {
+  background-color: #f9fafb;
 }
 
 .addAddress {

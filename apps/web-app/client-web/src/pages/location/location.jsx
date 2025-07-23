@@ -58,7 +58,7 @@ const LocationPicker = () => {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div className={styles.main}>
       <PlacesSearchBox
         onSelect={setSelected}
         setAddress={setAddress}
@@ -170,8 +170,10 @@ const PlacesSearchBox = ({ onSelect, setAddress, address }) => {
 
 const Location = () => {
   return (
-    <div className={styles.locationContainer}>
-      <LocationPicker />
+    <div className={styles.wrap}>
+      <div className={styles.locationContainer}>
+        <LocationPicker />
+      </div>
     </div>
   );
 };
