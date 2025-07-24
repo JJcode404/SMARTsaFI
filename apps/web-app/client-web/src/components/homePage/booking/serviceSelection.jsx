@@ -1,36 +1,22 @@
-import { Sparkles, Home, Wrench, HardHat, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import styles from "./serviceSelection.module.css";
-import { useState } from "react";
+import { useBooking } from "../../../utilites/bookingContext";
+import { services } from "../../../../data/Servicetypes";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const ServiceSelectionCard = () => {
-  const [selectedService, setSelectedService] = useState("");
+  const { state, setService } = useBooking();
+  const navigate = useNavigate();
+  const selectedService = state.service;
+  const selectedServiceType = state.serviceType;
+  const currentFeatures = services[selectedServiceType]?.features || [];
 
-  const services = [
-    {
-      id: "deep-cleaning",
-      title: "Deep Cleaning",
-      description: "Comprehensive cleaning for every corner of your home",
-      icon: Sparkles,
-    },
-    {
-      id: "move-in-out",
-      title: "Move-in/Move-out",
-      description: "Perfect clean for moving transitions",
-      icon: Home,
-    },
-    {
-      id: "regular-cleaning",
-      title: "Regular Cleaning",
-      description: "Weekly or bi-weekly maintenance cleaning",
-      icon: Wrench,
-    },
-    {
-      id: "post-construction",
-      title: "Post-construction",
-      description: "Specialized cleaning after renovations",
-      icon: HardHat,
-    },
-  ];
+  useEffect(() => {
+    console.log("Updated service:", state.service);
+    console.log(state);
+  }, [state.service]);
 
   return (
     <div className={styles.container}>
@@ -44,15 +30,25 @@ const ServiceSelectionCard = () => {
           </div>
         </div>
       </div>
+
       <div className={styles.card}>
         <div className={styles.servicesContainer}>
-          {services.map((service) => {
+          {currentFeatures.map((service) => {
             const Icon = service.icon;
-            const isSelected = selectedService === service.id;
+            const isSelected = selectedService === service.title;
+
             return (
               <button
                 key={service.id}
-                onClick={() => setSelectedService(service.id)}
+                onClick={() => {
+                  console.log("Setting service to:", service.title);
+                  setService(service.title);
+                  localStorage.setItem("selectedService", service.title);
+                  localStorage.setItem(
+                    "selectedServiceType",
+                    selectedServiceType
+                  );
+                }}
                 className={`${styles.serviceOption} ${
                   isSelected ? styles.serviceOptionActive : ""
                 }`}
@@ -107,16 +103,17 @@ const ServiceSelectionCard = () => {
             );
           })}
         </div>
-
-        <button
-          className={`${styles.continueButton} ${
-            selectedService ? styles.continueButtonEnabled : ""
-          }`}
-          disabled={!selectedService}
-        >
-          <span>Continue</span>
-          <ArrowRight className={styles.arrowIcon} />
-        </button>
+        <Link to={"/booking"}>
+          <button
+            className={`${styles.continueButton} ${
+              selectedService ? styles.continueButtonEnabled : ""
+            }`}
+            disabled={!selectedService}
+          >
+            <span>Continue</span>
+            <ArrowRight className={styles.arrowIcon} />
+          </button>
+        </Link>
 
         <div className={styles.footer}>
           <p className={styles.footerText}>

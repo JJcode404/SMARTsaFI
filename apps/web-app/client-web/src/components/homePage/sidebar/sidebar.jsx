@@ -23,12 +23,12 @@ const HomeSiderBar = () => {
   };
 
   const navItems = [
-    { id: "dashboard", icon: Home, label: "Dashboard", path: "/homePage" },
+    { id: "dashboard", icon: Home, label: "Dashboard", path: "/" },
     {
       id: "bookings",
       icon: Calendar,
       label: "Bookings",
-      path: "/homePage/myBookings",
+      path: "/myBookings",
     },
     {
       id: "messages",
@@ -40,13 +40,13 @@ const HomeSiderBar = () => {
       id: "cleaners",
       icon: BrushCleaning,
       label: "Cleaners",
-      path: "/homePage/cleaners",
+      path: "/cleaners",
     },
     {
       id: "profile",
       icon: User,
       label: "My Profile",
-      path: "/homePage/myProfile",
+      path: "/myProfile",
     },
     { id: "support", icon: Headphones, label: "Support", path: "/support" },
   ];

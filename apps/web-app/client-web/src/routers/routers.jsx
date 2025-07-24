@@ -14,16 +14,37 @@ import { Profile } from "../components/homePage/profile/profile";
 import ServiceBookingCard from "../components/homePage/booking/booking";
 import ServiceSelectionCard from "../components/homePage/booking/serviceSelection";
 import { MyBookings } from "../components/homePage/booking/myBookings";
-Booking;
+import { BookingLayout } from "../utilites/bookingLayout";
+import { Messaging } from "../components/homePage/messages/messages";
 
 const routes = [
   {
     path: "/",
-    element: <RootLayout />,
+    element: (
+      <BookingProvider>
+        <BookingLayout />
+      </BookingProvider>
+    ),
     children: [
       {
-        index: true,
-        element: <LandingPage />,
+        path: "",
+        element: <HomePage />,
+        children: [
+          {
+            index: true,
+            element: <Dashboard />,
+          },
+          { path: "myProfile", element: <Profile /> },
+          { path: "cleaners", element: <ServiceProvidersScreen /> },
+          { path: "choose-service", element: <ServiceSelectionCard /> },
+          { path: "service-type", element: <ServiceBookingCard /> },
+          { path: "myBookings", element: <MyBookings /> },
+          { path: "messages", element: <Messaging /> },
+        ],
+      },
+      {
+        path: "booking",
+        element: <Booking />,
       },
     ],
   },
@@ -35,14 +56,7 @@ const routes = [
     path: "/service-product-detail",
     element: <ServiceDetails />,
   },
-  {
-    path: "/booking",
-    element: (
-      <BookingProvider>
-        <Booking />
-      </BookingProvider>
-    ),
-  },
+
   {
     path: "/clientRegistration",
     element: (
@@ -59,21 +73,6 @@ const routes = [
   {
     path: "/service-provider/:id",
     element: <ServiceProviderDetail />,
-  },
-  {
-    path: "/homePage",
-    element: <HomePage />,
-    children: [
-      {
-        index: true,
-        element: <Dashboard />,
-      },
-      { path: "myProfile", element: <Profile /> },
-      { path: "cleaners", element: <ServiceProvidersScreen /> },
-      { path: "choose-service", element: <ServiceSelectionCard /> },
-      { path: "service-type", element: <ServiceBookingCard /> },
-      { path: "myBookings", element: <MyBookings /> },
-    ],
   },
 ];
 

@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useReducer } from "react";
 const BookingContext = createContext();
 
 const initialState = {
+  serviceType: "residential",
   service: "Deep Cleaning Service",
   isSubmitted: false,
   current: 0,
@@ -46,6 +47,16 @@ const bookingReducer = (state, action) => {
         ...state,
         price: action.payload,
       };
+    case "SET_SERVICETYPE":
+      return {
+        ...state,
+        serviceType: action.payload,
+      };
+    case "SET_SERVICE":
+      return {
+        ...state,
+        service: action.payload,
+      };
     case "SET_DATE":
       return { ...state, selectedDate: action.payload };
     case "SET_TIME":
@@ -66,10 +77,21 @@ const BookingProvider = ({ children }) => {
 
   const handleNext = () => dispatch({ type: "NEXT_STEP" });
   const handleSubmit = () => dispatch({ type: "SUBMIT" });
+  const setServiceType = (serviceType) =>
+    dispatch({ type: "SET_SERVICETYPE", payload: serviceType });
+  const setService = (service) =>
+    dispatch({ type: "SET_SERVICE", payload: service });
 
   return (
     <BookingContext.Provider
-      value={{ state, dispatch, handleNext, handleSubmit }}
+      value={{
+        state,
+        dispatch,
+        handleNext,
+        handleSubmit,
+        setService,
+        setServiceType,
+      }}
     >
       {children}
     </BookingContext.Provider>

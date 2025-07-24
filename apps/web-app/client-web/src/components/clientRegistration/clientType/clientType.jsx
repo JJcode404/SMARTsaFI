@@ -26,7 +26,7 @@ const ClientType = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.clientContainer}>
       <div className={styles.content}>
         <div className={styles.top}>
           <div className={styles.header}>

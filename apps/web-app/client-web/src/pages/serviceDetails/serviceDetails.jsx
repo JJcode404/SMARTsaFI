@@ -5,7 +5,8 @@ import styles from "./serviceDetails.module.css";
 import { useBooking } from "../../utilites/bookingContext";
 
 const ServiceDetails = () => {
-  const { state, dispatch, handleNext } = useBooking();
+  const { state, dispatch, handleNext, setService, setServiceType } =
+    useBooking();
   const instructions = state.cleaningInstructions;
   const handlePropertyChange = (type) => {
     dispatch({ type: "SET_PROPERTY_TYPE", payload: type });
@@ -65,6 +66,26 @@ const ServiceDetails = () => {
     // Update the ref for next comparison
     prevRoomCounts.current = roomCounts;
   }, [roomCounts]);
+
+  useEffect(() => {
+    try {
+      const savedService = localStorage.getItem("selectedService");
+      const savedServiceType = localStorage.getItem("selectedServiceType");
+
+      if (
+        savedService &&
+        savedServiceType &&
+        !state.isSubmitted &&
+        (state.service !== savedService ||
+          state.serviceType !== savedServiceType)
+      ) {
+        setService(savedService);
+        setServiceType(savedServiceType);
+      }
+    } catch (error) {
+      console.error("Failed to load service data from localStorage:", error);
+    }
+  }, []);
 
   const updateRoomCount = (roomType, increment) => {
     setRoomCounts((prev) => {

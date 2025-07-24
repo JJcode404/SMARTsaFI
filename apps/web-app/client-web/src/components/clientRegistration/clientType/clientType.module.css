@@ -1,8 +1,5 @@
-.container {
+.clientContainer {
   background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .content {

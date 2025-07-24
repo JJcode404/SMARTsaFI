@@ -1,4 +1,3 @@
-import { useBooking } from "../../utilites/bookingContext";
 import styles from "./booking.module.css";
 
 const ProgressBar = ({ steps, currentStep, title, subtitle }) => {

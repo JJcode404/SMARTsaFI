@@ -1,35 +1,14 @@
 import React, { useState } from "react";
-import { Building2, Home, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import styles from "./booking.module.css";
 import { Link } from "react-router-dom";
+import { services } from "../../../../data/Servicetypes";
+import { useBooking } from "../../../utilites/bookingContext";
 
 const ServiceBookingCard = () => {
-  const [selectedService, setSelectedService] = useState("residential");
+  const { setServiceType } = useBooking();
 
-  const services = {
-    commercial: {
-      icon: Building2,
-      title: "Commercial",
-      description: "Office buildings, retail spaces, and commercial properties",
-      features: [
-        "Office cleaning",
-        "Retail spaces",
-        "Medical facilities",
-        "Warehouses",
-      ],
-    },
-    residential: {
-      icon: Home,
-      title: "Residential",
-      description: "Homes, apartments, and residential properties",
-      features: [
-        "Deep cleaning",
-        "Move-in/out",
-        "Regular cleaning",
-        "Post-construction",
-      ],
-    },
-  };
+  const [selectedService, setSelectedService] = useState("residential");
 
   const {
     icon: Icon,
@@ -37,6 +16,7 @@ const ServiceBookingCard = () => {
     description,
     features,
   } = services[selectedService];
+  console.log(selectedService);
 
   return (
     <div className={styles.container}>
@@ -50,36 +30,32 @@ const ServiceBookingCard = () => {
           </div>
         </div>
       </div>
+
       <div className={styles.card}>
-        {/* Toggle */}
-        <div className={styles.toggleContainer}>
-          <div
-            className={`${styles.toggleSlider} ${
-              selectedService === "commercial" ? styles.toggleSliderRight : ""
-            }`}
-          />
-          <div className={styles.toggleButtons}>
-            <button
-              className={`${styles.toggleButton} ${
-                selectedService === "residential"
-                  ? styles.toggleButtonActive
-                  : ""
-              }`}
-              onClick={() => setSelectedService("residential")}
-            >
-              Residential
-            </button>
-            <button
-              className={`${styles.toggleButton} ${
-                selectedService === "commercial"
-                  ? styles.toggleButtonActive
-                  : ""
-              }`}
-              onClick={() => setSelectedService("commercial")}
-            >
-              Commercial
-            </button>
-          </div>
+        {/* Dynamic Service Selector */}
+        <div className={styles.serviceOptionsGrid}>
+          {Object.entries(services).map(([key, service]) => {
+            const ServiceIcon = service.icon;
+            return (
+              <button
+                key={key}
+                className={`${styles.serviceOptionButton} ${
+                  selectedService === key ? styles.activeService : ""
+                }`}
+                onClick={() => {
+                  setSelectedService(key);
+                  setServiceType(key);
+                }}
+              >
+                <div className={styles.serviceOptionIcon}>
+                  <ServiceIcon />
+                </div>
+                <div className={styles.serviceOptionText}>
+                  <h4>{service.title}</h4>
+                </div>
+              </button>
+            );
+          })}
         </div>
 
         {/* Service Details */}
@@ -98,17 +74,27 @@ const ServiceBookingCard = () => {
         {/* Features */}
         <div className={styles.featuresContainer}>
           <div className={styles.featuresGrid}>
-            {features.map((feature, idx) => (
-              <div className={styles.featureItem} key={idx}>
-                <div className={styles.featureDot}></div>
-                <span>{feature}</span>
-              </div>
-            ))}
+            {features.map((feature) => {
+              const FeatureIcon = feature.icon;
+              return (
+                <div className={styles.featureItem} key={feature.id}>
+                  <div className={styles.featureIcon}>
+                    <FeatureIcon />
+                  </div>
+                  <div className={styles.featureText}>
+                    <h5 className={styles.featureTitle}>{feature.title}</h5>
+                    <p className={styles.featureDescription}>
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
         {/* Continue Button */}
-        <Link to={`/homePage/choose-service`}>
+        <Link to={`/choose-service`}>
           <button className={styles.continueButton}>
             <span>Continue</span>
             <ArrowRight className={styles.arrowIcon} />

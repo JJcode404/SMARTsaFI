@@ -25,7 +25,8 @@ const Booking = () => {
     { full: "Payment", short: "Payment" },
   ];
   const title = "Service Details";
-  const subtitle = "Premium Deep Cleaning";
+  const subtitle = state.service;
+  console.log(state.service);
   const CurrentComponent = components[state.current];
 
   return (

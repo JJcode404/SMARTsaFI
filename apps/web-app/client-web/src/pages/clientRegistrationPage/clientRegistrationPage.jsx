@@ -44,9 +44,12 @@ const ClientRegistrationPage = () => {
             className="container"
             style={{
               maxWidth: "900px",
-              margin: "0 auto",
+              margin: "20px auto",
+              background: "white",
+              borderRadius: "20px",
               width: "100%",
               padding: "2em 20px",
+              minHeight: "0px",
             }}
           >
             {CurrentComponent}
