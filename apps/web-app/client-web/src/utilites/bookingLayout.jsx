@@ -1,5 +1,11 @@
 import { Outlet } from "react-router-dom";
+import { BookingProvider } from "./bookingContext";
 
-const BookingLayout = () => <Outlet />;
-
+const BookingLayout = () => {
+  return (
+    <BookingProvider>
+      <Outlet />
+    </BookingProvider>
+  );
+};
 export { BookingLayout };

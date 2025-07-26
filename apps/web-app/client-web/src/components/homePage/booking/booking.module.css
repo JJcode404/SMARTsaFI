@@ -7,7 +7,7 @@
   border-radius: 1rem;
   padding: 2rem;
   width: 100%;
-  max-width: 35rem;
+  max-width: 1015px;
   margin: auto;
   transition: all 0.3s ease;
 }
@@ -160,11 +160,13 @@
 }
 
 .continueButton {
-  width: 100%;
+  /* width: 100%; */
   /* background: linear-gradient(135deg, #3b82f6, #1d4ed8); */
   background-color: #10144a;
   color: white;
+  width: 30em;
   font-weight: 500;
+  margin: auto;
   padding: 1rem 1.5rem;
   border-radius: 0.75rem;
   border: none;
@@ -209,25 +211,9 @@
   color: #9ca3af;
   margin: 0;
 }
-
-/* Responsive */
-@media (max-width: 640px) {
-  .card {
-    padding: 1.5rem;
-  }
-
-  .title {
-    font-size: 1.25rem;
-  }
-
-  .featuresGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .serviceOptionsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -286,4 +272,25 @@
 .featureDescription {
   font-size: 0.9rem;
   color: #555;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .card {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+  .serviceOptionsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .featuresGrid {
+    grid-template-columns: 1fr;
+  }
+  .continueButton {
+    width: 100%;
+  }
 }

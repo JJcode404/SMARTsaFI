@@ -114,7 +114,7 @@ const Dashboard = () => {
             </p>
           </div>
           <div className={styles.welcomeActions}>
-            <Link to={`/service-type`}>
+            <Link to={`/booking-flow/service-type`}>
               <button className={styles.primaryButton}>
                 <Plus className={styles.icon} />
                 <span>Book Cleaning</span>

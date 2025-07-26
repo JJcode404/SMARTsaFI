@@ -1,102 +1,71 @@
-// CleaningServiceUI.jsx
 import { useState, useRef, useEffect } from "react";
-import { ChevronDown, Plus, Minus, User, Menu, ArrowLeft } from "lucide-react";
+import { ChevronDown, Plus, Minus } from "lucide-react";
 import styles from "./serviceDetails.module.css";
 import { useBooking } from "../../utilites/bookingContext";
+import { roomConfig } from "../../../data/roomConfig";
+
+const basePrice = 3000;
+
+const createInitialCounts = (type) => {
+  const counts = {};
+  roomConfig[type].forEach(({ key }) => {
+    counts[key] = 0;
+  });
+  return counts;
+};
 
 const ServiceDetails = () => {
-  const { state, dispatch, handleNext, setService, setServiceType } =
-    useBooking();
+  const { state, dispatch, handleNext } = useBooking();
+
   const instructions = state.cleaningInstructions;
+
+  const [roomCounts, setRoomCounts] = useState(() =>
+    createInitialCounts(state.serviceType)
+  );
+  const [showPaymentDetails, setShowPaymentDetails] = useState(true);
+  const [showServiceDetails, setShowServiceDetails] = useState(false);
+
+  useEffect(() => {
+    // Reset counts when serviceType changes
+    setRoomCounts(createInitialCounts(state.serviceType));
+  }, [state.serviceType]);
+
+  useEffect(() => {
+    const rooms = roomConfig[state.serviceType];
+    let totalPrice = basePrice;
+
+    rooms.forEach(({ key, price }) => {
+      totalPrice += price * (roomCounts[key] || 0);
+    });
+
+    dispatch({ type: "SET_PRICE", payload: totalPrice });
+
+    const label = rooms
+      .map(({ key, label }) => `${roomCounts[key] || 0} ${label.split(" ")[0]}`)
+      .join(", ");
+    dispatch({ type: "SET_BEDROOMLABLE", payload: label });
+  }, [roomCounts, state.serviceType]);
+
   const handlePropertyChange = (type) => {
     dispatch({ type: "SET_PROPERTY_TYPE", payload: type });
-  };
-  const handleBedroomChange = (room) => {
-    dispatch({ type: "SET_BEDROOMLABLE", payload: room });
   };
 
   const handleFurnishingChange = (value) => {
     dispatch({ type: "SET_FURNISHING", payload: value });
   };
-  const handlePriceChange = (price) => {
-    dispatch({ type: "SET_PRICE", payload: price });
-  };
+
   const handleCleaningInstructions = (value) => {
     dispatch({ type: "SET_CLEANINGINSTRUCTIONS", payload: value });
   };
-  const [roomCounts, setRoomCounts] = useState({
-    studio: 0,
-    oneBedroom: 0,
-    twoBedroom: 0,
-    threeBedroom: 0,
-    fourBedroom: 0,
-    fiveBedroom: 0,
-  });
-
-  const roomPrices = {
-    studio: 500,
-    oneBedroom: 700,
-    twoBedroom: 1000,
-    threeBedroom: 1300,
-    fourBedroom: 1600,
-    fiveBedroom: 2000,
-  };
-
-  const [selectedRoom, setSelecteRoom] = useState("");
-
-  const basePrice = 3000;
-
-  const [showPaymentDetails, setShowPaymentDetails] = useState(true);
-  const [showServiceDetails, setShowServiceDetails] = useState(false);
-
-  const prevRoomCounts = useRef(roomCounts);
-
-  useEffect(() => {
-    const changedKey = Object.keys(roomCounts).find(
-      (key) => roomCounts[key] > prevRoomCounts.current[key]
-    );
-    handleBedroomChange(changedKey);
-
-    setSelecteRoom(changedKey);
-
-    const newSelectedRoomPrice = roomPrices[changedKey] || 0;
-    const newTotalPrice = basePrice + newSelectedRoomPrice;
-    handlePriceChange(newTotalPrice);
-
-    // Update the ref for next comparison
-    prevRoomCounts.current = roomCounts;
-  }, [roomCounts]);
-
-  useEffect(() => {
-    try {
-      const savedService = localStorage.getItem("selectedService");
-      const savedServiceType = localStorage.getItem("selectedServiceType");
-
-      if (
-        savedService &&
-        savedServiceType &&
-        !state.isSubmitted &&
-        (state.service !== savedService ||
-          state.serviceType !== savedServiceType)
-      ) {
-        setService(savedService);
-        setServiceType(savedServiceType);
-      }
-    } catch (error) {
-      console.error("Failed to load service data from localStorage:", error);
-    }
-  }, []);
 
   const updateRoomCount = (roomType, increment) => {
     setRoomCounts((prev) => {
-      const newCount = Math.max(0, prev[roomType] + (increment ? 1 : -1));
+      const newCount = Math.max(
+        0,
+        (prev[roomType] || 0) + (increment ? 1 : -1)
+      );
       return {
-        studio: 0,
-        oneBedroom: 0,
-        twoBedroom: 0,
-        threeBedroom: 0,
-        fourBedroom: 0,
-        fiveBedroom: 0,
+        ...prev,
         [roomType]: newCount,
       };
     });
@@ -104,18 +73,16 @@ const ServiceDetails = () => {
 
   return (
     <div className={styles.container}>
-      {/* Main Content */}
       <div className={styles.mainContent}>
         <div className={styles.contentGrid}>
-          {/* Left Column - Service Details */}
+          {/* Left Column */}
           <div className={styles.leftColumn}>
             <div className={styles.serviceCard}>
               <h2 className={styles.serviceTitle}>Premium Deep Cleaning</h2>
 
-              {/* Service Image */}
               <div className={styles.serviceImageContainer}>
                 <img
-                  src="./homepage3.jpg"
+                  src="/homepage3.jpg"
                   alt="Premium Deep Cleaning Service"
                   className={styles.serviceImage}
                 />
@@ -127,7 +94,6 @@ const ServiceDetails = () => {
                 <p className={styles.inclusionsDescription}>
                   Thorough cleaning and sanitization of 6 sections:
                 </p>
-
                 <ul className={styles.inclusionsList}>
                   <li>• Bedroom and living rooms</li>
                   <li>• Kitchen and dining area</li>
@@ -188,33 +154,26 @@ const ServiceDetails = () => {
                 </div>
               </div>
 
-              {/* Room Selection */}
+              {/* Room Count Section */}
               <div className={styles.roomSection}>
-                {[
-                  { key: "studio", label: "Studio" },
-                  { key: "oneBedroom", label: "1 Bedroom" },
-                  { key: "twoBedroom", label: "2 Bedroom" },
-                  { key: "threeBedroom", label: "3 Bedroom" },
-                  { key: "fourBedroom", label: "4 Bedroom" },
-                  { key: "fiveBedroom", label: "5 Bedroom" },
-                ].map((room) => (
-                  <div key={room.key} className={styles.roomRow}>
-                    <span className={styles.roomLabel}>{room.label}</span>
+                {roomConfig[state.serviceType].map(({ key, label }) => (
+                  <div key={key} className={styles.roomRow}>
+                    <span className={styles.roomLabel}>{label}</span>
                     <div className={styles.roomControls}>
                       <button
-                        onClick={() => updateRoomCount(room.key, false)}
+                        onClick={() => updateRoomCount(key, false)}
                         className={styles.roomButton}
-                        disabled={roomCounts[room.key] === 0}
+                        disabled={roomCounts[key] === 0}
                       >
                         <Minus className={styles.roomButtonIcon} />
                       </button>
                       <span className={styles.roomCount}>
-                        {roomCounts[room.key]}
+                        {roomCounts[key] || 0}
                       </span>
                       <button
-                        onClick={() => updateRoomCount(room.key, true)}
+                        onClick={() => updateRoomCount(key, true)}
                         className={styles.roomButton}
-                        disabled={roomCounts[room.key] === 1}
+                        disabled={roomCounts[key] === 15}
                       >
                         <Plus className={styles.roomButtonIcon} />
                       </button>
@@ -222,9 +181,11 @@ const ServiceDetails = () => {
                   </div>
                 ))}
               </div>
+
+              {/* Cleaning Instructions */}
               <div className={styles.futherInstruction}>
                 <label
-                  htmlFor="insturctions"
+                  htmlFor="instructions"
                   className={styles.insturctionsLable}
                 >
                   Do you have any specific cleaning instructions?
@@ -234,10 +195,12 @@ const ServiceDetails = () => {
                   id="instructions"
                   value={instructions}
                   onChange={(e) => handleCleaningInstructions(e.target.value)}
-                  placeholder="Example: A/C has bad smell, to much dust in vents, regular cleaning .etc"
+                  placeholder="Example: A/C has bad smell, too much dust in vents, regular cleaning, etc."
                   className={styles.instructions}
                 ></textarea>
               </div>
+
+              {/* Navigation Buttons */}
               <div className={styles.navigate}>
                 <button className={styles.navbackButton}>BACK</button>
                 <button
@@ -249,7 +212,8 @@ const ServiceDetails = () => {
               </div>
             </div>
           </div>
-          {/* Right Column - Summary */}
+
+          {/* Right Column */}
           <div className={styles.rightColumn}>
             <div className={styles.summaryCard}>
               <h3 className={styles.summaryTitle}>Summary</h3>
@@ -327,7 +291,12 @@ const ServiceDetails = () => {
                     <div className={styles.summaryRow}>
                       <span className={styles.summaryLabel}>Rooms</span>
                       <span className={styles.summaryValue}>
-                        {selectedRoom || "Not selected"}
+                        {roomConfig[state.serviceType]
+                          .map(
+                            ({ key, label }) =>
+                              `${roomCounts[key] || 0} ${label}`
+                          )
+                          .join(", ")}
                       </span>
                     </div>
                     <div className={styles.summaryRow}>
@@ -341,6 +310,7 @@ const ServiceDetails = () => {
               </div>
             </div>
           </div>
+          {/* End of Grid */}
         </div>
       </div>
     </div>

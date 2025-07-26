@@ -20,7 +20,7 @@ const Checkout = () => {
         </p>
         <div className={styles.paymentIcons}>
           <img
-            src={"./mpesalogo1.svg"}
+            src={"/mpesalogo1.svg"}
             className={`${styles.mpesa} ${
               paymentMethod === "mpesa" ? styles.active : ""
             }`}
@@ -28,13 +28,13 @@ const Checkout = () => {
             onClick={() => setPaymentMethod("mpesa")}
           />
           <img
-            src={"./visa-svgrepo-com.svg"}
+            src={"/visa-svgrepo-com.svg"}
             alt="Visa"
             className={paymentMethod === "card" ? styles.active : ""}
             onClick={() => setPaymentMethod("card")}
           />
           <img
-            src={"./mastercard-svgrepo-com.svg"}
+            src={"/mastercard-svgrepo-com.svg"}
             alt="Mastercard"
             className={paymentMethod === "card" ? styles.active : ""}
             onClick={() => setPaymentMethod("card")}

@@ -356,6 +356,9 @@
   .stepLabelShort {
     display: inline;
   }
+  .brandLogo {
+    height: 100px;
+  }
 }
 
 @media (max-width: 480px) {

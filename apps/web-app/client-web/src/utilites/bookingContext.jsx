@@ -1,6 +1,12 @@
-import React, { createContext, useContext, useState, useReducer } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useReducer,
+  useRef,
+} from "react";
 
-const BookingContext = createContext();
+const BookingContext = createContext(null); // Provide default value
 
 const initialState = {
   serviceType: "residential",
@@ -74,6 +80,7 @@ const bookingReducer = (state, action) => {
 
 const BookingProvider = ({ children }) => {
   const [state, dispatch] = useReducer(bookingReducer, initialState);
+  const contextId = useRef(Math.random().toString(36).substr(2, 9));
 
   const handleNext = () => dispatch({ type: "NEXT_STEP" });
   const handleSubmit = () => dispatch({ type: "SUBMIT" });
@@ -98,6 +105,13 @@ const BookingProvider = ({ children }) => {
   );
 };
 
-const useBooking = () => useContext(BookingContext);
+// Add error handling to the hook
+const useBooking = () => {
+  const context = useContext(BookingContext);
+  if (!context) {
+    throw new Error("useBooking must be used within a BookingProvider");
+  }
+  return context;
+};
 
 export { BookingProvider, useBooking };

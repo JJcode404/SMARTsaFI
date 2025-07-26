@@ -20,34 +20,29 @@ import { Messaging } from "../components/homePage/messages/messages";
 const routes = [
   {
     path: "/",
-    element: (
-      <BookingProvider>
-        <BookingLayout />
-      </BookingProvider>
-    ),
+    element: <HomePage />,
     children: [
       {
-        path: "",
-        element: <HomePage />,
-        children: [
-          {
-            index: true,
-            element: <Dashboard />,
-          },
-          { path: "myProfile", element: <Profile /> },
-          { path: "cleaners", element: <ServiceProvidersScreen /> },
-          { path: "choose-service", element: <ServiceSelectionCard /> },
-          { path: "service-type", element: <ServiceBookingCard /> },
-          { path: "myBookings", element: <MyBookings /> },
-          { path: "messages", element: <Messaging /> },
-        ],
+        index: true,
+        element: <Dashboard />,
       },
-      {
-        path: "booking",
-        element: <Booking />,
-      },
+      { path: "myProfile", element: <Profile /> },
+      { path: "cleaners", element: <ServiceProvidersScreen /> },
+      { path: "myBookings", element: <MyBookings /> },
+      { path: "messages", element: <Messaging /> },
     ],
   },
+
+  {
+    path: "/booking-flow",
+    element: <BookingLayout />,
+    children: [
+      { path: "choose-service", element: <ServiceSelectionCard /> },
+      { path: "service-type", element: <ServiceBookingCard /> },
+      { path: "final", element: <Booking /> },
+    ],
+  },
+
   {
     path: "/account",
     element: <AuthPage />,
@@ -75,5 +70,4 @@ const routes = [
     element: <ServiceProviderDetail />,
   },
 ];
-
 export { routes };
