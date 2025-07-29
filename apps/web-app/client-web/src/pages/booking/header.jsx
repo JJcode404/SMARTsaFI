@@ -1,6 +1,7 @@
 import { ArrowLeft, Menu, X } from "lucide-react";
 import styles from "./booking.module.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Bookingheader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -22,15 +23,13 @@ const Bookingheader = () => {
       >
         <ul className={styles.navbar}>
           <li>
-            <a href="#">Home</a>
+            <Link to={"/"}>Home</Link>
           </li>
           <li>
-            <a href="#">Services</a>
+            <Link to={"/booking-flow/service-type"}>Services</Link>
           </li>
           <li>
-            <a href="#" role="button">
-              My Bookings
-            </a>
+            <Link to={"/myBookings"}>My Bookings</Link>
           </li>
         </ul>
       </div>

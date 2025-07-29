@@ -1,4 +1,3 @@
-// src/context/ClientRegistrationContext.js
 import React, { createContext, useReducer, useContext } from "react";
 
 const ClientRegistrationContext = createContext();
@@ -8,8 +7,10 @@ const initialState = {
   isSubmitted: false,
   formData: {
     client_type: "",
+    imageUrl: "",
     first_name: "",
     last_name: "",
+    profile_picture: "",
     organization_name: "",
     tax_number: "",
     phone_number: "",

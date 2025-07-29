@@ -66,6 +66,19 @@
   border-top: 1px solid #e5e7eb;
 }
 
+.userAvatar {
+  width: 4rem;
+  height: 4rem;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
 /* Icon Styles */
 .icon {
   width: 1.5rem;

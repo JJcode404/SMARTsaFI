@@ -16,6 +16,7 @@ import ServiceSelectionCard from "../components/homePage/booking/serviceSelectio
 import { MyBookings } from "../components/homePage/booking/myBookings";
 import { BookingLayout } from "../utilites/bookingLayout";
 import { Messaging } from "../components/homePage/messages/messages";
+import { Loader } from "../components/loading/loading";
 
 const routes = [
   {
@@ -68,6 +69,10 @@ const routes = [
   {
     path: "/service-provider/:id",
     element: <ServiceProviderDetail />,
+  },
+  {
+    path: "/loader",
+    element: <Loader />,
   },
 ];
 export { routes };

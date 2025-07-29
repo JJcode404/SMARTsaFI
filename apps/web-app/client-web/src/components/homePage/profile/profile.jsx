@@ -113,7 +113,11 @@ const Profile = () => {
             <label className={styles.label}>Profile Picture</label>
             <div className={styles.profilePicture}>
               <div className={styles.avatar}>
-                <User className={styles.avatarIcon} />
+                {/* <User className={styles.avatarIcon} /> */}
+
+                <div className={styles.userAvatar}>
+                  <span>JD</span>
+                </div>
               </div>
               <button className={`${styles.button} ${styles.buttonBlue}`}>
                 <Camera className={styles.buttonIcon} />

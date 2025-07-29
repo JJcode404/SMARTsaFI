@@ -6,6 +6,7 @@ import {
   Phone,
   MapPin,
   FileText,
+  Camera,
 } from "lucide-react";
 import styles from "./clientDetails.module.css";
 import { useClientRegistration } from "../../../utilites/clientRegistrationContext";
@@ -13,6 +14,15 @@ import { useClientRegistration } from "../../../utilites/clientRegistrationConte
 const ClientDetailsForm = () => {
   const { state, setField } = useClientRegistration();
   const clientType = state.formData.client_type;
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      setField("profile_picture", file);
+      setField("profile_picture_preview", previewUrl);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -85,6 +95,44 @@ const ClientDetailsForm = () => {
             </div>
           </div>
         )}
+
+        {/* Profile Picture Upload - Added here after name/org fields */}
+        <div className={styles.formGroup}>
+          <label className={styles.label}>
+            {clientType === "Individual"
+              ? "Profile Picture"
+              : "Organization Logo"}
+          </label>
+          <div className={styles.fileUploadWrapper}>
+            <input
+              type="file"
+              accept="image/*"
+              id="profile-picture-upload"
+              className={styles.fileInput}
+              onChange={handleImageUpload}
+            />
+            <label
+              htmlFor="profile-picture-upload"
+              className={styles.fileInputLabel}
+            >
+              <Camera className={styles.fileInputIcon} />
+              <span className={styles.fileInputText}>
+                {state.formData.profile_picture
+                  ? "Change Image"
+                  : "Choose Image"}
+              </span>
+            </label>
+          </div>
+          {state.formData.profile_picture_preview && (
+            <div className={styles.imagePreview}>
+              <img
+                src={state.formData.profile_picture_preview}
+                alt="Preview"
+                className={styles.previewImage}
+              />
+            </div>
+          )}
+        </div>
 
         <div className={styles.row}>
           <div className={styles.formGroup}>

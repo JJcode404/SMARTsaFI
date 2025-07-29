@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styles from "./authPage.module.css";
 import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../utilites/authContextapi";
 
 function Header() {
   return (
@@ -14,6 +15,43 @@ function Header() {
 }
 function AuthPage() {
   const [view, setView] = useState("login");
+  const { signUp, login } = useAuth();
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const userData = await login(email, password);
+      console.log(userData);
+      navigate("/");
+    } catch (err) {
+      setError(err.message || "Something went wrong during login");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const signUpUserData = await signUp(email, password);
+      navigate("/");
+    } catch (e) {
+      setError(e.message || "Sign up failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -28,28 +66,28 @@ function AuthPage() {
           {view === "login" ? (
             <p className={styles.loginSubtitle}>
               Don't have one?{" "}
-              <a
-                href="#"
-                className={styles.signupLink}
+              <button
+                type="button"
+                className={styles.buttonLink}
                 onClick={() => setView("signup")}
               >
                 Sign up here
-              </a>
+              </button>
             </p>
           ) : (
             <p className={styles.loginSubtitle}>
               Already have an account?{" "}
-              <a
-                href="#"
-                className={styles.signupLink}
+              <button
+                type="button"
+                className={styles.buttonLink}
                 onClick={() => setView("login")}
               >
                 Login here
-              </a>
+              </button>
             </p>
           )}
 
-          <form>
+          <form onSubmit={view === "login" ? handleLogin : handleSignUp}>
             <div className={styles.formGroup}>
               <label htmlFor="email" className={styles.formLabel}>
                 Email Address *
@@ -58,6 +96,8 @@ function AuthPage() {
                 type="email"
                 id="email"
                 className={styles.formInput}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -70,6 +110,8 @@ function AuthPage() {
                 type="password"
                 id="password"
                 className={styles.formInput}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
@@ -79,14 +121,23 @@ function AuthPage() {
               </div>
             )}
             {view === "login" ? (
-              <button type="submit" className={styles.signInButton}>
-                Sign In
+              <button
+                type="submit"
+                className={styles.signInButton}
+                disabled={isLoading}
+              >
+                {isLoading ? "Signing in..." : "Sign In"}
               </button>
             ) : (
-              <button type="submit" className={styles.signInButton}>
-                Register
+              <button
+                type="submit"
+                className={styles.signInButton}
+                disabled={isLoading}
+              >
+                {isLoading ? "Creating account..." : "Register"}
               </button>
             )}
+            {error && <div className={styles.errorMessage}>{error}</div>}
           </form>
           <div className={styles.divider}>this or continue with</div>
           {view === "login" ? (

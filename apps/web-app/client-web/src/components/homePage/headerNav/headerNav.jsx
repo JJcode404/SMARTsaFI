@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Bell, Search, Moon, Sun, Menu } from "lucide-react";
 import styles from "./headerNav.module.css";
 
-const HeaderNav = () => {
+const HeaderNav = ({ onNotificationClick }) => {
   const [darkMode, setDarkMode] = useState(false);
 
   const toggleDarkMode = () => {
@@ -42,7 +42,10 @@ const HeaderNav = () => {
         <div className={styles.headerRight}>
           {/* Notifications */}
           <div className={styles.notificationButton}>
-            <button className={styles.headerButton}>
+            <button
+              className={styles.headerButton}
+              onClick={onNotificationClick}
+            >
               <Bell style={{ width: "1.25rem", height: "1.25rem" }} />
               <span className={styles.notificationBadge}></span>
             </button>

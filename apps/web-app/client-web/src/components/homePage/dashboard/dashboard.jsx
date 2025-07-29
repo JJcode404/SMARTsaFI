@@ -120,10 +120,12 @@ const Dashboard = () => {
                 <span>Book Cleaning</span>
               </button>
             </Link>
-            <button className={styles.secondaryButton}>
-              <Send className={styles.icon} />
-              <span>Send Message</span>
-            </button>
+            <Link to={`/messages`}>
+              <button className={styles.secondaryButton}>
+                <Send className={styles.icon} />
+                <span>Send Message</span>
+              </button>
+            </Link>
           </div>
         </div>
       </div>
