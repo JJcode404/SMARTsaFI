@@ -1,11 +1,66 @@
 import { Check, ChevronRight } from "lucide-react";
 import { useClientRegistration } from "../../../utilites/clientRegistrationContext";
 import styles from "./pagination.module.css";
+import { useFormPostReq } from "../../../utilites/useFormPost";
 
 export default function PaginationButtons() {
-  const { state, nextStep, prevStep, SumbitDocuments } =
+  const { state, nextStep, prevStep, SubmitDocuments } =
     useClientRegistration();
   const isLastStep = state.current === 3;
+  const { postFormData, loading, error, data } = useFormPostReq();
+
+  const submit = async () => {
+    const { formData } = state;
+    const payload = new FormData();
+
+    // Always required
+    payload.append("client_type", formData.client_type);
+    payload.append("first_name", formData.first_name);
+    payload.append("last_name", formData.last_name);
+    payload.append("phone_number", formData.phone_number);
+    payload.append("address", formData.address);
+    payload.append("user_id", formData.user_id);
+
+    if (formData.profile_picture) {
+      payload.append("profile_picture", formData.profile_picture);
+    }
+    if (formData.tax_document_proof) {
+      payload.append("tax_document_proof", formData.tax_document_proof);
+    }
+    if (formData.national_id_proof) {
+      payload.append("national_id_proof", formData.national_id_proof);
+    }
+
+    // Conditionally append fields based on client_type
+    if (formData.client_type === "organization") {
+      if (formData.organization_name) {
+        payload.append("organization_name", formData.organization_name);
+      }
+      if (formData.tax_number) {
+        payload.append("tax_number", formData.tax_number);
+      }
+    } else if (formData.client_type === "individual") {
+      if (formData.national_id_number) {
+        payload.append("national_id_number", formData.national_id_number);
+      }
+    }
+
+    try {
+      console.log("FormData contents:");
+      for (let [key, value] of payload.entries()) {
+        console.log(`${key}:`, value);
+      }
+
+      const result = await postFormData(
+        "http://127.0.0.1:8000/clients/",
+        payload
+      );
+      SubmitDocuments();
+      console.log("Success:", result);
+    } catch (err) {
+      console.error("Failed:", err.message);
+    }
+  };
 
   return (
     <div className={styles.footer}>
@@ -31,7 +86,7 @@ export default function PaginationButtons() {
         <button
           type="submit"
           className={styles.completeButton}
-          onClick={SumbitDocuments}
+          onClick={submit}
         >
           <Check size={20} />
           <span>Complete Registration</span>

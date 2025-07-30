@@ -142,6 +142,7 @@ body.dark-mode {
   font-weight: 500;
   color: var(--text-primary);
   margin: 0;
+  text-transform: capitalize;
 }
 
 .userRole {

@@ -2,9 +2,17 @@ import styles from "./dashboard.module.css";
 import { Plus, Send, Clock, CheckCircle, AlertCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useFetch } from "../../../utilites/useFetch";
+import { useAuth } from "../../../utilites/authContextapi";
+import { useClientData } from "../../../utilites/useClientData";
 
 const Dashboard = () => {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
+  const { data, loading, error } = useClientData();
+
+  if (data) {
+    console.log(data);
+  }
 
   useEffect(() => {
     const handleResize = () => {
@@ -108,7 +116,16 @@ const Dashboard = () => {
       <div className={styles.welcomeSection}>
         <div className={styles.welcomeContent}>
           <div className={styles.welcomeText}>
-            <h1 className={styles.welcomeTitle}>Welcome back, John! 👋</h1>
+            {data && (
+              <h1 className={styles.welcomeTitle}>
+                Welcome back,{" "}
+                <span className={styles.userName}>
+                  {data?.first_name || data?.last_name || "Client"}
+                </span>
+                !👋
+              </h1>
+            )}
+
             <p className={styles.welcomeSubtitle}>
               Your home is looking great. Ready for your next cleaning?
             </p>

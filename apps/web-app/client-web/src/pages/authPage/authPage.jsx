@@ -45,7 +45,7 @@ function AuthPage() {
 
     try {
       const signUpUserData = await signUp(email, password);
-      navigate("/");
+      navigate("/clientRegistration");
     } catch (e) {
       setError(e.message || "Sign up failed. Please try again.");
     } finally {

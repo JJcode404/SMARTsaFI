@@ -1,39 +1,62 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router";
 
-const useFetch = (url) => {
+const useFetch = (url = "https://blog-post-api-posm.onrender.com/posts") => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  console.log("token form usefetch", token);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    console.log(url);
+  const fetchData = useCallback(async () => {
     if (!url) {
-      setError("Url required");
+      setLoading(false); // Add this line
+      return;
+    }
+    // if (!token) {
+    //   setError("No token found");
+    //   setLoading(false);
+    //   navigate("/unauthorized");
+    //   return;
+    // }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // if (response.status === 401) {
+      //   navigate("/unauthorized");
+      //   throw new Error("Authentication required");
+      // }
+
+      // if (response.status === 403) {
+      //   navigate("/forbiden");
+      //   throw new Error("Access denied");
+      // }
+
+      const result = await response.json();
+      setData(result);
+    } catch (err) {
+      setError(err.message || "Unknown error");
+    } finally {
       setLoading(false);
     }
-    fetch(`${url}`, { mode: "cors" })
-      .then((response) => {
-        if (response.status === 404) {
-          navigate("/404");
-          return null;
-        }
-        if (response.status >= 400) {
-          navigate("/serverError");
-          throw new Error("server error");
-        }
-        return response.json();
-      })
-      .then((response) => {
-        console.log(response);
-        setData(response);
-      })
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
-  }, []);
+  }, [url]);
 
-  return { data, error, loading };
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return { data, error, loading, refetch: fetchData };
 };
 
 export { useFetch };

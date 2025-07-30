@@ -9,7 +9,7 @@ const ClientType = () => {
 
   const options = [
     {
-      type: "Individual",
+      type: "individual",
       description: "Personal registration",
       icon: <UserIcon className={styles.icon} />,
     },

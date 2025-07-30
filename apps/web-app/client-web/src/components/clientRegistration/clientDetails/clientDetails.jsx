@@ -44,7 +44,7 @@ const ClientDetailsForm = () => {
       </p>
 
       <form className={styles.form}>
-        {clientType === "Individual" ? (
+        {clientType === "individual" ? (
           <div className={styles.row}>
             <div className={styles.formGroup}>
               <label className={styles.label}>
@@ -99,7 +99,7 @@ const ClientDetailsForm = () => {
         {/* Profile Picture Upload - Added here after name/org fields */}
         <div className={styles.formGroup}>
           <label className={styles.label}>
-            {clientType === "Individual"
+            {clientType === "individual"
               ? "Profile Picture"
               : "Organization Logo"}
           </label>

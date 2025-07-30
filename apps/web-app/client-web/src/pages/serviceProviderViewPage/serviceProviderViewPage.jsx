@@ -98,7 +98,7 @@ const ServiceProvidersScreen = () => {
               }`}
             >
               <User />
-              <span>Individuals</span>
+              <span>individuals</span>
             </button>
             <button
               onClick={() => setFilterType("organization")}
@@ -138,7 +138,7 @@ const ServiceProvidersScreen = () => {
                       <div className={`typeBadge ${provider.type}`}>
                         {provider.type === "individual" ? <User /> : <Users />}
                         {provider.type === "individual"
-                          ? "Individual"
+                          ? "individual"
                           : "Organization"}
                       </div>
                     </div>

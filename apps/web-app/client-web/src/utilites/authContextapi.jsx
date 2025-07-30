@@ -1,36 +1,50 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  // const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   useEffect(() => {
-    // Load token from localStorage on initial render
     const savedToken = localStorage.getItem("token");
     if (savedToken) {
       try {
-        // Verify token is valid before setting
         const decoded = jwtDecode(savedToken);
-
-        // Check if token is expired
         const currentTime = Date.now() / 1000;
         if (decoded.exp && decoded.exp < currentTime) {
-          // Token expired, clean up
+          console.log("Session expired");
           localStorage.removeItem("token");
+          setUser(null);
+          setToken(null);
+          // navigate("/account");
         } else {
           setToken(savedToken);
           setUser(decoded);
         }
       } catch (error) {
-        // Invalid token, clear it
         console.error("Invalid token:", error);
         localStorage.removeItem("token");
+        setUser(null);
+        setToken(null);
+        // navigate("/account"); // redirect if invalid
       }
+    } else {
+      setUser(null);
+      setToken(null);
+      // navigate("/account"); // redirect if no token
     }
+
+    setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    console.log("AuthContext user on load:", user);
+  }, [user]);
 
   const setAuthToken = (newToken) => {
     if (!newToken) {
@@ -55,8 +69,6 @@ const AuthProvider = ({ children }) => {
   };
 
   const login = async (email, password) => {
-    // First ensure we're logged out to prevent token conflicts
-    // logout();
     console.log(JSON.stringify({ email, password }));
 
     const response = await fetch("http://127.0.0.1:8000/login", {
@@ -72,11 +84,11 @@ const AuthProvider = ({ children }) => {
       throw new Error(data.error);
     }
 
-    setAuthToken(data.Token);
+    setAuthToken(data.access_token);
     return data;
   };
 
-  const signUp = async (fullname, email, password) => {
+  const signUp = async (email, password) => {
     const response = await fetch("http://127.0.0.1:8000/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -94,9 +106,6 @@ const AuthProvider = ({ children }) => {
       );
     }
 
-    // Clear any existing session before logging in
-    logout();
-
     // Then login with the new credentials
     await login(email, password);
   };
@@ -106,18 +115,11 @@ const AuthProvider = ({ children }) => {
     setUser(null);
     setToken(null);
     localStorage.removeItem("token");
-
-    // Force clear any URL parameters related to token
-    if (window.history && window.history.replaceState) {
-      const url = new URL(window.location.href);
-      url.searchParams.delete("token");
-      window.history.replaceState({}, document.title, url);
-    }
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, setUser, signUp, token }}
+      value={{ user, login, logout, setUser, signUp, token, isLoading }}
     >
       {children}
     </AuthContext.Provider>

@@ -29,6 +29,7 @@ const RegistrationSummary = () => {
   ];
 
   const { formData, files } = state;
+  console.log(formData);
 
   return (
     <div className={styles.container}>
@@ -76,17 +77,17 @@ const RegistrationSummary = () => {
         </div>
         <div className={styles.row}>
           <span>ID Proof:</span>
-          <span>{files.national_id_proof.name || "None"}</span>
+          <span>{formData.national_id_proof.name || "None"}</span>
         </div>
         <div className={styles.row}>
           <span>Profile Picture:</span>
-          <span>{files.profile_picture.name || "None"}</span>
+          <span>{formData.profile_picture.name || "None"}</span>
         </div>
         <div className={styles.row}>
           <span>Tax Proof:</span>
-          <span>{files.tax_document_proof.name || "None"}</span>
+          <span>{formData.tax_document_proof.name || "None"}</span>
         </div>
-        {formData.client_type === "Individual" && (
+        {formData.client_type === "individual" && (
           <div className={styles.row}>
             <span>Full Name:</span>
             <span>

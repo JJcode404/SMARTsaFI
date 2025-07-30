@@ -10,7 +10,7 @@ const initialState = {
     imageUrl: "",
     first_name: "",
     last_name: "",
-    profile_picture: "",
+    profile_picture: null,
     organization_name: "",
     tax_number: "",
     phone_number: "",
@@ -19,13 +19,15 @@ const initialState = {
     user_id: 1,
     verification_id: false,
     verification_tax: false,
-  },
-  files: {
     national_id_proof: null,
     tax_document_proof: null,
-    profile_picture: null,
-    image_path: null,
   },
+  // files: {
+  //   national_id_proof: null,
+  //   tax_document_proof: null,
+  //   profile_picture: null,
+  //   image_path: null,
+  // },
   error: "",
   success: "",
 };
@@ -43,8 +45,8 @@ function reducer(state, action) {
     case "SET_FILE":
       return {
         ...state,
-        files: {
-          ...state.files,
+        formData: {
+          ...state.formData,
           [action.field]: action.file,
         },
       };
@@ -109,7 +111,7 @@ export const ClientRegistrationProvider = ({ children }) => {
   const nextStep = () => dispatch({ type: "NEXT_STEP" });
   const prevStep = () => dispatch({ type: "PREV_STEP" });
   const verifyID = () => dispatch({ type: "VERIFY_ID" });
-  const SumbitDocuments = () => dispatch({ type: "SUBMIT" });
+  const SubmitDocuments = () => dispatch({ type: "SUBMIT" });
   const verifyTax = () => dispatch({ type: "VERIFY_TAX" });
   const setError = (message) => dispatch({ type: "SET_ERROR", message });
   const setSuccess = (message) => dispatch({ type: "SET_SUCCESS", message });
@@ -128,7 +130,7 @@ export const ClientRegistrationProvider = ({ children }) => {
         verifyTax,
         setError,
         setSuccess,
-        SumbitDocuments,
+        SubmitDocuments,
         resetMessages,
       }}
     >

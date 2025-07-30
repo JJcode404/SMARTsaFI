@@ -61,9 +61,9 @@ const ClientDocumentUploads = () => {
             <Shield className={styles.icon} />
           </div>
           <p className={styles.cardText}>Upload ID Proof</p>
-          {state.files.national_id_proof && (
+          {state.formData.national_id_proof && (
             <p className={styles.fileName}>
-              Uploaded: {state.files.national_id_proof.name}
+              Uploaded: {state.formData.national_id_proof.name}
             </p>
           )}
         </label>
@@ -84,15 +84,15 @@ const ClientDocumentUploads = () => {
             <FileText className={styles.icon} />
           </div>
           <p className={styles.cardText}>Upload Tax Document</p>
-          {state.files.tax_document_proof && (
+          {state.formData.tax_document_proof && (
             <p className={styles.fileName}>
-              Uploaded: {state.files.tax_document_proof.name}
+              Uploaded: {state.formData.tax_document_proof.name}
             </p>
           )}
         </label>
 
         {/* Profile Picture */}
-        <label
+        {/* <label
           className={styles.card}
           onDrop={(e) => handleDrop(e, "profile_picture")}
           onDragOver={handleDragOver}
@@ -107,12 +107,12 @@ const ClientDocumentUploads = () => {
             <ImageIcon className={styles.icon} />
           </div>
           <p className={styles.cardText}>Upload Photo</p>
-          {state.files.profile_picture && (
+          {state.formData.profile_picture && (
             <p className={styles.fileName}>
-              Uploaded: {state.files.profile_picture.name}
+              Uploaded: {state.formData.profile_picture.name}
             </p>
           )}
-        </label>
+        </label> */}
       </div>
     </div>
   );

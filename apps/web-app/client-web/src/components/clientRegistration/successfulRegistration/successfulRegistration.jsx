@@ -1,10 +1,12 @@
 import { useClientRegistration } from "../../../utilites/clientRegistrationContext";
 import "./successfulRegistration.css";
 import { Hourglass } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const SuccessfulRegistrationPage = () => {
   const { state } = useClientRegistration();
   const address = state.formData.address;
+  const navigate = useNavigate();
   const formatDate = (date) =>
     date.toLocaleDateString("en-US", {
       weekday: "long",
@@ -62,7 +64,12 @@ const SuccessfulRegistrationPage = () => {
       </div>
 
       <div className="action-buttons">
-        <button className="btn btn-primary">Browse Services</button>
+        <button
+          className="btn btn-primary"
+          onClick={() => navigate("/booking-flow/service-type")}
+        >
+          Browse Services
+        </button>
         <button className="btn btn-secondary">My Profile</button>
       </div>
     </div>

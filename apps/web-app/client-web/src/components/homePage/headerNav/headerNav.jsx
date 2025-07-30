@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bell, Search, Moon, Sun, Menu } from "lucide-react";
 import styles from "./headerNav.module.css";
-
+import { useAuth } from "../../../utilites/authContextapi";
+import { useFetch } from "../../../utilites/useFetch";
+import { useClientData } from "../../../utilites/useClientData";
 const HeaderNav = ({ onNotificationClick }) => {
   const [darkMode, setDarkMode] = useState(false);
+  const { data, loading, error } = useClientData();
 
   const toggleDarkMode = () => {
     setDarkMode((prev) => !prev);
@@ -57,7 +60,10 @@ const HeaderNav = ({ onNotificationClick }) => {
               <span>JD</span>
             </div>
             <div className={styles.userInfo}>
-              <p className={styles.userName}>John Doe</p>
+              <p className={styles.userName}>
+                {" "}
+                {[data?.first_name, data?.last_name].filter(Boolean).join(" ")}
+              </p>
               <p className={styles.userRole}>Premium Member</p>
             </div>
           </div>

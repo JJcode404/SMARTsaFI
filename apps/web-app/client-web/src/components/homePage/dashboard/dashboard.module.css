@@ -186,7 +186,9 @@ a {
   flex-direction: column;
   gap: 1rem;
 }
-
+.userName {
+  text-transform: capitalize;
+}
 .bookingItem {
   padding: 1rem;
   border-radius: 0.75rem;
