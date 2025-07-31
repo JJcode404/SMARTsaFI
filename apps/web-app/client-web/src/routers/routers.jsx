@@ -30,6 +30,7 @@ const routes = [
         children: [
           { index: true, element: <Dashboard /> },
           { path: "myProfile", element: <Profile /> },
+          { path: "cleaners", element: <ServiceProvidersScreen /> },
           { path: "myBookings", element: <MyBookings /> },
           { path: "messages", element: <Messaging /> },
         ],
