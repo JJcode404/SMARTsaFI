@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import {
   Home,
@@ -13,13 +13,21 @@ import {
   X,
 } from "lucide-react";
 import styles from "./sidebar.module.css";
+import { useAuth } from "../../../utilites/authContextapi";
 
 const HomeSiderBar = () => {
+  const { logout } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/account");
   };
 
   const navItems = [
@@ -85,7 +93,7 @@ const HomeSiderBar = () => {
       </nav>
 
       <div className={styles.logoutContainer}>
-        <button className={styles.logoutButton}>
+        <button className={styles.logoutButton} onClick={handleLogout}>
           <LogOut className={styles.icon} />
           <span>Log Out</span>
         </button>

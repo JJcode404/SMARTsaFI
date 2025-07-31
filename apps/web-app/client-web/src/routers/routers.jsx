@@ -17,20 +17,23 @@ import { MyBookings } from "../components/homePage/booking/myBookings";
 import { BookingLayout } from "../utilites/bookingLayout";
 import { Messaging } from "../components/homePage/messages/messages";
 import { Loader } from "../components/loading/loading";
+import { ProtectedLayout } from "./protectedLayout";
 
 const routes = [
   {
     path: "/",
-    element: <HomePage />,
+    element: <ProtectedLayout />, // token check here
     children: [
       {
-        index: true,
-        element: <Dashboard />,
+        path: "/",
+        element: <HomePage />, // wraps sidebar, header, notification, etc.
+        children: [
+          { index: true, element: <Dashboard /> },
+          { path: "myProfile", element: <Profile /> },
+          { path: "myBookings", element: <MyBookings /> },
+          { path: "messages", element: <Messaging /> },
+        ],
       },
-      { path: "myProfile", element: <Profile /> },
-      { path: "cleaners", element: <ServiceProvidersScreen /> },
-      { path: "myBookings", element: <MyBookings /> },
-      { path: "messages", element: <Messaging /> },
     ],
   },
 
