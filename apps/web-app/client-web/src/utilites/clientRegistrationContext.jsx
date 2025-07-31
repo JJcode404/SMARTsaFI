@@ -1,4 +1,5 @@
-import React, { createContext, useReducer, useContext } from "react";
+import React, { createContext, useReducer, useContext, useEffect } from "react";
+import { useAuth } from "./authContextapi";
 
 const ClientRegistrationContext = createContext();
 
@@ -16,7 +17,7 @@ const initialState = {
     phone_number: "",
     national_id_number: "",
     address: "",
-    user_id: 1,
+    user_id: null,
     verification_id: false,
     verification_tax: false,
     national_id_proof: null,
@@ -74,6 +75,14 @@ function reducer(state, action) {
         ...state,
         formData: { ...state.formData, verification_tax: true },
       };
+    case "SET_USER_ID":
+      return {
+        ...state,
+        formData: {
+          ...state.formData,
+          user_id: action.user_id,
+        },
+      };
     case "SET_ERROR":
       return {
         ...state,
@@ -99,6 +108,13 @@ function reducer(state, action) {
 
 export const ClientRegistrationProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { user } = useAuth();
+  useEffect(() => {
+    if (user?.client_id) {
+      console.log("Setting user_id from AuthContext:", user.client_id);
+      dispatch({ type: "SET_USER_ID", user_id: user.client_id });
+    }
+  }, [user]);
 
   const setField = (field, value) => {
     dispatch({ type: "SET_FORM_FIELD", field, value });

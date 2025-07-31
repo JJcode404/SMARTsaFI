@@ -59,11 +59,7 @@ const routes = [
 
   {
     path: "/clientRegistration",
-    element: (
-      <ClientRegistrationProvider>
-        <ClientRegistrationPage />
-      </ClientRegistrationProvider>
-    ),
+    element: <ClientRegistrationPage />,
   },
   {
     path: "/viewServiceProviders",

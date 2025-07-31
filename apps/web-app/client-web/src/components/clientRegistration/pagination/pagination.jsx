@@ -2,16 +2,29 @@ import { Check, ChevronRight } from "lucide-react";
 import { useClientRegistration } from "../../../utilites/clientRegistrationContext";
 import styles from "./pagination.module.css";
 import { useFormPostReq } from "../../../utilites/useFormPost";
+import { useEffect } from "react";
 
 export default function PaginationButtons() {
   const { state, nextStep, prevStep, SubmitDocuments } =
     useClientRegistration();
+  useEffect(() => {
+    console.log(
+      "PaginationButtons mounted with user_id:",
+      state.formData.user_id
+    );
+  }, [state.formData.user_id]);
   const isLastStep = state.current === 3;
   const { postFormData, loading, error, data } = useFormPostReq();
 
   const submit = async () => {
     const { formData } = state;
     const payload = new FormData();
+
+    if (!formData.user_id) {
+      console.error("User ID not ready yet. Aborting form submission.");
+      alert("Please wait a moment before submitting. User ID is loading...");
+      return;
+    }
 
     // Always required
     payload.append("client_type", formData.client_type);

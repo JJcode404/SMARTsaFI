@@ -1,5 +1,8 @@
 import { ProgressBar } from "../booking/progressBar";
-import { useClientRegistration } from "../../utilites/clientRegistrationContext";
+import {
+  ClientRegistrationProvider,
+  useClientRegistration,
+} from "../../utilites/clientRegistrationContext";
 import { ClientType } from "../../components/clientRegistration/clientType/clientType";
 import { ClientDetailsForm } from "../../components/clientRegistration/clientDetails/clientDetails";
 import { ClientDocumentUploads } from "../../components/clientRegistration/clientDocuments/clientDocuments";
@@ -8,7 +11,7 @@ import { Header } from "../authPage/authPage";
 import PaginationButtons from "../../components/clientRegistration/pagination/pagination";
 import { SuccessfulRegistrationPage } from "../../components/clientRegistration/successfulRegistration/successfulRegistration";
 
-const ClientRegistrationPage = () => {
+const RegistrationContent = () => {
   const { state } = useClientRegistration();
   const components = [
     <ClientType state={state} />,
@@ -60,5 +63,10 @@ const ClientRegistrationPage = () => {
     </div>
   );
 };
+const ClientRegistrationPage = () => (
+  <ClientRegistrationProvider>
+    <RegistrationContent />
+  </ClientRegistrationProvider>
+);
 
 export { ClientRegistrationPage };

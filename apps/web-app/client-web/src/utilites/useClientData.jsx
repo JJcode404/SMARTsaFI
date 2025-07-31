@@ -9,6 +9,7 @@ const useClientData = () => {
 
   useEffect(() => {
     if (user?.client_id) {
+      console.log("The changing user id is", user.client_id);
       setUrl(`http://127.0.0.1:8000/clients/${user.client_id}`);
     }
   }, [user]);
