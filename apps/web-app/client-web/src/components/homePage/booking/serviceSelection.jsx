@@ -1,18 +1,56 @@
 import { ArrowRight } from "lucide-react";
 import styles from "./serviceSelection.module.css";
 import { useBooking } from "../../../utilites/bookingContext";
-import { services } from "../../../../data/Servicetypes";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Bookingheader } from "../../../pages/booking/header";
+import {
+  transformFeatures,
+  transformServices,
+} from "../../../../data/serviceTransformer";
+import { useFetch } from "../../../utilites/useFetch";
 
 const ServiceSelectionCard = () => {
-  const { state, setService } = useBooking();
+  const { state, setService, setFeatures } = useBooking();
   const navigate = useNavigate();
   const selectedService = state.service;
   const selectedServiceType = state.serviceType;
-  const currentFeatures = services[selectedServiceType]?.features || [];
+
+  // Fetch data from backend
+  console.log(
+    "selectedServiceType From serviceSelection:",
+    selectedServiceType
+  );
+
+  const { data, loading, error } = useFetch(
+    `http://127.0.0.1:8000/services/features/${selectedServiceType}`
+  );
+  if (data) {
+    console.log("Here is the fetched data", data);
+  }
+
+  const servicesFeatures = useMemo(() => {
+    return data ? transformFeatures(data) : {};
+  }, [data]);
+
+  useEffect(() => {
+    if (data) {
+      const transformed = transformFeatures(data);
+
+      // Only update if different from existing state
+      if (JSON.stringify(state.features) !== JSON.stringify(transformed)) {
+        setFeatures(transformed);
+        console.log("These are the state features", transformed);
+      }
+    }
+  }, [data, state.features, setFeatures]);
+
+  // console.log(`services with icons:`, services);
+  // const currentFeatures = services[selectedServiceType]?.features || [];
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <>
@@ -31,7 +69,7 @@ const ServiceSelectionCard = () => {
 
         <div className={styles.card}>
           <div className={styles.servicesContainer}>
-            {currentFeatures.map((service) => {
+            {servicesFeatures.map((service) => {
               const Icon = service.icon;
               const isSelected = selectedService === service.title;
 

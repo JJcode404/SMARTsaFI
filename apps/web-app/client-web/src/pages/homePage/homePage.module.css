@@ -15,3 +15,138 @@
     margin-left: 0; /* full width on small screens if sidebar is collapsed */
   }
 }
+
+/* Add these styles to your homePage.module.css file */
+
+.container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s ease;
+  min-width: 0; /* Prevents flex item from overflowing */
+  background: #fafafa;
+}
+
+/* Desktop push behavior */
+@media (min-width: 769px) {
+  .mainContentPushed {
+    margin-left: 16rem; /* Same as sidebar open width */
+  }
+
+  .mainContentCollapsed {
+    margin-left: 4rem; /* Same as sidebar collapsed width */
+  }
+}
+
+/* Mobile behavior - no push, overlay instead */
+@media (max-width: 768px) {
+  .mainContent {
+    margin-left: 0 !important; /* Always full width on mobile */
+  }
+}
+
+/* Notification panel styles */
+.notificationPanel {
+  position: absolute;
+  top: 4rem; /* Adjust based on your header height */
+  right: 1rem;
+  z-index: 100;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+/* Ensure content doesn't get squeezed too much */
+.mainContent > * {
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+/* Content area styling */
+.mainContent > :last-child {
+  flex: 1;
+  overflow-y: auto;
+  /* padding: 1rem; */
+}
+
+/* Clean homePage.module.css - Replace your existing CSS with this */
+
+.container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f9fafb;
+  transition: margin-left 0.3s ease;
+  min-width: 0;
+  /* Remove any default margin */
+  margin-left: 0;
+}
+
+/* Desktop push behavior */
+@media (min-width: 769px) {
+  .mainContentPushed {
+    margin-left: 16rem; /* Same as sidebar open width */
+  }
+
+  .mainContentCollapsed {
+    margin-left: 4rem; /* Same as sidebar collapsed width */
+  }
+}
+
+/* Mobile behavior - no push, overlay instead */
+@media (max-width: 768px) {
+  .mainContent {
+    margin-left: 0 !important; /* Always full width on mobile */
+  }
+}
+
+/* Header should be fixed height, not flexible */
+.mainContent > nav {
+  flex-shrink: 0;
+  /* Add specific height if needed */
+}
+
+/* Notification panel styles */
+.notificationPanel {
+  position: absolute;
+  top: 4rem; /* Adjust based on your header height */
+  right: 1rem;
+  z-index: 100;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  max-height: 400px;
+}
+
+/* Main content area - this is where Outlet renders */
+.mainContent > div:last-child {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* padding: 1rem; */
+  /* Ensure it takes remaining space */
+  min-height: 0;
+}
+
+/* Alternative: If you want to target the Outlet specifically */
+.contentArea {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  min-height: 0;
+}

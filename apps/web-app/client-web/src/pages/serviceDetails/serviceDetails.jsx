@@ -2,15 +2,25 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Plus, Minus } from "lucide-react";
 import styles from "./serviceDetails.module.css";
 import { useBooking } from "../../utilites/bookingContext";
-import { roomConfig } from "../../../data/roomConfig";
 
 const basePrice = 3000;
 
-const createInitialCounts = (type) => {
+const createInitialCounts = (features, selectedService) => {
   const counts = {};
-  roomConfig[type].forEach(({ key }) => {
-    counts[key] = 0;
-  });
+  const selectedFeature = features.find(
+    (feature) => feature.title === selectedService
+  );
+
+  if (
+    selectedFeature &&
+    selectedFeature.options &&
+    selectedFeature.options.length > 0
+  ) {
+    selectedFeature.options.forEach((option) => {
+      counts[`${selectedFeature.id}_${option.id}`] = 0;
+    });
+  }
+
   return counts;
 };
 
@@ -20,31 +30,57 @@ const ServiceDetails = () => {
   const instructions = state.cleaningInstructions;
 
   const [roomCounts, setRoomCounts] = useState(() =>
-    createInitialCounts(state.serviceType)
+    createInitialCounts(state.features, state.service)
   );
+  const [featureDescriptions, setFeatureDescriptions] = useState({});
   const [showPaymentDetails, setShowPaymentDetails] = useState(true);
   const [showServiceDetails, setShowServiceDetails] = useState(false);
 
   useEffect(() => {
-    // Reset counts when serviceType changes
-    setRoomCounts(createInitialCounts(state.serviceType));
-  }, [state.serviceType]);
+    // Reset counts when features or service changes
+    setRoomCounts(createInitialCounts(state.features, state.service));
+    setFeatureDescriptions({});
+  }, [state.features, state.service]);
 
   useEffect(() => {
-    const rooms = roomConfig[state.serviceType];
     let totalPrice = basePrice;
 
-    rooms.forEach(({ key, price }) => {
-      totalPrice += price * (roomCounts[key] || 0);
-    });
+    // Find the selected feature
+    const selectedFeature = state.features.find(
+      (feature) => feature.title === state.service
+    );
+
+    // Calculate price from the selected feature's options
+    if (
+      selectedFeature &&
+      selectedFeature.options &&
+      selectedFeature.options.length > 0
+    ) {
+      selectedFeature.options.forEach((option) => {
+        const key = `${selectedFeature.id}_${option.id}`;
+        totalPrice += option.unit_price * (roomCounts[key] || 0);
+      });
+    }
 
     dispatch({ type: "SET_PRICE", payload: totalPrice });
 
-    const label = rooms
-      .map(({ key, label }) => `${roomCounts[key] || 0} ${label.split(" ")[0]}`)
-      .join(", ");
-    dispatch({ type: "SET_BEDROOMLABLE", payload: label });
-  }, [roomCounts, state.serviceType]);
+    // Create label from selected options
+    const labels = [];
+    if (
+      selectedFeature &&
+      selectedFeature.options &&
+      selectedFeature.options.length > 0
+    ) {
+      selectedFeature.options.forEach((option) => {
+        const key = `${selectedFeature.id}_${option.id}`;
+        const count = roomCounts[key] || 0;
+        if (count > 0) {
+          labels.push(`${count} ${option.label}`);
+        }
+      });
+    }
+    dispatch({ type: "SET_BEDROOMLABLE", payload: labels.join(", ") });
+  }, [roomCounts, state.features, state.service, dispatch]);
 
   const handlePropertyChange = (type) => {
     dispatch({ type: "SET_PROPERTY_TYPE", payload: type });
@@ -58,15 +94,19 @@ const ServiceDetails = () => {
     dispatch({ type: "SET_CLEANINGINSTRUCTIONS", payload: value });
   };
 
-  const updateRoomCount = (roomType, increment) => {
+  const handleFeatureDescriptionChange = (featureId, value) => {
+    setFeatureDescriptions((prev) => ({
+      ...prev,
+      [featureId]: value,
+    }));
+  };
+
+  const updateRoomCount = (key, increment) => {
     setRoomCounts((prev) => {
-      const newCount = Math.max(
-        0,
-        (prev[roomType] || 0) + (increment ? 1 : -1)
-      );
+      const newCount = Math.max(0, (prev[key] || 0) + (increment ? 1 : -1));
       return {
         ...prev,
-        [roomType]: newCount,
+        [key]: newCount,
       };
     });
   };
@@ -154,32 +194,120 @@ const ServiceDetails = () => {
                 </div>
               </div>
 
-              {/* Room Count Section */}
+              {/* Features Section */}
               <div className={styles.roomSection}>
-                {roomConfig[state.serviceType].map(({ key, label }) => (
-                  <div key={key} className={styles.roomRow}>
-                    <span className={styles.roomLabel}>{label}</span>
-                    <div className={styles.roomControls}>
-                      <button
-                        onClick={() => updateRoomCount(key, false)}
-                        className={styles.roomButton}
-                        disabled={roomCounts[key] === 0}
-                      >
-                        <Minus className={styles.roomButtonIcon} />
-                      </button>
-                      <span className={styles.roomCount}>
-                        {roomCounts[key] || 0}
-                      </span>
-                      <button
-                        onClick={() => updateRoomCount(key, true)}
-                        className={styles.roomButton}
-                        disabled={roomCounts[key] === 15}
-                      >
-                        <Plus className={styles.roomButtonIcon} />
-                      </button>
+                {(() => {
+                  // Find the selected feature by matching title with state.service
+                  const selectedFeature = state.features.find(
+                    (feature) => feature.title === state.service
+                  );
+
+                  if (!selectedFeature) {
+                    return (
+                      <div className={styles.noFeatureMessage}>
+                        No feature found for "{state.service}"
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div
+                      key={selectedFeature.id}
+                      className={styles.featureGroup}
+                    >
+                      <h4 className={styles.featureTitle}>
+                        {selectedFeature.title}
+                      </h4>
+                      <p className={styles.featureDescription}>
+                        {selectedFeature.description}
+                      </p>
+
+                      {selectedFeature.options &&
+                      selectedFeature.options.length > 0 ? (
+                        // Render options with counters
+                        selectedFeature.options.map((option) => {
+                          const key = `${selectedFeature.id}_${option.id}`;
+                          return (
+                            <div key={option.id} className={styles.roomRow}>
+                              <span className={styles.roomLabel}>
+                                {option.label} (Ksh {option.unit_price})
+                              </span>
+                              <div className={styles.roomControls}>
+                                {/* Minus button */}
+                                <button
+                                  onClick={() => updateRoomCount(key, false)}
+                                  className={styles.roomButton}
+                                  disabled={roomCounts[key] === 0}
+                                >
+                                  <Minus className={styles.roomButtonIcon} />
+                                </button>
+
+                                {/* Number input */}
+                                <input
+                                  type="number"
+                                  className={styles.roomInput}
+                                  value={roomCounts[key] || 0}
+                                  min={option.min_units || 0}
+                                  placeholder="0"
+                                  max={option.max_units || 100}
+                                  onChange={(e) => {
+                                    const value = Math.max(
+                                      option.min_units || 0,
+                                      Math.min(
+                                        option.max_units || 100,
+                                        Number(e.target.value) || 0
+                                      )
+                                    );
+                                    setRoomCounts((prev) => ({
+                                      ...prev,
+                                      [key]: value,
+                                    }));
+                                  }}
+                                />
+
+                                {/* Plus button */}
+                                <button
+                                  onClick={() => updateRoomCount(key, true)}
+                                  className={styles.roomButton}
+                                  disabled={
+                                    roomCounts[key] >= (option.max_units || 100)
+                                  }
+                                >
+                                  <Plus className={styles.roomButtonIcon} />
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })
+                      ) : (
+                        // Render description input when no options
+                        <div className={styles.futherInstruction}>
+                          <label
+                            htmlFor={`feature-${selectedFeature.id}`}
+                            className={styles.insturctionsLable}
+                          >
+                            Please provide details for {selectedFeature.title}:
+                          </label>
+                          <textarea
+                            name={`feature-${selectedFeature.id}`}
+                            id={`feature-${selectedFeature.id}`}
+                            value={
+                              featureDescriptions[selectedFeature.id] || ""
+                            }
+                            onChange={(e) =>
+                              handleFeatureDescriptionChange(
+                                selectedFeature.id,
+                                e.target.value
+                              )
+                            }
+                            placeholder={`Describe your ${selectedFeature.title.toLowerCase()} requirements...`}
+                            className={styles.instructions}
+                          />
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })()}
               </div>
 
               {/* Cleaning Instructions */}
@@ -197,7 +325,7 @@ const ServiceDetails = () => {
                   onChange={(e) => handleCleaningInstructions(e.target.value)}
                   placeholder="Example: A/C has bad smell, too much dust in vents, regular cleaning, etc."
                   className={styles.instructions}
-                ></textarea>
+                />
               </div>
 
               {/* Navigation Buttons */}
@@ -289,14 +417,11 @@ const ServiceDetails = () => {
                       </span>
                     </div>
                     <div className={styles.summaryRow}>
-                      <span className={styles.summaryLabel}>Rooms</span>
+                      <span className={styles.summaryLabel}>
+                        Selected Features
+                      </span>
                       <span className={styles.summaryValue}>
-                        {roomConfig[state.serviceType]
-                          .map(
-                            ({ key, label }) =>
-                              `${roomCounts[key] || 0} ${label}`
-                          )
-                          .join(", ")}
+                        {state.bedroomLabel || "None selected"}
                       </span>
                     </div>
                     <div className={styles.summaryRow}>

@@ -4,15 +4,19 @@ import React, {
   useState,
   useReducer,
   useRef,
+  useEffect,
 } from "react";
+import { useAuth } from "./authContextapi";
 
 const BookingContext = createContext(null); // Provide default value
 
 const initialState = {
   serviceType: "residential",
   service: "Deep Cleaning Service",
+  features: [],
   isSubmitted: false,
   current: 0,
+  user_id: null,
   propertyType: "Apartment",
   bedroomLabel: "",
   furnishing: "Furnished",
@@ -33,6 +37,11 @@ const bookingReducer = (state, action) => {
       return { ...state, current: (state.current + 1) % 5 };
     case "SUBMIT":
       return { ...state, isSubmitted: true };
+    case "SET_USER_ID":
+      return {
+        ...state,
+        user_id: action.user_id,
+      };
     case "SET_PROPERTY_TYPE":
       return { ...state, propertyType: action.payload };
     case "SET_FURNISHING":
@@ -63,6 +72,13 @@ const bookingReducer = (state, action) => {
         ...state,
         service: action.payload,
       };
+
+    case "SET_FEATURES":
+      return {
+        ...state,
+        features: action.payload,
+      };
+
     case "SET_DATE":
       return { ...state, selectedDate: action.payload };
     case "SET_TIME":
@@ -81,6 +97,14 @@ const bookingReducer = (state, action) => {
 const BookingProvider = ({ children }) => {
   const [state, dispatch] = useReducer(bookingReducer, initialState);
   const contextId = useRef(Math.random().toString(36).substr(2, 9));
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user?.client_id) {
+      console.log("Setting user_id from AuthContext:", user.client_id);
+      dispatch({ type: "SET_USER_ID", user_id: user.client_id });
+    }
+  }, [user]);
 
   const handleNext = () => dispatch({ type: "NEXT_STEP" });
   const handleSubmit = () => dispatch({ type: "SUBMIT" });
@@ -88,6 +112,9 @@ const BookingProvider = ({ children }) => {
     dispatch({ type: "SET_SERVICETYPE", payload: serviceType });
   const setService = (service) =>
     dispatch({ type: "SET_SERVICE", payload: service });
+
+  const setFeatures = (features) =>
+    dispatch({ type: "SET_FEATURES", payload: features });
 
   return (
     <BookingContext.Provider
@@ -98,6 +125,7 @@ const BookingProvider = ({ children }) => {
         handleSubmit,
         setService,
         setServiceType,
+        setFeatures,
       }}
     >
       {children}

@@ -31,6 +31,7 @@ const initialState = {
   // },
   error: "",
   success: "",
+  fieldErrors: {},
 };
 
 function reducer(state, action) {
@@ -95,6 +96,25 @@ function reducer(state, action) {
         success: action.message,
         error: "",
       };
+    case "SET_FIELD_ERROR":
+      return {
+        ...state,
+        fieldErrors: {
+          ...state.fieldErrors,
+          [action.field]: action.message,
+        },
+      };
+    case "CLEAR_FIELD_ERROR":
+      const { [action.field]: _, ...rest } = state.fieldErrors;
+      return {
+        ...state,
+        fieldErrors: rest,
+      };
+    case "CLEAR_ALL_FIELD_ERRORS":
+      return {
+        ...state,
+        fieldErrors: {},
+      };
     case "RESET_MESSAGES":
       return {
         ...state,
@@ -123,6 +143,14 @@ export const ClientRegistrationProvider = ({ children }) => {
   const setFile = (field, file) => {
     dispatch({ type: "SET_FILE", field, file });
   };
+  const setFieldError = (field, message) =>
+    dispatch({ type: "SET_FIELD_ERROR", field, message });
+
+  const clearFieldError = (field) =>
+    dispatch({ type: "CLEAR_FIELD_ERROR", field });
+
+  const clearAllFieldErrors = () =>
+    dispatch({ type: "CLEAR_ALL_FIELD_ERRORS" });
 
   const nextStep = () => dispatch({ type: "NEXT_STEP" });
   const prevStep = () => dispatch({ type: "PREV_STEP" });
@@ -148,6 +176,9 @@ export const ClientRegistrationProvider = ({ children }) => {
         setSuccess,
         SubmitDocuments,
         resetMessages,
+        setFieldError,
+        clearFieldError,
+        clearAllFieldErrors,
       }}
     >
       {children}

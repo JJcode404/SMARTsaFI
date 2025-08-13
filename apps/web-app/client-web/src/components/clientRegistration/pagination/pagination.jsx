@@ -5,8 +5,16 @@ import { useFormPostReq } from "../../../utilites/useFormPost";
 import { useEffect } from "react";
 
 export default function PaginationButtons() {
-  const { state, nextStep, prevStep, SubmitDocuments } =
-    useClientRegistration();
+  const {
+    state,
+    nextStep,
+    prevStep,
+    SubmitDocuments,
+    setFieldError,
+    setErrors,
+    clearAllFieldErrors,
+  } = useClientRegistration();
+  const { formData } = state;
   useEffect(() => {
     console.log(
       "PaginationButtons mounted with user_id:",
@@ -75,9 +83,115 @@ export default function PaginationButtons() {
     }
   };
 
+  const validateStep = () => {
+    let isValid = true;
+
+    // Clear existing errors before validation
+    clearAllFieldErrors();
+
+    if (state.current === 1) {
+      if (!formData.tax_number) {
+        setFieldError("tax_number", "Tax number is required");
+        isValid = false;
+      }
+
+      if (!formData.national_id_number) {
+        setFieldError("national_id_number", "National ID number is required");
+        isValid = false;
+      }
+
+      if (!formData.address) {
+        setFieldError("address", "Address is required");
+        isValid = false;
+      }
+
+      if (formData.client_type === "individual") {
+        if (!formData.first_name) {
+          setFieldError("first_name", "First name is required");
+          isValid = false;
+        }
+
+        if (!formData.last_name) {
+          setFieldError("last_name", "Last name is required");
+          isValid = false;
+        }
+
+        if (!formData.profile_picture) {
+          setFieldError("profile_picture", "Profile picture is required");
+          isValid = false;
+        } else {
+          const allowedTypes = ["image/jpeg", "image/png"];
+          const maxSize = 5 * 1024 * 1024;
+
+          if (!allowedTypes.includes(formData.profile_picture.type)) {
+            setFieldError(
+              "profile_picture",
+              "Invalid file type. Only JPEG and PNG are allowed."
+            );
+            isValid = false;
+          }
+
+          if (formData.profile_picture.size > maxSize) {
+            setFieldError(
+              "profile_picture",
+              "File is too large. Maximum allowed size is 5MB."
+            );
+            isValid = false;
+          }
+        }
+      } else if (formData.client_type === "Organization") {
+        if (!formData.organization_name) {
+          setFieldError("organization_name", "Organization name is required");
+          isValid = false;
+        }
+
+        if (!formData.profile_picture) {
+          setFieldError("profile_picture", "Organization logo is required");
+          isValid = false;
+        } else {
+          const allowedTypes = ["image/jpeg", "image/png"];
+          const maxSize = 5 * 1024 * 1024; // 5MB
+
+          if (!allowedTypes.includes(formData.profile_picture.type)) {
+            setFieldError(
+              "profile_picture",
+              "Invalid file type. Only JPEG and PNG are allowed."
+            );
+            isValid = false;
+          }
+
+          if (formData.profile_picture.size > maxSize) {
+            setFieldError(
+              "profile_picture",
+              "File is too large. Maximum allowed size is 5MB."
+            );
+            isValid = false;
+          }
+        }
+      }
+    }
+
+    if (state.current === 2) {
+      if (!formData.national_id_proof) {
+        setFieldError("national_id_proof", "National ID proof is required");
+        isValid = false;
+      }
+      if (!formData.tax_document_proof) {
+        setFieldError("tax_document_proof", "Tax document is required");
+        isValid = false;
+      }
+    }
+
+    return isValid;
+  };
+
   return (
     <div className={styles.footer}>
-      <button className={styles.backButton} onClick={prevStep}>
+      <button
+        className={styles.backButton}
+        onClick={prevStep}
+        disabled={state.current === 0}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className={styles.icon}
@@ -105,7 +219,15 @@ export default function PaginationButtons() {
           <span>Complete Registration</span>
         </button>
       ) : (
-        <button type="button" className={styles.nextButton} onClick={nextStep}>
+        <button
+          type="button"
+          className={styles.nextButton}
+          onClick={() => {
+            if (validateStep()) {
+              nextStep();
+            }
+          }}
+        >
           <span>Next</span>
           <ChevronRight size={20} />
         </button>

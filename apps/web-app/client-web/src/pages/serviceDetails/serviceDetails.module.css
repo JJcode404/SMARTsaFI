@@ -413,6 +413,24 @@
 }
 
 /* Room Section */
+.featureGroup {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.featureTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.featureDescription {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
 .roomSection {
   display: flex;
   flex-direction: column;
@@ -595,6 +613,32 @@
 
 .summaryValue {
   color: #111827;
+}
+.roomInput {
+  width: 50px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 4px;
+  margin: 0 6px;
+  outline: none;
+  background-color: #fff;
+  color: #333;
+}
+
+/* Remove default number input arrows (optional) */
+.roomInput::-webkit-inner-spin-button,
+.roomInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Focus state for accessibility */
+.roomInput:focus {
+  border-color: #10144a; /* Green border on focus */
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.4);
 }
 
 @media (max-width: 480px) {

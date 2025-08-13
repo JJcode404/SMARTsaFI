@@ -90,3 +90,12 @@
   font-size: 0.85rem;
   color: #4b5563;
 }
+.errorCard {
+  border: 2px solid red;
+  background-color: #ffe5e5;
+}
+.fieldError {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}

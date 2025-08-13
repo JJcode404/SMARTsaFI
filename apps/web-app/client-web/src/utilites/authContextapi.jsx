@@ -80,8 +80,8 @@ const AuthProvider = ({ children }) => {
     const data = await response.json();
 
     if (!response.ok) {
-      console.log(data.error);
-      throw new Error(data.error);
+      console.log(data.detail);
+      throw new Error(data.detail);
     }
 
     setAuthToken(data.access_token);
@@ -100,9 +100,9 @@ const AuthProvider = ({ children }) => {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("Signup failed:", data);
+      console.error("Signup failed:", data.detail);
       throw new Error(
-        data.error || "Failed to create account. Please try again."
+        data.detail || "Failed to create account. Please try again."
       );
     }
 

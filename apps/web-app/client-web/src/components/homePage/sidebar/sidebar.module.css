@@ -117,13 +117,498 @@
   font-weight: 500;
 }
 
-/* Desktop Override */
-@media (min-width: 1024px) {
+/* Add these styles to your sidebar.module.css file */
+
+/* Toggle Button - Similar to Claude's panel button */
+.toggleButton {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1002;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggleButton:hover {
+  background: #f9fafb;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.toggleButtonOpen {
+  left: 5rem; /* Adjust based on your sidebar width */
+}
+
+.toggleIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #6b7280;
+}
+
+/* Overlay for mobile */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+/* Sidebar Base Styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  z-index: 1000;
+  transition: width 0.3s ease, transform 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sidebar Open State */
+.sidebarOpen {
+  width: 16rem; /* 256px */
+}
+
+/* Sidebar Closed State */
+.sidebarClosed {
+  width: 4rem; /* 64px - just enough for icons */
+}
+
+/* Sidebar Header */
+.sidebarHeader {
+  padding: 1.5rem 1rem 1rem 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  transition: opacity 0.2s ease;
+}
+
+.headerHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logoIcon {
+  flex-shrink: 0;
+}
+
+.brandLogo {
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.logoText {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+}
+
+/* Navigation */
+.nav {
+  flex: 1;
+  padding: 1rem 0.5rem;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  margin-bottom: 0.25rem;
+  color: #6b7280;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.navItem:hover {
+  background: #f9fafb;
+  color: #374151;
+}
+
+.navItemActive {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+}
+
+.navItemCollapsed {
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
+}
+
+.navIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.navLabel {
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.navLabelHidden {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+/* Logout Container */
+.logoutContainer {
+  padding: 1rem 0.5rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.logoutButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  width: 100%;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.logoutButton:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.logoutButtonCollapsed {
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .toggleButton {
+    left: 1rem !important; /* Always in top-left on mobile */
+  }
+
+  .toggleButtonOpen {
+    left: 1rem !important;
+  }
+
+  .overlay {
+    display: block;
+  }
+
   .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebarOpen {
+    transform: translateX(0);
+    width: 16rem;
+  }
+
+  .sidebarClosed {
+    transform: translateX(-100%);
+  }
+
+  /* Always show labels on mobile when sidebar is open */
+  .sidebarOpen .navLabelHidden {
+    opacity: 1;
+    width: auto;
+    overflow: visible;
+  }
+
+  .sidebarOpen .headerHidden {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 769px) {
+  .overlay {
+    display: none !important;
+  }
+
+  /* Smooth transition for toggle button position */
+  .toggleButton {
+    transition: left 0.3s ease, all 0.2s ease;
+  }
+}
+
+/* Tooltip for collapsed items on desktop */
+@media (min-width: 769px) {
+  .sidebarClosed .navItem::after,
+  .sidebarClosed .logoutButton::after {
+    content: attr(title);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: #1f2937;
+    color: white;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 1001;
+  }
+
+  .sidebarClosed .navItem:hover::after,
+  .sidebarClosed .logoutButton:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Updates to add to your existing sidebar.module.css file */
+
+/* Toggle Button - Updated positioning */
+.toggleButton {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1002;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease; /* Increased transition time to match sidebar */
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggleButton:hover {
+  background: #f9fafb;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Button moves with sidebar on desktop */
+@media (min-width: 769px) {
+  .toggleButtonOpen {
+    left: 13rem; /* Slightly inside the sidebar when open */
+  }
+}
+
+/* Button stays in corner on mobile */
+@media (max-width: 768px) {
+  .toggleButton {
+    left: 1rem !important;
+  }
+}
+
+.toggleIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #6b7280;
+}
+
+/* Sidebar positioning for push layout */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  z-index: 1000;
+  transition: width 0.3s ease, transform 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Desktop behavior - push layout */
+@media (min-width: 769px) {
+  .sidebarOpen {
+    width: 16rem;
     transform: translateX(0);
   }
 
-  .closeButton {
-    display: none;
+  .sidebarClosed {
+    width: 4rem;
+    transform: translateX(0);
   }
+}
+
+/* Mobile behavior - overlay */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 16rem;
+  }
+
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+
+  .sidebarClosed {
+    transform: translateX(-100%);
+  }
+}
+
+/* Overlay for mobile */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+@media (max-width: 768px) {
+  .overlay {
+    display: block;
+  }
+}
+
+/* Rest of your existing sidebar styles... */
+.sidebarHeader {
+  padding: 1.5rem 1rem 1rem 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  transition: opacity 0.2s ease;
+}
+
+.headerHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logoIcon {
+  flex-shrink: 0;
+}
+
+/* .brandLogo {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 4px;
+  object-fit: cover;
+} */
+
+.logoText {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+}
+
+.nav {
+  flex: 1;
+  padding: 1rem 0.5rem;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  margin-bottom: 0.25rem;
+  color: #6b7280;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.navItem:hover {
+  background: #f9fafb;
+  color: #374151;
+}
+
+.navItemActive {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+}
+
+.navItemCollapsed {
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
+}
+
+.navIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.navLabel {
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.navLabelHidden {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.logoutContainer {
+  padding: 1rem 0.5rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.logoutButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  width: 100%;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.logoutButton:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.logoutButtonCollapsed {
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
 }
