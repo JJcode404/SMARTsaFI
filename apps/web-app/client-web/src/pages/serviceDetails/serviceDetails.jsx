@@ -5,82 +5,83 @@ import { useBooking } from "../../utilites/bookingContext";
 
 const basePrice = 3000;
 
-const createInitialCounts = (features, selectedService) => {
-  const counts = {};
+const createInitialCounts = (
+  features,
+  selectedService,
+  existingCounts = {}
+) => {
+  const counts = { ...existingCounts };
   const selectedFeature = features.find(
     (feature) => feature.title === selectedService
   );
 
-  if (
-    selectedFeature &&
-    selectedFeature.options &&
-    selectedFeature.options.length > 0
-  ) {
+  if (selectedFeature?.options?.length > 0) {
     selectedFeature.options.forEach((option) => {
-      counts[`${selectedFeature.id}_${option.id}`] = 0;
+      const key = `${selectedFeature.id}_${option.id}`;
+      if (counts[key] === undefined) {
+        counts[key] = 0;
+      }
     });
   }
-
   return counts;
 };
 
 const ServiceDetails = () => {
-  const { state, dispatch, handleNext } = useBooking();
+  const {
+    state,
+    dispatch,
+    handleNext,
+    updateRoomCount,
+    updateFeatureDescription,
+    buildPayload,
+  } = useBooking();
 
   const instructions = state.cleaningInstructions;
-
-  const [roomCounts, setRoomCounts] = useState(() =>
-    createInitialCounts(state.features, state.service)
-  );
-  const [featureDescriptions, setFeatureDescriptions] = useState({});
   const [showPaymentDetails, setShowPaymentDetails] = useState(true);
   const [showServiceDetails, setShowServiceDetails] = useState(false);
 
+  const initializedServiceRef = useRef(null);
+
   useEffect(() => {
-    // Reset counts when features or service changes
-    setRoomCounts(createInitialCounts(state.features, state.service));
-    setFeatureDescriptions({});
-  }, [state.features, state.service]);
+    const serviceKey = `${state.service}_${state.features.length}`;
+    if (initializedServiceRef.current !== serviceKey) {
+      const initialCounts = createInitialCounts(
+        state.features,
+        state.service,
+        state.roomCounts
+      );
+      dispatch({ type: "SET_ROOM_COUNTS", payload: initialCounts });
+      initializedServiceRef.current = serviceKey;
+    }
+  }, [state.features, state.service, dispatch, state.roomCounts]);
 
   useEffect(() => {
     let totalPrice = basePrice;
-
-    // Find the selected feature
     const selectedFeature = state.features.find(
       (feature) => feature.title === state.service
     );
 
-    // Calculate price from the selected feature's options
-    if (
-      selectedFeature &&
-      selectedFeature.options &&
-      selectedFeature.options.length > 0
-    ) {
+    if (selectedFeature?.options?.length > 0) {
       selectedFeature.options.forEach((option) => {
         const key = `${selectedFeature.id}_${option.id}`;
-        totalPrice += option.unit_price * (roomCounts[key] || 0);
+        totalPrice += option.unit_price * (state.roomCounts[key] || 0);
       });
     }
 
     dispatch({ type: "SET_PRICE", payload: totalPrice });
 
-    // Create label from selected options
     const labels = [];
-    if (
-      selectedFeature &&
-      selectedFeature.options &&
-      selectedFeature.options.length > 0
-    ) {
+    if (selectedFeature?.options?.length > 0) {
       selectedFeature.options.forEach((option) => {
         const key = `${selectedFeature.id}_${option.id}`;
-        const count = roomCounts[key] || 0;
+        const count = state.roomCounts[key] || 0;
         if (count > 0) {
           labels.push(`${count} ${option.label}`);
         }
       });
     }
     dispatch({ type: "SET_BEDROOMLABLE", payload: labels.join(", ") });
-  }, [roomCounts, state.features, state.service, dispatch]);
+  }, [state.roomCounts, state.features, state.service, dispatch]);
 
   const handlePropertyChange = (type) => {
     dispatch({ type: "SET_PROPERTY_TYPE", payload: type });
@@ -95,20 +96,44 @@ const ServiceDetails = () => {
   };
 
   const handleFeatureDescriptionChange = (featureId, value) => {
-    setFeatureDescriptions((prev) => ({
-      ...prev,
-      [featureId]: value,
-    }));
+    updateFeatureDescription(featureId, value);
   };
 
-  const updateRoomCount = (key, increment) => {
-    setRoomCounts((prev) => {
-      const newCount = Math.max(0, (prev[key] || 0) + (increment ? 1 : -1));
-      return {
-        ...prev,
-        [key]: newCount,
-      };
-    });
+  const handleRoomCountUpdate = (key, increment) => {
+    const currentCount = Number(state.roomCounts[key]) || 0;
+    const newCount = Math.max(0, currentCount + (increment ? 1 : -1));
+    updateRoomCount(key, newCount);
+  };
+
+  const handleInputChange = (key, option, inputValue) => {
+    // Allow empty input
+    if (inputValue === "") {
+      updateRoomCount(key, "");
+      return;
+    }
+
+    // Remove leading zeros except when the number is actually zero
+    const cleanedValue = inputValue.replace(/^0+(?=\d)/, "");
+
+    const numericValue = Number(cleanedValue);
+    if (!Number.isNaN(numericValue)) {
+      const minUnits = option.min_units || 0;
+      const maxUnits = option.max_units || 999;
+
+      if (numericValue > maxUnits) {
+        updateRoomCount(key, String(maxUnits));
+      } else if (numericValue < minUnits) {
+        updateRoomCount(key, String(minUnits));
+      } else {
+        updateRoomCount(key, cleanedValue); // Keep as string
+      }
+    }
+  };
+
+  const handleNextWithPayload = () => {
+    // const payload = buildPayload(state);
+    // console.log("Booking Payload:", payload);
+    handleNext();
   };
 
   return (
@@ -197,7 +222,6 @@ const ServiceDetails = () => {
               {/* Features Section */}
               <div className={styles.roomSection}>
                 {(() => {
-                  // Find the selected feature by matching title with state.service
                   const selectedFeature = state.features.find(
                     (feature) => feature.title === state.service
                   );
@@ -222,56 +246,74 @@ const ServiceDetails = () => {
                         {selectedFeature.description}
                       </p>
 
-                      {selectedFeature.options &&
-                      selectedFeature.options.length > 0 ? (
-                        // Render options with counters
+                      {selectedFeature.options?.length > 0 ? (
                         selectedFeature.options.map((option) => {
                           const key = `${selectedFeature.id}_${option.id}`;
+                          const currentValue =
+                            state.roomCounts[key] === ""
+                              ? ""
+                              : Number(state.roomCounts[key]) || 0;
+                          const minUnits = option.min_units || 0;
+                          const maxUnits = option.max_units || 999;
+
                           return (
                             <div key={option.id} className={styles.roomRow}>
                               <span className={styles.roomLabel}>
                                 {option.label} (Ksh {option.unit_price})
+                                <small
+                                  style={{
+                                    display: "block",
+                                    color: "#666",
+                                    fontSize: "10px",
+                                  }}
+                                >
+                                  Min: {minUnits}, Max: {maxUnits}
+                                </small>
                               </span>
                               <div className={styles.roomControls}>
-                                {/* Minus button */}
                                 <button
-                                  onClick={() => updateRoomCount(key, false)}
+                                  onClick={() =>
+                                    handleRoomCountUpdate(key, false)
+                                  }
                                   className={styles.roomButton}
-                                  disabled={roomCounts[key] === 0}
+                                  disabled={currentValue <= minUnits}
                                 >
                                   <Minus className={styles.roomButtonIcon} />
                                 </button>
 
-                                {/* Number input */}
                                 <input
                                   type="number"
                                   className={styles.roomInput}
-                                  value={roomCounts[key] || 0}
-                                  min={option.min_units || 0}
-                                  placeholder="0"
-                                  max={option.max_units || 100}
-                                  onChange={(e) => {
-                                    const value = Math.max(
-                                      option.min_units || 0,
-                                      Math.min(
-                                        option.max_units || 100,
-                                        Number(e.target.value) || 0
-                                      )
+                                  value={state.roomCounts[key] ?? ""}
+                                  min={minUnits}
+                                  max={maxUnits}
+                                  // placeholder="0"
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      key,
+                                      option,
+                                      e.target.value
+                                    )
+                                  }
+                                  onBlur={(e) => {
+                                    let value = Number(e.target.value);
+                                    if (Number.isNaN(value)) {
+                                      value = minUnits;
+                                    }
+                                    value = Math.max(
+                                      minUnits,
+                                      Math.min(maxUnits, value)
                                     );
-                                    setRoomCounts((prev) => ({
-                                      ...prev,
-                                      [key]: value,
-                                    }));
+                                    updateRoomCount(key, String(value)); // Keep string format
                                   }}
                                 />
 
-                                {/* Plus button */}
                                 <button
-                                  onClick={() => updateRoomCount(key, true)}
-                                  className={styles.roomButton}
-                                  disabled={
-                                    roomCounts[key] >= (option.max_units || 100)
+                                  onClick={() =>
+                                    handleRoomCountUpdate(key, true)
                                   }
+                                  className={styles.roomButton}
+                                  disabled={currentValue >= maxUnits}
                                 >
                                   <Plus className={styles.roomButtonIcon} />
                                 </button>
@@ -280,7 +322,6 @@ const ServiceDetails = () => {
                           );
                         })
                       ) : (
-                        // Render description input when no options
                         <div className={styles.futherInstruction}>
                           <label
                             htmlFor={`feature-${selectedFeature.id}`}
@@ -292,7 +333,8 @@ const ServiceDetails = () => {
                             name={`feature-${selectedFeature.id}`}
                             id={`feature-${selectedFeature.id}`}
                             value={
-                              featureDescriptions[selectedFeature.id] || ""
+                              state.featureDescriptions[selectedFeature.id] ||
+                              ""
                             }
                             onChange={(e) =>
                               handleFeatureDescriptionChange(
@@ -333,7 +375,7 @@ const ServiceDetails = () => {
                 <button className={styles.navbackButton}>BACK</button>
                 <button
                   className={styles.bookButton}
-                  onClick={() => handleNext()}
+                  onClick={handleNextWithPayload}
                 >
                   Next
                 </button>

@@ -7,7 +7,7 @@ import { usePostReq } from "../../utilites/usePost";
 import { useAuth } from "../../utilites/authContextapi";
 
 const Checkout = () => {
-  const { handleSubmit, state } = useBooking();
+  const { handleSubmit, state, buildPayload } = useBooking();
   const [paymentMethod, setPaymentMethod] = useState("mpesa");
   const { user } = useAuth();
   const { postData, loading, error, data } = usePostReq();
@@ -17,34 +17,16 @@ const Checkout = () => {
   const totalPrice = price + Vat;
 
   const handleFinalBooking = async () => {
-    const {
-      selectedDate,
-      selectedTime,
-      service,
-      propertyType,
-      cleaningInstructions,
-      clientSpecialReaquest,
-      location,
-      serviceProvider,
-      user_id,
-    } = state;
-    console.log(state);
+    const payload = buildPayload(state);
+    console.log("Booking Payload:", payload);
 
-    const clientId = user_id;
+    const clientId = state.user_id;
     if (!clientId) {
       alert("You're not logged in. Please log in to complete your booking.");
       return;
     }
-    const workerId = serviceProvider?.id || 1; // to be changed
-
-    const [hour, minute] = selectedTime
-      ? selectedTime.split(":").map(Number)
-      : [0, 0];
-
-    const dateWithTime = new Date(selectedDate);
-    dateWithTime.setHours(hour);
-    dateWithTime.setMinutes(minute);
-    const scheduledDateTime = dateWithTime.toISOString();
+    // const payload = buildPayload(state);
+    // console.log("Booking Payload:", payload);
 
     // const payload = {
     //   client_id: clientId,

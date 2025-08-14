@@ -6,7 +6,7 @@ const ServiceProviderCard = ({ provider }) => {
   const { dispatch, state } = useBooking();
 
   const handleSelectProvider = () => {
-    dispatch({ type: "SET_SERVICE_PROVIDER", payload: provider.name });
+    dispatch({ type: "SET_SERVICE_PROVIDER", payload: provider });
   };
 
   const renderStars = (rating) => {
@@ -81,7 +81,7 @@ const ServiceProviderCard = ({ provider }) => {
               <button
                 className={styles.bookButton}
                 onClick={handleSelectProvider}
-                disabled={state.serviceProvider === "Any Available"}
+                disabled={state.serviceProvider === null}
               >
                 Book Now
               </button>
@@ -229,7 +229,9 @@ function ServiceProvider() {
                 onChange={(e) =>
                   dispatch({
                     type: "SET_SERVICE_PROVIDER",
-                    payload: e.target.checked ? "Any Available" : "",
+                    payload: e.target.checked
+                      ? null
+                      : state.serviceProvider.name,
                   })
                 }
                 className={styles.radioInput}
@@ -281,7 +283,7 @@ function ServiceProvider() {
             <hr />
             <div className={styles.details}>
               <ul className={styles.serviceList}>
-                <li>Service Provider: {state.serviceProvider}</li>
+                <li>Service Provider: {state.serviceProvider.name}</li>
                 <li>Language: {state.preferedLanguange}</li>
                 <li>Special-Request: {state.clientSpecialReaquest}</li>
               </ul>
