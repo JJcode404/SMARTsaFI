@@ -11,88 +11,153 @@ import {
   Clock,
 } from "lucide-react";
 import styles from "./myBookings.module.css";
+import { useBookingData } from "../../../utilites/useBookingData";
+
+const SkeletonCard = () => (
+  <div className={styles.bookingCard}>
+    <div className={styles.cardHeader}>
+      <div className={styles.serviceInfo}>
+        <div className={`${styles.serviceIcon} ${styles.skeleton}`}></div>
+        <div>
+          <div className={`${styles.skeleton} ${styles.skeletonTitle}`}></div>
+          <div className={styles.propertyInfo}>
+            <div className={`${styles.skeleton} ${styles.skeletonIcon}`}></div>
+            <div
+              className={`${styles.skeleton} ${styles.skeletonProperty}`}
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div
+        className={`${styles.statusBadge} ${styles.skeleton} ${styles.skeletonStatus}`}
+      ></div>
+    </div>
+
+    <div className={styles.cardDetail}>
+      <div className={`${styles.skeleton} ${styles.skeletonIcon}`}></div>
+      <div className={`${styles.skeleton} ${styles.skeletonText}`}></div>
+    </div>
+
+    <div className={styles.cardDetail}>
+      <div className={`${styles.skeleton} ${styles.skeletonIcon}`}></div>
+      <div className={`${styles.skeleton} ${styles.skeletonText}`}></div>
+    </div>
+
+    <div className={styles.cardDetail}>
+      <div className={`${styles.skeleton} ${styles.skeletonPrice}`}></div>
+    </div>
+
+    <div className={styles.cardActions}>
+      <div
+        className={`${styles.actionButton} ${styles.skeleton} ${styles.skeletonButton}`}
+      ></div>
+      <div
+        className={`${styles.actionButton} ${styles.skeleton} ${styles.skeletonButton}`}
+      ></div>
+    </div>
+  </div>
+);
+
+const SkeletonTabs = () => (
+  <div className={styles.tabContainer}>
+    <div className={styles.maxWidth}>
+      <div className={styles.tabNavigation}>
+        {[1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className={`${styles.tab} ${styles.skeleton} ${styles.skeletonTab}`}
+          ></div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
 
 const MyBookings = () => {
   const [activeTab, setActiveTab] = useState("upcoming");
+  const { data, loading, error } = useBookingData();
 
-  const upcomingBookings = [
-    {
-      id: 1,
-      serviceType: "Deep Cleaning",
-      property: "2-bedroom Apartment",
-      location: "Westlands",
-      date: "Tomorrow",
-      time: "10:00 AM",
-      cleaner: "Sarah Kimani",
-      status: "Scheduled",
-    },
-    {
-      id: 2,
-      serviceType: "Regular Cleaning",
-      property: "3-bedroom House",
-      location: "Karen",
-      date: "July 25, 2025",
-      time: "2:00 PM",
-      cleaner: "John Mwangi",
-      status: "Scheduled",
-    },
-    {
-      id: 3,
-      serviceType: "Move-out Cleaning",
-      property: "Studio Apartment",
-      location: "Kilimani",
-      date: "July 28, 2025",
-      time: "9:00 AM",
-      cleaner: null,
-      status: "Pending",
-    },
+  const mapBookingData = (booking) => {
+    const services = booking.booked_services || [];
+    let serviceType = "Service";
+    let property = "N/A";
+
+    if (services.length > 0) {
+      const firstService = services[0].feature_option;
+      serviceType = firstService?.feature?.title || "Service";
+      property = firstService?.area_type || "N/A";
+
+      if (services.length > 1) {
+        serviceType += ` (+${services.length - 1} more)`;
+      }
+    }
+
+    const location =
+      booking.client.organization_name ||
+      `${booking.client.first_name} ${booking.client.last_name}`;
+
+    return {
+      id: booking.id,
+      serviceType,
+      property,
+      location,
+      date: new Date(booking.appointment_datetime).toLocaleDateString(),
+      time: new Date(booking.appointment_datetime).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      cleaner: booking.worker
+        ? `${booking.worker.first_name} ${booking.worker.last_name}`
+        : null,
+      status: booking.status,
+      rated: booking.rating !== null,
+      reason: booking.reason || null,
+      totalPrice: booking.total_price,
+      depositPaid: booking.deposit_paid,
+    };
+  };
+
+  const upcomingBookings = (data || [])
+    .filter((b) => ["scheduled", "pending"].includes(b.status.toLowerCase()))
+    .map(mapBookingData);
+
+  const pastBookings = (data || [])
+    .filter((b) => b.status.toLowerCase() === "completed")
+    .map(mapBookingData);
+
+  const canceledBookings = (data || [])
+    .filter((b) => ["canceled", "cancelled"].includes(b.status.toLowerCase()))
+    .map(mapBookingData);
+
+  const tabs = [
+    { id: "upcoming", label: "Upcoming", count: upcomingBookings.length },
+    { id: "past", label: "Past", count: pastBookings.length },
+    { id: "canceled", label: "Canceled", count: canceledBookings.length },
   ];
 
-  const pastBookings = [
-    {
-      id: 4,
-      serviceType: "Deep Cleaning",
-      property: "2-bedroom Apartment",
-      location: "Westlands",
-      date: "July 15, 2025",
-      time: "10:00 AM",
-      cleaner: "Mary Wanjiku",
-      status: "Completed",
-      rated: false,
-    },
-    {
-      id: 5,
-      serviceType: "Regular Cleaning",
-      property: "1-bedroom Apartment",
-      location: "CBD",
-      date: "July 10, 2025",
-      time: "3:00 PM",
-      cleaner: "Peter Ochieng",
-      status: "Completed",
-      rated: true,
-    },
-  ];
-
-  const canceledBookings = [
-    {
-      id: 6,
-      serviceType: "Regular Cleaning",
-      property: "2-bedroom Apartment",
-      location: "Westlands",
-      date: "July 12, 2025",
-      time: "11:00 AM",
-      reason: "Rescheduled by customer",
-      status: "Canceled",
-    },
-  ];
+  const getCurrentBookings = () => {
+    switch (activeTab) {
+      case "past":
+        return pastBookings;
+      case "canceled":
+        return canceledBookings;
+      default:
+        return upcomingBookings;
+    }
+  };
 
   const getServiceIcon = (serviceType) => {
-    if (serviceType.includes("Deep")) {
+    const lowerType = serviceType.toLowerCase();
+    if (lowerType.includes("deep") || lowerType.includes("institution")) {
       return (
         <Home className={`${styles.serviceIcon} ${styles.serviceIconBlue}`} />
       );
     }
-    if (serviceType.includes("Regular")) {
+    if (
+      lowerType.includes("regular") ||
+      lowerType.includes("washing") ||
+      lowerType.includes("laundry")
+    ) {
       return (
         <RotateCcw
           className={`${styles.serviceIcon} ${styles.serviceIconGreen}`}
@@ -115,6 +180,7 @@ const MyBookings = () => {
       case "completed":
         return styles.statusCompleted;
       case "canceled":
+      case "cancelled":
         return styles.statusCanceled;
       default:
         return "";
@@ -131,7 +197,7 @@ const MyBookings = () => {
             <div className={styles.propertyInfo}>
               <MapPin />
               <span>
-                {booking.property}, {booking.location}
+                {booking.property} - {booking.location}
               </span>
             </div>
           </div>
@@ -157,6 +223,18 @@ const MyBookings = () => {
         </div>
       )}
 
+      <div className={styles.cardDetail}>
+        <span className={styles.priceInfo}>
+          Total: KSh {booking.totalPrice?.toLocaleString()}
+          {booking.depositPaid > 0 && (
+            <span className={styles.depositInfo}>
+              {" "}
+              (Deposit: KSh {booking.depositPaid?.toLocaleString()})
+            </span>
+          )}
+        </span>
+      </div>
+
       {type === "canceled" && booking.reason && (
         <div className={`${styles.cardDetail} ${styles.cancelReason}`}>
           <Ban />
@@ -166,10 +244,20 @@ const MyBookings = () => {
 
       <div className={styles.cardActions}>
         {type === "upcoming" && (
-          <button className={`${styles.actionButton} ${styles.buttonPrimary}`}>
-            <CalendarClock />
-            <span>Reschedule</span>
-          </button>
+          <>
+            <button
+              className={`${styles.actionButton} ${styles.buttonPrimary}`}
+            >
+              <CalendarClock />
+              <span>Reschedule</span>
+            </button>
+            <button
+              className={`${styles.actionButton} ${styles.buttonSecondary}`}
+            >
+              <Ban />
+              <span>Cancel</span>
+            </button>
+          </>
         )}
 
         {type === "past" && (
@@ -179,7 +267,7 @@ const MyBookings = () => {
                 className={`${styles.actionButton} ${styles.buttonYellow}`}
               >
                 <Star />
-                <span>Rate Cleaner</span>
+                <span>Rate Service</span>
               </button>
             )}
             <button
@@ -190,41 +278,43 @@ const MyBookings = () => {
             </button>
           </>
         )}
+
+        {type === "canceled" && (
+          <button className={`${styles.actionButton} ${styles.buttonPrimary}`}>
+            <RotateCcw />
+            <span>Rebook</span>
+          </button>
+        )}
       </div>
     </div>
   );
 
-  const tabs = [
-    { id: "upcoming", label: "Upcoming", count: upcomingBookings.length },
-    { id: "past", label: "Past", count: pastBookings.length },
-    { id: "canceled", label: "Canceled", count: canceledBookings.length },
-  ];
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <div className="progressSection">
+          <div className="progressContent">
+            <div className="progressHeader">
+              <h1 className="progressTitle">My Bookings</h1>
+              <p className="progressSubtitle">
+                Manage your cleaning appointments
+              </p>
+            </div>
+          </div>
+        </div>
 
-  const getCurrentBookings = () => {
-    switch (activeTab) {
-      case "upcoming":
-        return upcomingBookings;
-      case "past":
-        return pastBookings;
-      case "canceled":
-        return canceledBookings;
-      default:
-        return upcomingBookings;
-    }
-  };
+        <SkeletonTabs />
 
-  const getEmptyMessage = () => {
-    switch (activeTab) {
-      case "upcoming":
-        return "You don't have any upcoming bookings.";
-      case "past":
-        return "You don't have any past bookings.";
-      case "canceled":
-        return "You don't have any canceled bookings.";
-      default:
-        return "";
-    }
-  };
+        <div className={`${styles.maxWidth} ${styles.content}`}>
+          <div className={styles.bookingsList}>
+            {[1, 2, 3].map((i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -238,6 +328,7 @@ const MyBookings = () => {
           </div>
         </div>
       </div>
+
       <div className={styles.tabContainer}>
         <div className={styles.maxWidth}>
           <div className={styles.tabNavigation}>
@@ -272,7 +363,13 @@ const MyBookings = () => {
               <Calendar />
             </div>
             <h3 className={styles.emptyTitle}>No bookings found</h3>
-            <p className={styles.emptyText}>{getEmptyMessage()}</p>
+            <p className={styles.emptyText}>
+              {activeTab === "upcoming"
+                ? "You don't have any upcoming bookings."
+                : activeTab === "past"
+                ? "You don't have any past bookings."
+                : "You don't have any canceled bookings."}
+            </p>
           </div>
         ) : (
           <div className={styles.bookingsList}>

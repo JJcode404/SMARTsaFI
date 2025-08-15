@@ -315,3 +315,84 @@
     flex-direction: column;
   }
 }
+
+/* Skeleton Base Styles */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Skeleton Component Sizes */
+.skeletonTitle {
+  height: 24px;
+  width: 180px;
+  margin-bottom: 8px;
+}
+
+.skeletonProperty {
+  height: 16px;
+  width: 200px;
+}
+
+.skeletonStatus {
+  height: 24px;
+  width: 80px;
+  border-radius: 12px;
+}
+
+.skeletonIcon {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.skeletonText {
+  height: 16px;
+  width: 150px;
+}
+
+.skeletonPrice {
+  height: 16px;
+  width: 120px;
+}
+
+.skeletonButton {
+  height: 36px;
+  width: 100px;
+  border-radius: 6px;
+}
+
+.skeletonTab {
+  height: 44px;
+  width: 120px;
+  border-radius: 8px;
+}
+
+/* Service Icon Skeleton */
+.serviceIcon.skeleton {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+/* Dark mode skeleton (if needed) */
+@media (prefers-color-scheme: dark) {
+  .skeleton {
+    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+  }
+}

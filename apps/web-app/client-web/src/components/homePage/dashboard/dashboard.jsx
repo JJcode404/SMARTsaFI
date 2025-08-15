@@ -5,14 +5,16 @@ import { Link } from "react-router-dom";
 import { useFetch } from "../../../utilites/useFetch";
 import { useAuth } from "../../../utilites/authContextapi";
 import { useClientData } from "../../../utilites/useClientData";
+import { useBookingData } from "../../../utilites/useBookingData";
 
 const Dashboard = () => {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
-  const { data, loading, error } = useClientData();
-
-  if (data) {
-    console.log(data);
-  }
+  const { data: clientData, loading: clientLoading } = useClientData();
+  const {
+    data: bookingData,
+    loading: bookingLoading,
+    error: bookingError,
+  } = useBookingData();
 
   useEffect(() => {
     const handleResize = () => {
@@ -21,65 +23,134 @@ const Dashboard = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  if (clientData) {
+    console.log("Client data:", clientData);
+  }
 
-  const stats = [
-    { label: "Total Bookings", value: "24", change: "+12%", color: "#3b82f6" },
-    { label: "Upcoming Cleanings", value: "3", change: "+2", color: "#10b981" },
-    { label: "Messages", value: "7", change: "+3", color: "#8b5cf6" },
-    { label: "Top Cleaner", value: "Janet M.", change: "", color: "#ec4899" },
-  ];
+  // Process booking data to generate stats
+  const getStatsFromBookings = (bookings) => {
+    if (!bookings || bookings.length === 0) {
+      return {
+        totalBookings: 0,
+        upcomingCleanings: 0,
+        messages: 0,
+        topCleaner: "N/A",
+      };
+    }
 
-  const recentBookings = [
-    {
-      id: 1,
-      service: "Deep House Cleaning",
-      date: "Dec 28, 2024",
-      status: "Scheduled",
-      cleaner: "Sarah M.",
-    },
-    {
-      id: 2,
-      service: "Kitchen Deep Clean",
-      date: "Dec 25, 2024",
-      status: "In Progress",
-      cleaner: "Mike K.",
-    },
-    {
-      id: 3,
-      service: "Bathroom Cleaning",
-      date: "Dec 22, 2024",
-      status: "Completed",
-      cleaner: "Lisa P.",
-    },
-    {
-      id: 4,
-      service: "Office Cleaning",
-      date: "Dec 20, 2024",
-      status: "Completed",
-      cleaner: "John D.",
-    },
-  ];
+    const now = new Date();
+    const upcomingBookings = bookings.filter(
+      (booking) =>
+        new Date(booking.appointment_datetime) > now &&
+        (booking.status === "Scheduled" || booking.status === "pending")
+    );
 
+    // Get top cleaner (most bookings)
+    const cleanerCounts = {};
+    bookings.forEach((booking) => {
+      const cleanerName = `${
+        booking.worker.first_name
+      } ${booking.worker.last_name.charAt(0)}.`;
+      cleanerCounts[cleanerName] = (cleanerCounts[cleanerName] || 0) + 1;
+    });
+
+    const topCleaner =
+      Object.keys(cleanerCounts).length > 0
+        ? Object.keys(cleanerCounts).reduce((a, b) =>
+            cleanerCounts[a] > cleanerCounts[b] ? a : b
+          )
+        : "N/A";
+
+    return {
+      totalBookings: bookings.length,
+      upcomingCleanings: upcomingBookings.length,
+      messages: 0, // This would come from a separate messages API
+      topCleaner,
+    };
+  };
+
+  const stats = bookingLoading
+    ? []
+    : (() => {
+        const bookingStats = getStatsFromBookings(bookingData);
+        return [
+          {
+            label: "Total Bookings",
+            value: bookingStats.totalBookings.toString(),
+            change: "",
+            color: "#3b82f6",
+          },
+          {
+            label: "Upcoming Cleanings",
+            value: bookingStats.upcomingCleanings.toString(),
+            change: "",
+            color: "#10b981",
+          },
+          {
+            label: "Messages",
+            value: bookingStats.messages.toString(),
+            change: "",
+            color: "#8b5cf6",
+          },
+          {
+            label: "Top Cleaner",
+            value: bookingStats.topCleaner,
+            change: "",
+            color: "#ec4899",
+          },
+        ];
+      })();
+
+  // Process booking data for recent bookings display
+  const getRecentBookings = (bookings) => {
+    if (!bookings || bookings.length === 0) return [];
+
+    return bookings
+      .sort((a, b) => new Date(b.date_of_booking) - new Date(a.date_of_booking))
+      .slice(0, 4)
+      .map((booking) => {
+        // Get the main service name from booked_services
+        const mainService =
+          booking.booked_services[0]?.feature_option?.feature?.title ||
+          "Cleaning Service";
+
+        // Format date
+        const date = new Date(booking.appointment_datetime).toLocaleDateString(
+          "en-US",
+          {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          }
+        );
+
+        // Format status
+        let displayStatus = booking.status;
+        if (booking.status === "pending") {
+          displayStatus = "Scheduled";
+        }
+
+        return {
+          id: booking.id,
+          service: mainService,
+          date: date,
+          status: displayStatus,
+          cleaner: `${
+            booking.worker.first_name
+          } ${booking.worker.last_name.charAt(0)}.`,
+        };
+      });
+  };
+
+  const recentBookings = bookingLoading ? [] : getRecentBookings(bookingData);
+
+  // Mock messages - you can replace this with real message data when available
   const messages = [
     {
       id: 1,
-      sender: "Sarah M.",
-      message: "I'll arrive at 2 PM today for your deep cleaning service.",
-      time: "10:30 AM",
-      unread: true,
-    },
-    {
-      id: 2,
       sender: "Support Team",
-      message: "Your feedback has been received. Thank you!",
-      time: "9:15 AM",
-      unread: false,
-    },
-    {
-      id: 3,
-      sender: "Mike K.",
-      message: "Kitchen cleaning completed successfully. Please review.",
-      time: "Yesterday",
+      message: "Welcome to our cleaning service platform!",
+      time: "Today",
       unread: false,
     },
   ];
@@ -93,7 +164,7 @@ const Dashboard = () => {
       case "Completed":
         return <CheckCircle className={styles.statusIcon} />;
       default:
-        return null;
+        return <Clock className={styles.statusIcon} />;
     }
   };
 
@@ -106,9 +177,53 @@ const Dashboard = () => {
       case "Completed":
         return styles.statusCompleted;
       default:
-        return "";
+        return styles.statusScheduled;
     }
   };
+
+  // Skeleton components
+  const StatCardSkeleton = () => (
+    <div className={styles.statCard}>
+      <div className={styles.statCardHeader}>
+        <div className={`${styles.statIcon} ${styles.skeleton}`}></div>
+        <div className={`${styles.skeletonText} ${styles.skeletonSmall}`}></div>
+      </div>
+      <div className={`${styles.skeletonText} ${styles.skeletonLarge}`}></div>
+      <div className={`${styles.skeletonText} ${styles.skeletonMedium}`}></div>
+    </div>
+  );
+
+  const BookingItemSkeleton = () => (
+    <div className={styles.bookingItem}>
+      <div className={styles.bookingHeader}>
+        <div
+          className={`${styles.skeletonText} ${styles.skeletonMedium}`}
+        ></div>
+        <div className={styles.bookingStatus}>
+          <div className={`${styles.statusIcon} ${styles.skeleton}`}></div>
+          <div
+            className={`${styles.skeletonText} ${styles.skeletonSmall}`}
+          ></div>
+        </div>
+      </div>
+      <div className={styles.bookingDetails}>
+        <div className={`${styles.skeletonText} ${styles.skeletonSmall}`}></div>
+        <div className={`${styles.skeletonText} ${styles.skeletonSmall}`}></div>
+      </div>
+    </div>
+  );
+
+  const MessageItemSkeleton = () => (
+    <div className={styles.messageItem}>
+      <div className={styles.messageHeader}>
+        <div
+          className={`${styles.skeletonText} ${styles.skeletonMedium}`}
+        ></div>
+      </div>
+      <div className={`${styles.skeletonText} ${styles.skeletonLarge}`}></div>
+      <div className={`${styles.skeletonText} ${styles.skeletonSmall}`}></div>
+    </div>
+  );
 
   return (
     <main className={styles.dashboard}>
@@ -116,16 +231,23 @@ const Dashboard = () => {
       <div className={styles.welcomeSection}>
         <div className={styles.welcomeContent}>
           <div className={styles.welcomeText}>
-            {data && (
-              <h1 className={styles.welcomeTitle}>
-                Welcome back,{" "}
-                <span className={styles.userName}>
-                  {data?.first_name || data?.last_name || "Client"}
-                </span>
-                !👋
-              </h1>
+            {clientLoading ? (
+              <div
+                className={`${styles.skeletonText} ${styles.skeletonLarge}`}
+              ></div>
+            ) : (
+              clientData && (
+                <h1 className={styles.welcomeTitle}>
+                  Welcome back,{" "}
+                  <span className={styles.userName}>
+                    {clientData?.first_name ||
+                      clientData?.last_name ||
+                      "Client"}
+                  </span>
+                  !👋
+                </h1>
+              )
             )}
-
             <p className={styles.welcomeSubtitle}>
               Your home is looking great. Ready for your next cleaning?
             </p>
@@ -149,23 +271,29 @@ const Dashboard = () => {
 
       {/* Stats */}
       <div className={styles.statsGrid}>
-        {stats.map((stat, i) => (
-          <div
-            key={i}
-            className={styles.statCard}
-            style={{ "--stat-color": stat.color }}
-          >
-            <div className={styles.statCardHeader}>
+        {bookingLoading
+          ? Array(4)
+              .fill(0)
+              .map((_, i) => <StatCardSkeleton key={i} />)
+          : stats.map((stat, i) => (
               <div
-                className={styles.statIcon}
-                style={{ backgroundColor: stat.color }}
-              ></div>
-              <span className={styles.statChange}>{stat.change}</span>
-            </div>
-            <h3 className={styles.statValue}>{stat.value}</h3>
-            <p className={styles.statLabel}>{stat.label}</p>
-          </div>
-        ))}
+                key={i}
+                className={styles.statCard}
+                style={{ "--stat-color": stat.color }}
+              >
+                <div className={styles.statCardHeader}>
+                  <div
+                    className={styles.statIcon}
+                    style={{ backgroundColor: stat.color }}
+                  ></div>
+                  {stat.change && (
+                    <span className={styles.statChange}>{stat.change}</span>
+                  )}
+                </div>
+                <h3 className={styles.statValue}>{stat.value}</h3>
+                <p className={styles.statLabel}>{stat.label}</p>
+              </div>
+            ))}
       </div>
 
       {/* Content Grid */}
@@ -183,27 +311,47 @@ const Dashboard = () => {
             </a>
           </div>
           <div className={styles.bookingsList}>
-            {recentBookings.map((booking) => (
-              <div key={booking.id} className={styles.bookingItem}>
-                <div className={styles.bookingHeader}>
-                  <h3 className={styles.bookingTitle}>{booking.service}</h3>
-                  <div className={styles.bookingStatus}>
-                    {getStatusIcon(booking.status)}
-                    <span
-                      className={`${styles.statusBadge} ${getStatusClass(
-                        booking.status
-                      )}`}
-                    >
-                      {booking.status}
-                    </span>
+            {bookingLoading ? (
+              Array(4)
+                .fill(0)
+                .map((_, i) => <BookingItemSkeleton key={i} />)
+            ) : bookingError ? (
+              <div className={styles.errorMessage}>
+                Unable to load bookings. Please try again.
+              </div>
+            ) : recentBookings.length === 0 ? (
+              <div className={styles.emptyState}>
+                <p>No bookings yet. Book your first cleaning service!</p>
+                <Link to="/booking-flow/service-type">
+                  <button className={styles.primaryButton}>
+                    <Plus className={styles.icon} />
+                    Book Now
+                  </button>
+                </Link>
+              </div>
+            ) : (
+              recentBookings.map((booking) => (
+                <div key={booking.id} className={styles.bookingItem}>
+                  <div className={styles.bookingHeader}>
+                    <h3 className={styles.bookingTitle}>{booking.service}</h3>
+                    <div className={styles.bookingStatus}>
+                      {getStatusIcon(booking.status)}
+                      <span
+                        className={`${styles.statusBadge} ${getStatusClass(
+                          booking.status
+                        )}`}
+                      >
+                        {booking.status}
+                      </span>
+                    </div>
+                  </div>
+                  <div className={styles.bookingDetails}>
+                    <span>{booking.date}</span>
+                    <span>Cleaner: {booking.cleaner}</span>
                   </div>
                 </div>
-                <div className={styles.bookingDetails}>
-                  <span>{booking.date}</span>
-                  <span>Cleaner: {booking.cleaner}</span>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   User,
   Mail,
@@ -14,16 +14,25 @@ import {
   EyeOff,
   Check,
   X,
+  Loader,
 } from "lucide-react";
 import styles from "./profile.module.css";
+import { useClientData } from "../../../utilites/useClientData";
 
 const Profile = () => {
+  const { data: clientData, loading, error } = useClientData();
+
   const [formData, setFormData] = useState({
-    fullName: "John Doe",
-    email: "john.doe@email.com",
-    phone: "+254 712 345 678",
-    address: "123 Westlands Avenue",
+    fullName: "",
+    email: "",
+    phone: "",
+    address: "",
     city: "Nairobi",
+    organizationName: "",
+    taxNumber: "",
+    nationalId: "",
+    clientType: "individual",
+    profilePicture: "",
     preferredTimes: ["morning", "evening"],
     emailNotifications: true,
     smsNotifications: false,
@@ -39,6 +48,23 @@ const Profile = () => {
     new: "",
     confirm: "",
   });
+
+  // Update form data when client data is loaded
+  useEffect(() => {
+    if (clientData) {
+      setFormData((prev) => ({
+        ...prev,
+        fullName: `${clientData.first_name} ${clientData.last_name}`.trim(),
+        phone: clientData.phone_number || "",
+        address: clientData.address || "",
+        organizationName: clientData.organization_name || "",
+        taxNumber: clientData.tax_number || "",
+        nationalId: clientData.national_id_number || "",
+        clientType: clientData.client_type || "individual",
+        profilePicture: clientData.profile_picture || "",
+      }));
+    }
+  }, [clientData]);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -63,11 +89,71 @@ const Profile = () => {
     }));
   };
 
-  const handleSave = (section) => {
-    // Simulate save action
+  const handleSave = async (section) => {
+    // Simulate save action - replace with actual API call
     console.log(`Saving ${section} changes:`, formData);
-    // Here you would typically make an API call
+
+    // Example API call structure:
+    // try {
+    //   const response = await fetch(`http://127.0.0.1:8000/clients/${clientData.id}`, {
+    //     method: 'PUT',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       first_name: formData.fullName.split(' ')[0],
+    //       last_name: formData.fullName.split(' ').slice(1).join(' '),
+    //       phone_number: formData.phone,
+    //       address: formData.address,
+    //       organization_name: formData.organizationName,
+    //       tax_number: formData.taxNumber,
+    //       // ... other fields
+    //     }),
+    //   });
+    //   if (response.ok) {
+    //     console.log('Profile updated successfully');
+    //   }
+    // } catch (error) {
+    //   console.error('Error updating profile:', error);
+    // }
   };
+
+  const getInitials = (fullName) => {
+    return fullName
+      .split(" ")
+      .map((name) => name.charAt(0))
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  const getProfileImageUrl = (imagePath) => {
+    if (!imagePath) return null;
+    // Adjust the base URL according to your backend setup
+    return `http://127.0.0.1:8000/${imagePath}`;
+  };
+
+  if (loading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loadingContainer}>
+          <Loader className={styles.loadingSpinner} />
+          <p>Loading profile data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.errorContainer}>
+          <AlertTriangle className={styles.errorIcon} />
+          <p>Error loading profile data: {error.message}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -96,6 +182,7 @@ const Profile = () => {
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
               className={`${styles.input} ${styles.inputBlue}`}
+              placeholder="Enter your email"
             />
           </div>
 
@@ -109,14 +196,64 @@ const Profile = () => {
             />
           </div>
 
+          {formData.clientType === "organization" && (
+            <>
+              <div>
+                <label className={styles.label}>Organization Name</label>
+                <input
+                  type="text"
+                  value={formData.organizationName}
+                  onChange={(e) =>
+                    handleInputChange("organizationName", e.target.value)
+                  }
+                  className={`${styles.input} ${styles.inputBlue}`}
+                />
+              </div>
+
+              <div>
+                <label className={styles.label}>Tax Number</label>
+                <input
+                  type="text"
+                  value={formData.taxNumber}
+                  onChange={(e) =>
+                    handleInputChange("taxNumber", e.target.value)
+                  }
+                  className={`${styles.input} ${styles.inputBlue}`}
+                />
+              </div>
+            </>
+          )}
+
+          <div>
+            <label className={styles.label}>National ID Number</label>
+            <input
+              type="text"
+              value={formData.nationalId}
+              onChange={(e) => handleInputChange("nationalId", e.target.value)}
+              className={`${styles.input} ${styles.inputBlue}`}
+            />
+          </div>
+
           <div>
             <label className={styles.label}>Profile Picture</label>
             <div className={styles.profilePicture}>
               <div className={styles.avatar}>
-                {/* <User className={styles.avatarIcon} /> */}
-
-                <div className={styles.userAvatar}>
-                  <span>JD</span>
+                {formData.profilePicture ? (
+                  <img
+                    src={getProfileImageUrl(formData.profilePicture)}
+                    alt="Profile"
+                    className={styles.avatarImage}
+                    onError={(e) => {
+                      e.target.style.display = "none";
+                      e.target.nextSibling.style.display = "flex";
+                    }}
+                  />
+                ) : null}
+                <div
+                  className={styles.userAvatar}
+                  style={{ display: formData.profilePicture ? "none" : "flex" }}
+                >
+                  <span>{getInitials(formData.fullName) || "U"}</span>
                 </div>
               </div>
               <button className={`${styles.button} ${styles.buttonBlue}`}>

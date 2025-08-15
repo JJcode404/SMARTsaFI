@@ -212,7 +212,7 @@ const BookingProvider = ({ children }) => {
     const payload = {
       client_id: state.user_id,
       worker_id: state.serviceProvider.id || null,
-      appointmentdatetime: scheduledDateTime,
+      appointment_datetime: scheduledDateTime,
       service_feature_id: selectedFeature ? selectedFeature.id : null,
       deposit_paid: state.deposit_paid,
       status: state.status || "",

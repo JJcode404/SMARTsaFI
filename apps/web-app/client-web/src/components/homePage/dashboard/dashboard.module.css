@@ -318,3 +318,66 @@ a {
     grid-template-columns: 2fr 1fr;
   }
 }
+
+/* Skeleton loading styles - Add these to your dashboard.module.css */
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeletonText {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+  height: 16px;
+  margin: 4px 0;
+}
+
+.skeletonSmall {
+  width: 60px;
+  height: 12px;
+}
+
+.skeletonMedium {
+  width: 120px;
+  height: 16px;
+}
+
+.skeletonLarge {
+  width: 200px;
+  height: 24px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Empty state and error message styles */
+.emptyState {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.emptyState p {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.errorMessage {
+  text-align: center;
+  padding: 40px 20px;
+  color: #e74c3c;
+  background-color: #fdf2f2;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+}

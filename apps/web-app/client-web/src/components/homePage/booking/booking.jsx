@@ -66,23 +66,26 @@ const ServiceBookingCard = () => {
   // Set initial selection when services are loaded
   useEffect(() => {
     if (services && Object.keys(services).length > 0 && !selectedService) {
-      // Option 1: Use "residential" if it exists, otherwise use the first service
       const initialService = services.residential
         ? "residential"
-        : Object.keys(services)[4];
-
-      // Option 2: Always use the first available service
-      // const initialService = Object.keys(services)[0];
-
-      // Option 3: Use a specific service you prefer
-      // const initialService = "residential"; // Make sure this key exists in your services
+        : Object.keys(services)[0];
 
       setSelectedService(initialService);
-      setServiceType(initialService);
+
+      // FIX: Set the service slug instead of the key
+      const initialServiceData = services[initialService];
+      setServiceType(initialServiceData.slug); // Use slug instead of key
+
+      console.log("Initial service set:", {
+        key: initialService,
+        slug: initialServiceData.slug,
+        serviceType: initialServiceData.slug,
+      });
     }
   }, [services, selectedService, setServiceType]);
 
   console.log("this is the services transformed", services);
+  console.log("Current serviceType in state:", state.serviceType);
 
   const selected = selectedService ? services[selectedService] || {} : {};
   const { icon: Icon, title, description, features = [] } = selected;
@@ -136,6 +139,7 @@ const ServiceBookingCard = () => {
                 icon_name: service.icon_name,
                 component: ServiceIconComponent,
                 title: service.title,
+                slug: service.slug, // Add slug to debug
                 isSelected: selectedService === key,
               });
 
@@ -147,8 +151,12 @@ const ServiceBookingCard = () => {
                   }`}
                   onClick={() => {
                     setSelectedService(key);
-                    setServiceType(service.slug);
-                    console.log("state after selection:", state);
+                    setServiceType(service.slug); // This is correct - using slug
+                    console.log("Service selected:", {
+                      key,
+                      slug: service.slug,
+                      newState: { ...state, serviceType: service.slug },
+                    });
                   }}
                 >
                   <div className={styles.serviceOptionIcon}>
