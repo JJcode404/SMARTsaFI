@@ -2,6 +2,7 @@ import styles from "./dashboard.module.css";
 import { Plus, Send, Clock, CheckCircle, AlertCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../../utilites/useFetch";
 import { useAuth } from "../../../utilites/authContextapi";
 import { useClientData } from "../../../utilites/useClientData";
@@ -9,11 +10,17 @@ import { useBookingData } from "../../../utilites/useBookingData";
 
 const Dashboard = () => {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
-  const { data: clientData, loading: clientLoading } = useClientData();
+  const navigate = useNavigate();
+  const {
+    data: clientData,
+    loading: clientLoading,
+    status: clientStatus,
+  } = useClientData();
   const {
     data: bookingData,
     loading: bookingLoading,
     error: bookingError,
+    status: bookingStatus,
   } = useBookingData();
 
   useEffect(() => {
@@ -26,6 +33,23 @@ const Dashboard = () => {
   if (clientData) {
     console.log("Client data:", clientData);
   }
+  useEffect(() => {
+    if (clientStatus === 404) {
+      navigate("/clientRegistration");
+    }
+  }, [clientStatus, navigate]);
+
+  useEffect(() => {
+    if (bookingStatus === 404) {
+      // This might be normal - client just has no bookings yet
+      console.log("No bookings found - this is normal for new clients");
+    } else if (bookingStatus === 401) {
+      console.log("Unauthorized access to bookings");
+      navigate("/login");
+    } else if (bookingStatus === 403) {
+      console.log("Forbidden access to bookings");
+    }
+  }, [bookingStatus, navigate]);
 
   // Process booking data to generate stats
   const getStatsFromBookings = (bookings) => {

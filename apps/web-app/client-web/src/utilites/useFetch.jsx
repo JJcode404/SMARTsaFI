@@ -1,62 +1,63 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router";
 
-const useFetch = (url = "https://blog-post-api-posm.onrender.com/posts") => {
+const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  console.log("token form usefetch", token);
-  const [loading, setLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
     if (!url) {
-      setLoading(false); // Add this line
+      setLoading(false);
       return;
     }
-    // if (!token) {
-    //   setError("No token found");
-    //   setLoading(false);
-    //   navigate("/unauthorized");
-    //   return;
-    // }
 
     setLoading(true);
     setError(null);
+    setStatus(null);
 
     try {
       const response = await fetch(url, {
-        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
 
-      // if (response.status === 401) {
-      //   navigate("/unauthorized");
-      //   throw new Error("Authentication required");
-      // }
+      setStatus(response.status);
 
-      // if (response.status === 403) {
-      //   navigate("/forbiden");
-      //   throw new Error("Access denied");
-      // }
+      if (!response.ok) {
+        const errorObj = {
+          message:
+            response.status === 404
+              ? "Resource not found"
+              : `HTTP ${response.status}: ${response.statusText}`,
+          status: response.status,
+        };
+        setError(errorObj);
+        return;
+      }
 
       const result = await response.json();
       setData(result);
     } catch (err) {
-      setError(err.message || "Unknown error");
+      setError({
+        message: err.message || "Unknown error",
+        originalError: err,
+      });
     } finally {
       setLoading(false);
     }
-  }, [url]);
+  }, [url, token]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  return { data, error, loading, refetch: fetchData };
+  return { data, error, status, loading, refetch: fetchData };
 };
 
 export { useFetch };

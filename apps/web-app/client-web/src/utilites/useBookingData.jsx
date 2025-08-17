@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "./authContextapi";
 import { useFetch } from "./useFetch";
+import { useClientData } from "./useClientData";
 
 const useBookingData = () => {
-  const { user } = useAuth();
+  const { data } = useClientData();
   const [url, setUrl] = useState(null);
 
   useEffect(() => {
-    if (user?.client_id) {
-      setUrl(`http://127.0.0.1:8000/bookings/1`);
+    if (data?.id) {
+      setUrl(`http://127.0.0.1:8000/bookings/${data.id}`);
     }
-  }, [user]);
+  }, [data]);
 
   return useFetch(url);
 };

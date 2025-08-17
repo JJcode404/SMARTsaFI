@@ -9,6 +9,7 @@ import React, {
   useMemo,
 } from "react";
 import { useAuth } from "./authContextapi";
+import { useClientData } from "./useClientData";
 
 const BookingContext = createContext(null);
 
@@ -119,14 +120,14 @@ const bookingReducer = (state, action) => {
 const BookingProvider = ({ children }) => {
   const [state, dispatch] = useReducer(bookingReducer, initialState);
   const contextId = useRef(Math.random().toString(36).substr(2, 9));
-  const { user } = useAuth();
+  const { data } = useClientData();
 
   useEffect(() => {
-    if (user?.client_id) {
-      console.log("Setting user_id from AuthContext:", user.client_id);
-      dispatch({ type: "SET_USER_ID", user_id: user.client_id });
+    if (data?.id) {
+      console.log("Setting client id from AuthContext:", data.id);
+      dispatch({ type: "SET_USER_ID", user_id: data.id });
     }
-  }, [user]);
+  }, [data]);
 
   // Memoize action creators to prevent re-renders
   const handleNext = useCallback(() => dispatch({ type: "NEXT_STEP" }), []);
@@ -214,7 +215,7 @@ const BookingProvider = ({ children }) => {
       worker_id: state.serviceProvider.id || null,
       appointment_datetime: scheduledDateTime,
       service_feature_id: selectedFeature ? selectedFeature.id : null,
-      deposit_paid: state.deposit_paid,
+      deposit_paid: Number(state.price) / 2,
       status: state.status || "",
       rating: state.serviceProvider.rating || "",
       // location: location?.pin || "",
