@@ -79,7 +79,7 @@ export default function PaginationButtons() {
       SubmitDocuments();
       console.log("Success:", result);
     } catch (err) {
-      console.error("Failed:", err.message);
+      console.error("Failed:", err);
     }
   };
 

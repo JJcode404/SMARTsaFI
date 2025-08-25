@@ -37,6 +37,7 @@ const ServiceDetails = () => {
   } = useBooking();
 
   const instructions = state.cleaningInstructions;
+  const description = state.description;
   const [showPaymentDetails, setShowPaymentDetails] = useState(true);
   const [showServiceDetails, setShowServiceDetails] = useState(false);
 
@@ -94,7 +95,17 @@ const ServiceDetails = () => {
   const handleCleaningInstructions = (value) => {
     dispatch({ type: "SET_CLEANINGINSTRUCTIONS", payload: value });
   };
+  const handleDescription = (value) => {
+    dispatch({ type: "SET_DESCRIPTION", payload: value });
+  };
 
+  /*************  ✨ Windsurf Command ⭐  *************/
+  /**
+   * Handles a change in the description of a feature.
+   * @param {number} featureId The ID of the feature to be updated.
+   * @param {string} value The new description for the feature.
+   */
+  /*******  a9a0a401-25ef-48d5-8367-6b41d293436f  *******/
   const handleFeatureDescriptionChange = (featureId, value) => {
     updateFeatureDescription(featureId, value);
   };
@@ -332,16 +343,8 @@ const ServiceDetails = () => {
                           <textarea
                             name={`feature-${selectedFeature.id}`}
                             id={`feature-${selectedFeature.id}`}
-                            value={
-                              state.featureDescriptions[selectedFeature.id] ||
-                              ""
-                            }
-                            onChange={(e) =>
-                              handleFeatureDescriptionChange(
-                                selectedFeature.id,
-                                e.target.value
-                              )
-                            }
+                            value={description}
+                            onChange={(e) => handleDescription(e.target.value)}
                             placeholder={`Describe your ${selectedFeature.title.toLowerCase()} requirements...`}
                             className={styles.instructions}
                           />

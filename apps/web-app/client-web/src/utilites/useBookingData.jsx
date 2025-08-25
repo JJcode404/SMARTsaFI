@@ -8,7 +8,7 @@ const useBookingData = () => {
 
   useEffect(() => {
     if (data?.id) {
-      setUrl(`http://127.0.0.1:8000/bookings/${data.id}`);
+      setUrl(`http://127.0.0.1:8000/bookings/client/${data.id}`);
     }
   }, [data]);
 

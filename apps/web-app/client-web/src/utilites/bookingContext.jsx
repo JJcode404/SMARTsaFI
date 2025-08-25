@@ -29,6 +29,7 @@ const initialState = {
   furnishing: "Furnished",
   price: 0,
   cleaningInstructions: "",
+  description: "",
   serviceProvider: "",
   preferedLanguange: "",
   clientSpecialReaquest: "",
@@ -57,6 +58,8 @@ const bookingReducer = (state, action) => {
       return { ...state, bedroomLabel: action.payload };
     case "SET_CLEANINGINSTRUCTIONS":
       return { ...state, cleaningInstructions: action.payload };
+    case "SET_DESCRIPTION":
+      return { ...state, description: action.payload };
     case "SET_LOCATION":
       return {
         ...state,
@@ -173,35 +176,11 @@ const BookingProvider = ({ children }) => {
 
   // Memoize the payload builder function
   const buildBookingPayload = useCallback((state) => {
-    // Find the selected feature based on the service
     const selectedFeature = state.features.find(
       (feature) => feature.title === state.service
     );
 
-    // Build booked_services array from roomCounts and selected feature options
-    const bookedServices = [];
-
-    if (
-      selectedFeature &&
-      selectedFeature.options &&
-      selectedFeature.options.length > 0
-    ) {
-      selectedFeature.options.forEach((option) => {
-        const key = `${selectedFeature.id}_${option.id}`;
-        const quantity = state.roomCounts[key] || 0;
-
-        if (quantity > 0) {
-          bookedServices.push({
-            feature_option_id: option.id,
-            quantity: quantity,
-            unit_price: option.unit_price,
-            total_price: option.unit_price * quantity,
-          });
-        }
-      });
-    }
-
-    // Combine scheduled date and time into a single datetime
+    // Combine date + time
     const scheduledDateTime =
       state.selectedDate && state.selectedTime
         ? new Date(
@@ -209,21 +188,60 @@ const BookingProvider = ({ children }) => {
           ).toISOString()
         : null;
 
-    // Build the complete payload
-    const payload = {
-      client_id: state.user_id,
-      worker_id: state.serviceProvider.id || null,
-      appointment_datetime: scheduledDateTime,
-      service_feature_id: selectedFeature ? selectedFeature.id : null,
-      deposit_paid: Number(state.price) / 2,
-      status: state.status || "",
-      rating: state.serviceProvider.rating || "",
-      // location: location?.pin || "",
-      total_price: state.price,
-      booked_services: bookedServices,
-    };
+    const appointmentDate = scheduledDateTime
+      ? new Date(scheduledDateTime).toISOString().split(".")[0] + "Z"
+      : null;
 
-    return payload;
+    // Case 1: Feature has options → build booked_services payload
+    if (selectedFeature && selectedFeature.options?.length > 0) {
+      const bookedServices = [];
+
+      selectedFeature.options.forEach((option) => {
+        const key = `${selectedFeature.id}_${option.id}`;
+        const quantity = state.roomCounts[key] || 0;
+
+        if (quantity > 0) {
+          bookedServices.push({
+            feature_option_id: option.id,
+            quantity,
+            unit_price: option.unit_price,
+            total_price: option.unit_price * quantity,
+          });
+        }
+      });
+
+      return {
+        hasOption: true,
+        payload: {
+          client_id: state.user_id,
+          worker_id: state.serviceProvider?.id ?? null,
+          appointment_datetime: appointmentDate,
+          service_feature_id: selectedFeature.id,
+          total_price: Number(state.price),
+          deposit_paid: Number(state.price) / 2,
+          location: state.location,
+          description: "Payroll booking for worker",
+          status: state.status || "Scheduled",
+          rating: Math.round(state.serviceProvider?.rating) || 5,
+          booked_services: bookedServices,
+        },
+      };
+    }
+
+    // Case 2: No options → simple payload
+    return {
+      hasOption: false,
+      payload: {
+        client_id: state.user_id,
+        service_feature_id: selectedFeature ? selectedFeature.id : 0,
+        appointment_date: appointmentDate,
+        worker_id: state.serviceProvider?.id ?? null,
+        location: state.address || state.location || "Not provided",
+        description: state.description,
+        pricing: Number(state.price) || 0,
+        status: state.status || "pending",
+      },
+    };
   }, []);
 
   const buildPayload = useCallback(() => {

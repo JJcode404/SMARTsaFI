@@ -17,45 +17,31 @@ const Checkout = () => {
   const totalPrice = price + Vat;
 
   const handleFinalBooking = async () => {
-    const payload = buildPayload(state);
+    const { hasOption, payload } = buildPayload(state);
     console.log("Booking Payload:", payload);
-
-    const clientId = state.user_id;
-    if (!clientId) {
-      alert("You're not logged in. Please log in to complete your booking.");
-      return;
-    }
-    // const payload = buildPayload(state);
-    // console.log("Booking Payload:", payload);
-
-    // const payload = {
-    //   client_id: clientId,
-    //   worker_id: workerId,
-    //   appointmentdatetime: scheduledDateTime,
-    //   service_feature_id: cleaningInstructions || "",
-    //   deposit_paid: propertyType,
-    //   status: clientSpecialReaquest || "",
-    //   rating: location?.pin || "",
-    //   total_price: totalPrice,
-    //   booked_services: [
-    //     {
-    //       feature_option_id:
-    //       quantity:
-    //       unit_price:
-    //       total_price
-    //     }
-    //   ]
-    // };
+    console.log("hasOption", hasOption);
 
     try {
-      const response = await postData(
-        "http://127.0.0.1:8000/bookings",
-        payload
-      );
-      console.log("Booking successful:", response);
+      const url = hasOption
+        ? "http://127.0.0.1:8000/bookings/"
+        : "http://127.0.0.1:8000/bookings/requests/";
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create booking");
+      }
+
+      const data = await response.json();
+      console.log("Booking created successfully:", data);
       handleSubmit();
-    } catch (err) {
-      console.error("Booking failed:", err.message);
+    } catch (error) {
+      console.error("Error creating booking:", error);
+      alert("Something went wrong while creating booking.");
     }
   };
 
